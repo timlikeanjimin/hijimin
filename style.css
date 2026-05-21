@@ -1,1 +1,110 @@
-/* Add styles here */
+:root {
+    --bg-color-start: oklch(95% 0.05 250);
+    --bg-color-end: oklch(85% 0.1 280);
+    --text-color: oklch(25% 0.05 250);
+    --primary-color: oklch(65% 0.2 280);
+    --shadow-color: oklch(20% 0.1 280 / 40%);
+    --glow-color: oklch(75% 0.25 290 / 60%);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: grid;
+    place-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-end));
+    color: var(--text-color);
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="10" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.07"/></svg>');
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.container {
+    background-color: oklch(98% 0.01 250 / 60%);
+    padding: 3rem 4rem;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px var(--shadow-color);
+    text-align: center;
+    border: 1px solid oklch(100% 0 0 / 20%);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    opacity: 0.8;
+}
+
+.lotto-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+@keyframes appear {
+    0% {
+        transform: translateY(20px) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.lotto-number {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-color);
+    background-color: oklch(99% 0.01 250);
+    box-shadow: 
+        inset 0 2px 4px oklch(0 0 0 / 10%),
+        0 8px 16px var(--shadow-color);
+    transform: translateY(20px) scale(0.8);
+    opacity: 0;
+    animation: appear 0.5s ease-out forwards;
+}
+
+#generate-btn {
+    position: relative;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    background-image: linear-gradient(to right, oklch(70% 0.2 285), oklch(65% 0.22 300));
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px var(--glow-color);
+}
+
+#generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--glow-color);
+}
+
+#generate-btn:active {
+    transform: translateY(1px);
+}

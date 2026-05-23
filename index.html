@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=4">
     <style>
         .theme-toggle {
             position: fixed !important;
@@ -70,6 +70,21 @@
                 </div>
                 <button type="submit" class="submit-btn">Send Inquiry</button>
             </form>
+        </div>
+
+        <!-- Disqus Comments -->
+        <div class="container comments-container">
+            <h2>Comments</h2>
+            <div id="disqus_thread"></div>
+            <script>
+                (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://hijimin.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </div>
     </div>
     <script src="main.js?v=3"></script>

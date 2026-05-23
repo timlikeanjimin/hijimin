@@ -5,6 +5,8 @@
     --container-bg: rgba(255, 255, 255, 0.7);
     --number-bg: #ffffff;
     --shadow-color: rgba(16, 42, 67, 0.3);
+    --input-bg: #ffffff;
+    --input-border: #d9e2ec;
 }
 
 body[data-theme="dark"] {
@@ -14,19 +16,31 @@ body[data-theme="dark"] {
     --container-bg: rgba(16, 42, 67, 0.5);
     --number-bg: #243b53;
     --shadow-color: rgba(0, 0, 0, 0.6);
+    --input-bg: #102a43;
+    --input-border: #334e68;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
-    display: grid;
-    place-content: center;
-    min-height: 100vh;
     margin: 0;
     background: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-end));
     color: var(--text-color);
-    position: relative;
-    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    overflow-y: auto;
     transition: background 0.4s ease, color 0.4s ease;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    max-width: 500px;
+    z-index: 1;
 }
 
 .container {
@@ -44,6 +58,7 @@ body {
     justify-content: center;
     gap: 10px;
     margin: 20px 0;
+    flex-wrap: wrap;
 }
 
 .lotto-number {
@@ -57,13 +72,56 @@ body {
     box-shadow: 0 2px 5px var(--shadow-color);
 }
 
-#generate-btn {
-    padding: 10px 25px;
-    border-radius: 20px;
+#generate-btn, .submit-btn {
+    padding: 12px 30px;
+    border-radius: 25px;
     border: none;
     background: #486581;
     color: white;
+    font-weight: 600;
     cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    width: 100%;
+}
+
+#generate-btn:hover, .submit-btn:hover {
+    transform: translateY(-2px);
+    background: #334e68;
+}
+
+.partnership-container h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.partnership-form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
 }
 
 /* Theme Toggle is handled in index.html inline for priority */

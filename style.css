@@ -1,10 +1,52 @@
 :root {
-    --bg-color-start: oklch(95% 0.05 250);
-    --bg-color-end: oklch(85% 0.1 280);
-    --text-color: oklch(25% 0.05 250);
-    --primary-color: oklch(65% 0.2 280);
-    --shadow-color: oklch(20% 0.1 280 / 40%);
-    --glow-color: oklch(75% 0.25 290 / 60%);
+    /* Light Mode (Default) */
+    --bg-color-start: #f0f4f8;
+    --bg-color-end: #d9e2ec;
+    --text-color: #102a43;
+    --container-bg: rgba(255, 255, 255, 0.7);
+    --number-bg: #ffffff;
+    --shadow-color: rgba(16, 42, 67, 0.3);
+    --glow-color: rgba(72, 101, 129, 0.5);
+    --button-bg-start: #627d98;
+    --button-bg-end: #486581;
+
+    /* Modern colors using oklch if supported */
+    @supports (color: oklch(0% 0 0)) {
+        --bg-color-start: oklch(95% 0.05 250);
+        --bg-color-end: oklch(85% 0.1 280);
+        --text-color: oklch(25% 0.05 250);
+        --container-bg: oklch(98% 0.01 250 / 70%);
+        --number-bg: oklch(99% 0.01 250);
+        --shadow-color: oklch(20% 0.1 280 / 30%);
+        --glow-color: oklch(75% 0.25 290 / 50%);
+        --button-bg-start: oklch(70% 0.2 285);
+        --button-bg-end: oklch(65% 0.22 300);
+    }
+}
+
+body[data-theme="dark"] {
+    /* Dark Mode */
+    --bg-color-start: #102a43;
+    --bg-color-end: #0a1a29;
+    --text-color: #f0f4f8;
+    --container-bg: rgba(16, 42, 67, 0.5);
+    --number-bg: #243b53;
+    --shadow-color: rgba(0, 0, 0, 0.6);
+    --glow-color: rgba(130, 154, 177, 0.3);
+    --button-bg-start: #486581;
+    --button-bg-end: #334e68;
+
+    @supports (color: oklch(0% 0 0)) {
+        --bg-color-start: oklch(15% 0.02 250);
+        --bg-color-end: oklch(5% 0.03 280);
+        --text-color: oklch(95% 0.01 250);
+        --container-bg: oklch(20% 0.03 250 / 50%);
+        --number-bg: oklch(25% 0.03 250);
+        --shadow-color: oklch(0% 0 0 / 60%);
+        --glow-color: oklch(50% 0.2 290 / 30%);
+        --button-bg-start: oklch(60% 0.15 285);
+        --button-bg-end: oklch(55% 0.18 300);
+    }
 }
 
 body {
@@ -12,10 +54,13 @@ body {
     display: grid;
     place-content: center;
     min-height: 100vh;
+    background-color: var(--bg-color-start);
     background-image: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-end));
     color: var(--text-color);
     position: relative;
     overflow: hidden;
+    margin: 0;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body::before {
@@ -28,13 +73,15 @@ body::before {
 }
 
 .container {
-    background-color: oklch(98% 0.01 250 / 60%);
+    background-color: var(--container-bg);
     padding: 3rem 4rem;
     border-radius: 20px;
     box-shadow: 0 25px 50px -12px var(--shadow-color);
     text-align: center;
-    border: 1px solid oklch(100% 0 0 / 20%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    z-index: 1;
 }
 
 h1 {
@@ -76,13 +123,14 @@ h1 {
     font-size: 1.75rem;
     font-weight: 600;
     color: var(--text-color);
-    background-color: oklch(99% 0.01 250);
+    background-color: var(--number-bg);
     box-shadow: 
-        inset 0 2px 4px oklch(0 0 0 / 10%),
+        inset 0 2px 4px rgba(0,0,0,0.1),
         0 8px 16px var(--shadow-color);
     transform: translateY(20px) scale(0.8);
     opacity: 0;
     animation: appear 0.5s ease-out forwards;
+    transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
 }
 
 #generate-btn {
@@ -92,7 +140,7 @@ h1 {
     font-weight: 600;
     border: none;
     border-radius: 50px;
-    background-image: linear-gradient(to right, oklch(70% 0.2 285), oklch(65% 0.22 300));
+    background-image: linear-gradient(to right, var(--button-bg-start), var(--button-bg-end));
     color: white;
     cursor: pointer;
     outline: none;
@@ -108,3 +156,36 @@ h1 {
 #generate-btn:active {
     transform: translateY(1px);
 }
+
+.theme-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: var(--container-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.6rem;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.4s ease;
+    z-index: 100;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(12deg);
+}
+
+.theme-toggle svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--text-color);
+}
+
+.sun-icon { display: none; }
+body[data-theme="dark"] .sun-icon { display: block; }
+body[data-theme="dark"] .moon-icon { display: none; }

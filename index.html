@@ -14,74 +14,82 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     <header>
         <nav class="nav-container">
             <a href="index.html" class="logo">LottoSmart</a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                <li><a href="privacy.html" data-i18n="nav-privacy">Privacy</a></li>
             </ul>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">KR</button>
+                    <button class="lang-btn" data-lang="zh">CN</button>
+                    <button class="lang-btn" data-lang="ja">JP</button>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            </div>
         </nav>
     </header>
 
     <div class="main-wrapper">
         <!-- Lotto Number Generator -->
         <main class="container">
-            <h1>Smart Lotto Number Generator</h1>
-            <p class="subtitle">Generate your lucky numbers based on the last 100-draw statistics!</p>
+            <h1 data-i18n="hero-title">Smart Lotto Number Generator</h1>
+            <p class="subtitle" data-i18n="hero-subtitle">Generate your lucky numbers based on the last 100-draw statistics!</p>
             <div class="lotto-numbers"></div>
             <button id="generate-btn">
-                <span class="button-text">Generate Smart Numbers</span>
+                <span class="button-text" data-i18n="gen-btn">Generate Smart Numbers</span>
             </button>
         </main>
 
         <!-- Lotto Number Statistics -->
         <section class="container stats-container">
-            <h2>로또 번호 통계 (Lotto Statistics)</h2>
-            <p class="subtitle">최근 100회차의 당첨 번호를 기반으로 분석한 결과입니다.</p>
+            <h2 data-i18n="stats-title">로또 번호 통계 (Lotto Statistics)</h2>
+            <p class="subtitle" data-i18n="stats-subtitle">최근 100회차의 당첨 번호를 기반으로 분석한 결과입니다.</p>
             <div class="stats-box">
-                <h3>Most Frequent Numbers (Hot)</h3>
-                <p>Numbers that appeared most often in the last 100 draws.</p>
+                <h3 data-i18n="hot-title">Most Frequent Numbers (Hot)</h3>
+                <p data-i18n="hot-desc">Numbers that appeared most often in the last 100 draws.</p>
                 <div id="hot-numbers" class="stats-list"></div>
             </div>
             <div class="stats-box">
-                <h3>Least Frequent Numbers (Cold)</h3>
-                <p>Numbers that appeared least often in the last 100 draws.</p>
+                <h3 data-i18n="cold-title">Least Frequent Numbers (Cold)</h3>
+                <p data-i18n="cold-desc">Numbers that appeared least often in the last 100 draws.</p>
                 <div id="cold-numbers" class="stats-list"></div>
             </div>
         </section>
 
         <!-- Information Content for AdSense Quality -->
         <section class="container content-section">
-            <h2>How the Smart Generator Works</h2>
-            <p>Our algorithm doesn't just pick numbers at random. It analyzes the historical data from the most recent 100 draws to identify patterns. We categorize numbers into two main groups:</p>
+            <h2 data-i18n="how-title">How the Smart Generator Works</h2>
+            <p data-i18n="how-p1">Our algorithm doesn't just pick numbers at random. It analyzes the historical data from the most recent 100 draws to identify patterns. We categorize numbers into two main groups:</p>
             
-            <h3>1. Hot Numbers</h3>
-            <p>These are numbers that have a high frequency of appearing in recent draws. Some players believe that "hot" numbers are more likely to appear again as they follow a current trend.</p>
+            <h3 data-i18n="how-hot-title">1. Hot Numbers</h3>
+            <p data-i18n="how-hot-desc">These are numbers that have a high frequency of appearing in recent draws. Some players believe that "hot" numbers are more likely to appear again as they follow a current trend.</p>
             
-            <h3>2. Cold Numbers</h3>
-            <p>These are numbers that haven't appeared for a while. The "law of averages" suggests that these numbers might be "due" to appear soon, making them a popular choice for strategic players.</p>
+            <h3 data-i18n="how-cold-title">2. Cold Numbers</h3>
+            <p data-i18n="how-cold-desc">These are numbers that haven't appeared for a while. The "law of averages" suggests that these numbers might be "due" to appear soon, making them a popular choice for strategic players.</p>
             
-            <h3>Statistical Balance</h3>
-            <p>The Smart Generator combines these insights to provide a balanced set of numbers, giving you a mix of trending and overdue numbers for your next ticket.</p>
+            <h3 data-i18n="how-balance-title">Statistical Balance</h3>
+            <p data-i18n="how-balance-desc">The Smart Generator combines these insights to provide a balanced set of numbers, giving you a mix of trending and overdue numbers for your next ticket.</p>
         </section>
 
         <!-- Responsible Gaming -->
         <section class="container content-section">
-            <h2>Responsible Gaming</h2>
-            <p>Lottery is a game of chance. While our generator uses statistical data to help you choose numbers, it does not guarantee a win. Please play responsibly and only spend what you can afford to lose.</p>
-            <p>If you or someone you know has a gambling problem, please seek help from professional organizations in your region.</p>
+            <h2 data-i18n="gaming-title">Responsible Gaming</h2>
+            <p data-i18n="gaming-desc1">Lottery is a game of chance. While our generator uses statistical data to help you choose numbers, it does not guarantee a win. Please play responsibly and only spend what you can afford to lose.</p>
+            <p data-i18n="gaming-desc2">If you or someone you know has a gambling problem, please seek help from professional organizations in your region.</p>
         </section>
 
         <!-- Disqus Comments -->
         <div class="container comments-container">
-            <h2>Community Discussion</h2>
+            <h2 data-i18n="community-title">Community Discussion</h2>
             <div id="disqus_thread"></div>
             <script>
                 (function() {
@@ -98,16 +106,16 @@
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="contact.html">Contact</a>
-                <a href="privacy.html">Privacy Policy</a>
+                <a href="index.html" data-i18n="nav-home">Home</a>
+                <a href="about.html" data-i18n="nav-about">About Us</a>
+                <a href="contact.html" data-i18n="nav-contact">Contact</a>
+                <a href="privacy.html" data-i18n="nav-privacy">Privacy Policy</a>
             </div>
-            <p class="copyright">&copy; 2026 LottoSmart. All rights reserved.</p>
-            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;">Disclaimer: This site is not affiliated with any official lottery organization.</p>
+            <p class="copyright" data-i18n="footer-copy">&copy; 2026 LottoSmart. All rights reserved.</p>
+            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;" data-i18n="footer-disclaimer">Disclaimer: This site is not affiliated with any official lottery organization.</p>
         </div>
     </footer>
 
-    <script src="main.js?v=5"></script>
+    <script src="main.js?v=6"></script>
 </body>
 </html>

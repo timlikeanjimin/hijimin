@@ -12,61 +12,69 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     <header>
         <nav class="nav-container">
             <a href="index.html" class="logo">LottoSmart</a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                <li><a href="privacy.html" data-i18n="nav-privacy">Privacy</a></li>
             </ul>
-            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">KR</button>
+                    <button class="lang-btn" data-lang="zh">CN</button>
+                    <button class="lang-btn" data-lang="ja">JP</button>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            </div>
         </nav>
     </header>
 
     <div class="main-wrapper">
         <main class="container content-section">
-            <h1>Privacy Policy</h1>
-            <p>Your privacy is important to us. This Privacy Policy document outlines the types of personal information that is received and collected by LottoSmart and how it is used.</p>
+            <h1 data-i18n="privacy-title">Privacy Policy</h1>
+            <p data-i18n="privacy-intro">Your privacy is important to us. This Privacy Policy document outlines the types of personal information that is received and collected by LottoSmart and how it is used.</p>
             
-            <h2>Log Files</h2>
-            <p>Like many other Web sites, LottoSmart makes use of log files. The information inside the log files includes internet protocol ( IP ) addresses, type of browser, Internet Service Provider ( ISP ), date/time stamp, referring/exit pages, and number of clicks to analyze trends, administer the site, track user’s movement around the site, and gather demographic information.</p>
+            <h2 data-i18n="privacy-log-title">Log Files</h2>
+            <p data-i18n="privacy-log-p">Like many other Web sites, LottoSmart makes use of log files. The information inside the log files includes internet protocol ( IP ) addresses, type of browser, Internet Service Provider ( ISP ), date/time stamp, referring/exit pages, and number of clicks to analyze trends, administer the site, track user’s movement around the site, and gather demographic information.</p>
             
-            <h2>Cookies and Web Beacons</h2>
-            <p>LottoSmart does use cookies to store information about visitors preferences, record user-specific information on which pages the user access or visit, customize Web page content based on visitors browser type or other information that the visitor sends via their browser.</p>
+            <h2 data-i18n="privacy-cookie-title">Cookies and Web Beacons</h2>
+            <p data-i18n="privacy-cookie-p">LottoSmart does use cookies to store information about visitors preferences, record user-specific information on which pages the user access or visit, customize Web page content based on visitors browser type or other information that the visitor sends via their browser.</p>
             
-            <h2>Google AdSense and Cookies</h2>
-            <p>Google, as a third party vendor, uses cookies to serve ads on LottoSmart.</p>
+            <h2 data-i18n="privacy-adsense-title">Google AdSense and Cookies</h2>
+            <p data-i18n="privacy-adsense-p1">Google, as a third party vendor, uses cookies to serve ads on LottoSmart.</p>
             <ul>
-                <li>Google's use of the DART cookie enables it to serve ads to users based on their visit to LottoSmart and other sites on the Internet.</li>
-                <li>Users may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy at the following URL - <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></li>
+                <li data-i18n="privacy-adsense-li1">Google's use of the DART cookie enables it to serve ads to users based on their visit to LottoSmart and other sites on the Internet.</li>
+                <li data-i18n="privacy-adsense-li2">Users may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy at the following URL - <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></li>
             </ul>
             
-            <p>These third-party ad servers or ad networks use technology to the advertisements and links that appear on LottoSmart send directly to your browsers. They automatically receive your IP address when this occurs. Other technologies ( such as cookies, JavaScript, or Web Beacons ) may also be used by the third-party ad networks to measure the effectiveness of their advertisements and / or to personalize the advertising content that you see.</p>
+            <p data-i18n="privacy-adsense-p2">These third-party ad servers or ad networks use technology to the advertisements and links that appear on LottoSmart send directly to your browsers. They automatically receive your IP address when this occurs. Other technologies ( such as cookies, JavaScript, or Web Beacons ) may also be used by the third-party ad networks to measure the effectiveness of their advertisements and / or to personalize the advertising content that you see.</p>
             
-            <p>LottoSmart has no access to or control over these cookies that are used by third-party advertisers.</p>
+            <p data-i18n="privacy-adsense-p3">LottoSmart has no access to or control over these cookies that are used by third-party advertisers.</p>
             
-            <h2>Contact Information</h2>
-            <p>If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at our <a href="contact.html">Contact Page</a>.</p>
+            <h2 data-i18n="privacy-contact-title">Contact Information</h2>
+            <p data-i18n="privacy-contact-p">If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at our <a href="contact.html">Contact Page</a>.</p>
         </main>
     </div>
 
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="contact.html">Contact</a>
-                <a href="privacy.html">Privacy Policy</a>
+                <a href="index.html" data-i18n="nav-home">Home</a>
+                <a href="about.html" data-i18n="nav-about">About Us</a>
+                <a href="contact.html" data-i18n="nav-contact">Contact</a>
+                <a href="privacy.html" data-i18n="nav-privacy">Privacy Policy</a>
             </div>
-            <p class="copyright">&copy; 2026 LottoSmart. All rights reserved.</p>
+            <p class="copyright" data-i18n="footer-copy">&copy; 2026 LottoSmart. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="main.js?v=5"></script>
+    <script src="main.js?v=6"></script>
 </body>
 </html>

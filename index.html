@@ -3,67 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>Smart Lotto Number Generator - Statistical Analysis Based</title>
+    <meta name="description" content="Generate lotto numbers using statistical analysis of the last 100 draws. Free, smart, and data-driven lucky number generator.">
+    <meta name="keywords" content="lotto generator, smart lotto, lottery statistics, hot numbers, cold numbers, lucky numbers">
+    
+    <!-- AdSense Verification & Account -->
     <meta name="google-adsense-account" content="ca-pub-9675652519477548">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9675652519477548" crossorigin="anonymous"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=5">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9675652519477548" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <!-- Theme toggle SVG icons will be here -->
-    </button>
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">LottoSmart</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="privacy.html">Privacy</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+        </nav>
+    </header>
+
     <div class="main-wrapper">
         <!-- Lotto Number Generator -->
-        <div class="container">
-            <h1>Lotto Number Generator</h1>
-            <p class="subtitle">Generate your lucky numbers based on 100-draw statistics!</p>
+        <main class="container">
+            <h1>Smart Lotto Number Generator</h1>
+            <p class="subtitle">Generate your lucky numbers based on the last 100-draw statistics!</p>
             <div class="lotto-numbers"></div>
             <button id="generate-btn">
                 <span class="button-text">Generate Smart Numbers</span>
             </button>
-        </div>
+        </main>
 
         <!-- Lotto Number Statistics -->
-        <div class="container stats-container">
-            <h2>로또 번호 통계</h2>
+        <section class="container stats-container">
+            <h2>로또 번호 통계 (Lotto Statistics)</h2>
             <p class="subtitle">최근 100회차의 당첨 번호를 기반으로 분석한 결과입니다.</p>
             <div class="stats-box">
                 <h3>Most Frequent Numbers (Hot)</h3>
+                <p>Numbers that appeared most often in the last 100 draws.</p>
                 <div id="hot-numbers" class="stats-list"></div>
             </div>
             <div class="stats-box">
                 <h3>Least Frequent Numbers (Cold)</h3>
+                <p>Numbers that appeared least often in the last 100 draws.</p>
                 <div id="cold-numbers" class="stats-list"></div>
             </div>
-        </div>
+        </section>
 
-        <!-- Partnership Inquiry -->
-        <div class="container partnership-container">
-            <h2>Partnership Inquiry</h2>
-            <p class="subtitle">Contact us for collaboration opportunities.</p>
-            <form action="https://formspree.io/f/xkoezowa" method="POST" class="partnership-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" placeholder="Your Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="_replyto" placeholder="Your Email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="4" placeholder="How can we help you?" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Inquiry</button>
-            </form>
-        </div>
+        <!-- Information Content for AdSense Quality -->
+        <section class="container content-section">
+            <h2>How the Smart Generator Works</h2>
+            <p>Our algorithm doesn't just pick numbers at random. It analyzes the historical data from the most recent 100 draws to identify patterns. We categorize numbers into two main groups:</p>
+            
+            <h3>1. Hot Numbers</h3>
+            <p>These are numbers that have a high frequency of appearing in recent draws. Some players believe that "hot" numbers are more likely to appear again as they follow a current trend.</p>
+            
+            <h3>2. Cold Numbers</h3>
+            <p>These are numbers that haven't appeared for a while. The "law of averages" suggests that these numbers might be "due" to appear soon, making them a popular choice for strategic players.</p>
+            
+            <h3>Statistical Balance</h3>
+            <p>The Smart Generator combines these insights to provide a balanced set of numbers, giving you a mix of trending and overdue numbers for your next ticket.</p>
+        </section>
+
+        <!-- Responsible Gaming -->
+        <section class="container content-section">
+            <h2>Responsible Gaming</h2>
+            <p>Lottery is a game of chance. While our generator uses statistical data to help you choose numbers, it does not guarantee a win. Please play responsibly and only spend what you can afford to lose.</p>
+            <p>If you or someone you know has a gambling problem, please seek help from professional organizations in your region.</p>
+        </section>
 
         <!-- Disqus Comments -->
         <div class="container comments-container">
-            <h2>Comments</h2>
+            <h2>Community Discussion</h2>
             <div id="disqus_thread"></div>
             <script>
                 (function() {
@@ -76,6 +94,20 @@
             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </div>
     </div>
-    <script src="main.js?v=4"></script>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+            <p class="copyright">&copy; 2026 LottoSmart. All rights reserved.</p>
+            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;">Disclaimer: This site is not affiliated with any official lottery organization.</p>
+        </div>
+    </footer>
+
+    <script src="main.js?v=5"></script>
 </body>
 </html>

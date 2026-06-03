@@ -104,6 +104,23 @@ const translations = {
         "premium-disc-title": "For Entertainment Only",
         "premium-disc-p": "This report is for entertainment and self-reflection and does not predict the actual future.",
         "premium-config-missing": "The checkout link isn't set up yet. Please contact the site owner.",
+        "nav-zodiac": "Chinese Zodiac",
+        "cta-zodiac": "🐯 See your Chinese zodiac fortune →",
+        "zodiac-title": "Chinese Zodiac Fortune",
+        "zodiac-subtitle": "Enter your birth year to find your zodiac animal and its fortune.",
+        "zodiac-label-year": "Birth year",
+        "zodiac-btn": "See My Zodiac Fortune",
+        "zodiac-validate": "Please enter a valid birth year.",
+        "zodiac-trait-label": "Your Nature",
+        "zodiac-today-label": "Today's Zodiac Fortune",
+        "zodiac-year-label": "2026 Year Fortune",
+        "zodiac-years-label": "Birth years",
+        "zodiac-number-label": "Lucky Number",
+        "zodiac-color-label": "Lucky Color",
+        "zodiac-info-title": "About the Chinese Zodiac",
+        "zodiac-info-p": "The Chinese zodiac assigns one of twelve animals to each birth year in a repeating 12-year cycle. Your animal is said to shape your personality and fortune. Enter your birth year to see your animal, its nature, today's reading, and your 2026 outlook.",
+        "zodiac-disc-title": "For Entertainment Only",
+        "zodiac-disc-p": "This zodiac reading is for entertainment and self-reflection only and does not predict the actual future.",
         "hero-title": "Smart Lotto Number Generator",
         "hero-subtitle": "Generate your lucky numbers based on the last 100-draw statistics!",
         "gen-btn": "Generate Smart Numbers",
@@ -266,6 +283,23 @@ const translations = {
         "premium-disc-title": "재미로 보는 운세입니다",
         "premium-disc-p": "이 리포트는 오락 및 자기 성찰용이며 실제 미래를 예측하지 않습니다.",
         "premium-config-missing": "결제 링크가 아직 설정되지 않았습니다. 사이트 관리자에게 문의해 주세요.",
+        "nav-zodiac": "띠별 운세",
+        "cta-zodiac": "🐯 내 띠 운세 보기 →",
+        "zodiac-title": "띠별 운세",
+        "zodiac-subtitle": "태어난 해를 입력하면 내 띠와 운세를 알려드립니다.",
+        "zodiac-label-year": "태어난 해(연도)",
+        "zodiac-btn": "내 띠 운세 보기",
+        "zodiac-validate": "올바른 출생 연도를 입력해 주세요.",
+        "zodiac-trait-label": "타고난 기질",
+        "zodiac-today-label": "오늘의 띠 운세",
+        "zodiac-year-label": "2026 올해의 운세",
+        "zodiac-years-label": "해당 출생 연도",
+        "zodiac-number-label": "행운의 숫자",
+        "zodiac-color-label": "행운의 색",
+        "zodiac-info-title": "띠별 운세란",
+        "zodiac-info-p": "십이지(띠)는 12년 주기로 태어난 해마다 하나의 동물이 배정되는 동양 문화입니다. 자신의 띠가 성격과 운을 좌우한다고 여겨집니다. 태어난 해를 입력하면 내 띠와 기질, 오늘의 운세, 2026년 전망을 보여드립니다.",
+        "zodiac-disc-title": "재미로 보는 운세입니다",
+        "zodiac-disc-p": "이 띠별 운세는 오락 및 자기 성찰용이며 실제 미래를 예측하지 않습니다.",
         "hero-title": "스마트 로또 번호 생성기",
         "hero-subtitle": "최근 100회차 당첨 통계를 기반으로 행운의 번호를 생성하세요!",
         "gen-btn": "스마트 번호 생성하기",
@@ -428,6 +462,23 @@ const translations = {
         "premium-disc-title": "仅供娱乐",
         "premium-disc-p": "本报告仅供娱乐与自我反思，不预测真实未来。",
         "premium-config-missing": "结账链接尚未设置，请联系网站管理员。",
+        "nav-zodiac": "生肖运势",
+        "cta-zodiac": "🐯 查看你的生肖运势 →",
+        "zodiac-title": "生肖运势",
+        "zodiac-subtitle": "输入出生年份，找到你的生肖与运势。",
+        "zodiac-label-year": "出生年份",
+        "zodiac-btn": "查看我的生肖运势",
+        "zodiac-validate": "请输入有效的出生年份。",
+        "zodiac-trait-label": "天生气质",
+        "zodiac-today-label": "今日生肖运势",
+        "zodiac-year-label": "2026 年度运势",
+        "zodiac-years-label": "对应出生年份",
+        "zodiac-number-label": "幸运数字",
+        "zodiac-color-label": "幸运颜色",
+        "zodiac-info-title": "关于生肖",
+        "zodiac-info-p": "生肖以12年为周期，为每个出生年份指定一种动物，被认为影响性格与运势。输入出生年份，即可查看你的生肖、气质、今日运势与2026年展望。",
+        "zodiac-disc-title": "仅供娱乐",
+        "zodiac-disc-p": "本生肖运势仅供娱乐与自我反思，不预测真实未来。",
         "hero-title": "智能乐透号码生成器",
         "hero-subtitle": "根据最近100期的开奖统计数据生成您的幸运号码！",
         "gen-btn": "生成智能号码",
@@ -590,6 +641,23 @@ const translations = {
         "premium-disc-title": "娯楽目的のみ",
         "premium-disc-p": "このレポートは娯楽・自己省察用で、実際の未来を予測しません。",
         "premium-config-missing": "決済リンクがまだ設定されていません。サイト管理者にお問い合わせください。",
+        "nav-zodiac": "干支占い",
+        "cta-zodiac": "🐯 干支占いを見る →",
+        "zodiac-title": "干支占い",
+        "zodiac-subtitle": "生まれた年を入れると、干支と運勢がわかります。",
+        "zodiac-label-year": "生まれた年",
+        "zodiac-btn": "干支占いを見る",
+        "zodiac-validate": "正しい生まれ年を入力してください。",
+        "zodiac-trait-label": "生まれ持った気質",
+        "zodiac-today-label": "今日の干支運勢",
+        "zodiac-year-label": "2026年の運勢",
+        "zodiac-years-label": "該当する生まれ年",
+        "zodiac-number-label": "ラッキーナンバー",
+        "zodiac-color-label": "ラッキーカラー",
+        "zodiac-info-title": "干支占いとは",
+        "zodiac-info-p": "干支は12年周期で、生まれた年ごとに一つの動物が割り当てられる東洋の文化です。自分の干支が性格や運を左右すると言われます。生まれた年を入れると、干支・気質・今日の運勢・2026年の見通しを表示します。",
+        "zodiac-disc-title": "娯楽目的のみ",
+        "zodiac-disc-p": "この干支占いは娯楽・自己省察用で、実際の未来を予測しません。",
         "hero-title": "スマートロト番号ジェネレーター",
         "hero-subtitle": "直近100回の抽選統計に基づいたラッキーナンバーを生成します！",
         "gen-btn": "スマート番号を生成",
@@ -927,6 +995,34 @@ const premiumPools = {
         advice: ["今年のキーワードは『継続』——小さな習慣が大きな運を作ります。", "欲張りよりバランスが幸運を招きます。", "与えた分だけ、より大きな福として返ってきます。"],
         keywords: ["成長", "ご縁", "財運", "挑戦", "安定", "健康", "実り", "変化"],
         monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+    }
+};
+
+// --- Chinese zodiac (띠별) pools (index 0=Rat ... 11=Pig) ---
+const zodiacPools = {
+    en: {
+        animals: ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"],
+        traits: ["Quick-witted and resourceful, you spot opportunities others miss.", "Steady and dependable, your patience builds lasting success.", "Brave and charismatic, you lead and inspire naturally.", "Gentle and tactful, you bring harmony wherever you go.", "Confident and ambitious, you draw luck and attention.", "Wise and intuitive, you read situations deeply.", "Energetic and free-spirited, you thrive on new adventures.", "Kind and creative, your warmth wins people over.", "Clever and playful, you solve problems with flair.", "Sharp and honest, your diligence earns respect.", "Loyal and fair, people trust you instinctively.", "Generous and easygoing, good fortune follows your warmth."],
+        today: ["A smooth day — trust your timing.", "Patience early pays off later today.", "A pleasant surprise may brighten your afternoon.", "A good day to connect with people.", "Mind your energy and rest when needed.", "Money matters look favorable today."],
+        year: ["2026 rewards steady effort with real growth.", "A year to widen your circle and seize chances.", "Finances strengthen in the second half of 2026.", "Love and friendships deepen this year.", "A fresh start brings welcome change.", "Your patience this year turns into lasting gain."]
+    },
+    ko: {
+        animals: ["쥐", "소", "호랑이", "토끼", "용", "뱀", "말", "양", "원숭이", "닭", "개", "돼지"],
+        traits: ["재치 있고 수완이 좋아 남이 놓친 기회를 잘 잡습니다.", "성실하고 듬직해 인내로 오래가는 성공을 쌓습니다.", "용감하고 카리스마가 있어 자연스럽게 사람을 이끕니다.", "온화하고 센스 있어 가는 곳마다 화합을 만듭니다.", "자신감 있고 야망이 커서 운과 시선을 끌어당깁니다.", "지혜롭고 직관이 뛰어나 상황을 깊이 읽습니다.", "활동적이고 자유로워 새로운 도전에서 빛납니다.", "다정하고 창의적이라 따뜻함으로 사람을 얻습니다.", "영리하고 유쾌해 문제를 센스 있게 풉니다.", "예리하고 정직해 성실함으로 신뢰를 얻습니다.", "의리 있고 공정해 사람들이 본능적으로 믿습니다.", "넉넉하고 느긋해 따뜻함을 따라 복이 들어옵니다."],
+        today: ["흐름이 순조로운 날, 타이밍을 믿으세요.", "초반의 인내가 오후에 보답으로 옵니다.", "오후에 기분 좋은 작은 행운이 있을 수 있어요.", "사람들과 연결되기 좋은 날입니다.", "기운을 아끼고 필요할 때 쉬어가세요.", "금전 관련 일이 유리하게 풀립니다."],
+        year: ["2026년은 꾸준한 노력에 확실한 성장으로 보답합니다.", "인맥을 넓히고 기회를 잡기 좋은 해입니다.", "2026년 하반기에 재정이 단단해집니다.", "올해 사랑과 우정이 더 깊어집니다.", "새로운 시작이 반가운 변화를 부릅니다.", "올해의 인내가 오래가는 결실로 바뀝니다."]
+    },
+    zh: {
+        animals: ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"],
+        traits: ["机敏而足智多谋，能抓住别人错过的机会。", "踏实可靠，以耐心积累长久的成功。", "勇敢有魅力，自然而然地带领与激励他人。", "温和而圆融，所到之处皆带来和谐。", "自信而有抱负，吸引好运与目光。", "睿智而直觉敏锐，能深刻洞察局势。", "活力充沛、热爱自由，在新冒险中闪耀。", "善良而富创意，以温暖赢得人心。", "聪明又风趣，解决问题别具一格。", "敏锐而诚实，以勤勉赢得尊重。", "忠诚而公正，人们本能地信任你。", "慷慨而随和，温暖之处福气相随。"],
+        today: ["诸事顺遂的一天，相信你的时机。", "前期的耐心会在午后得到回报。", "下午或有令人愉快的小惊喜。", "适合与人联络的一天。", "注意精力，需要时好好休息。", "今天金钱方面看好。"],
+        year: ["2026 以扎实的努力回报你真正的成长。", "适合拓展人脉、抓住机会的一年。", "2026 下半年财务更稳固。", "今年爱情与友情更加深厚。", "全新的开始带来可喜的改变。", "今年的耐心将化为长久的收获。"]
+    },
+    ja: {
+        animals: ["ねずみ", "うし", "とら", "うさぎ", "たつ", "へび", "うま", "ひつじ", "さる", "とり", "いぬ", "いのしし"],
+        traits: ["機転が利き機略に富み、人が見落とす好機をつかみます。", "堅実で頼もしく、忍耐で長く続く成功を築きます。", "勇敢でカリスマがあり、自然に人を導きます。", "穏やかで気配り上手、行く先々で調和を生みます。", "自信家で野心的、運と注目を引き寄せます。", "賢く直感に優れ、状況を深く読み取ります。", "活動的で自由、新しい挑戦で輝きます。", "優しく創造的、温かさで人の心をつかみます。", "賢く愉快で、問題を巧みに解決します。", "鋭く正直で、勤勉さで信頼を得ます。", "義理堅く公正で、人が自然と信頼します。", "気前よくおおらか、温かさに福が寄ってきます。"],
+        today: ["流れが順調な日。タイミングを信じて。", "序盤の忍耐が午後に報われます。", "午後に嬉しい小さな幸運があるかも。", "人とつながるのに良い日です。", "気力を温存し、必要なら休んで。", "今日は金銭面が好調です。"],
+        year: ["2026年は着実な努力に確かな成長で応えます。", "人脈を広げ、好機をつかむのに良い年。", "2026年後半に財政が安定します。", "今年は愛情と友情がより深まります。", "新たな始まりが嬉しい変化を呼びます。", "今年の忍耐が長く続く実りに変わります。"]
     }
 };
 
@@ -1450,6 +1546,78 @@ function initPremiumLogic() {
     });
 }
 
+const ZODIAC_EMOJI = ["🐀", "🐂", "🐯", "🐰", "🐉", "🐍", "🐴", "🐐", "🐵", "🐔", "🐶", "🐷"];
+
+function renderZodiac() {
+    const result = document.querySelector('#zodiac-result');
+    if (!result || !window.__zodiac) return;
+    const lang = localStorage.getItem('lang') || 'en';
+    const pool = zodiacPools[lang] || zodiacPools.en;
+    const year = window.__zodiac.year;
+    const idx = (((year - 4) % 12) + 12) % 12;
+    const setSel = (s, v) => { const e = document.querySelector(s); if (e) e.textContent = v; };
+
+    setSel('#zodiac-emoji', ZODIAC_EMOJI[idx]);
+    setSel('#zodiac-name', pool.animals[idx]);
+    setSel('#zodiac-trait', pool.traits[idx]);
+
+    const years = [];
+    for (let y = 1936; y <= 2026; y++) { if ((((y - 4) % 12) + 12) % 12 === idx) years.push(y); }
+    setSel('#zodiac-years', years.slice(-6).join(', '));
+
+    const today = new Date();
+    const ds = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+    const tr = mulberry32(fortuneHash('zodiac|today|' + idx + '|' + ds));
+    const tScore = 50 + Math.floor(tr() * 51);
+    const tText = pool.today[Math.floor(tr() * pool.today.length)];
+    const tb = document.querySelector('#zodiac-today-bar'); if (tb) tb.style.width = tScore + '%';
+    setSel('#zodiac-today-text', tText);
+
+    const yr = mulberry32(fortuneHash('zodiac|2026|' + idx));
+    const yText = pool.year[Math.floor(yr() * pool.year.length)];
+    const yScore = 55 + Math.floor(yr() * 46);
+    const yb = document.querySelector('#zodiac-year-bar'); if (yb) yb.style.width = yScore + '%';
+    setSel('#zodiac-year-text', yText);
+
+    const lr = mulberry32(fortuneHash('zodiac|lucky|' + idx + '|' + ds));
+    const colors = (fortunePools[lang] || fortunePools.en).colors;
+    setSel('#zodiac-number', 1 + Math.floor(lr() * 45));
+    setSel('#zodiac-color', colors[Math.floor(lr() * colors.length)]);
+
+    window.__zodiacShare = {
+        title: ZODIAC_EMOJI[idx] + ' ' + pool.animals[idx],
+        subtitle: '',
+        bigValue: tScore,
+        bigLabel: translations[lang]['zodiac-today-label'],
+        summary: pool.traits[idx],
+        rows: [
+            { label: translations[lang]['zodiac-today-label'], score: tScore },
+            { label: translations[lang]['zodiac-year-label'], score: yScore }
+        ]
+    };
+}
+
+function initZodiacLogic() {
+    const btn = document.querySelector('#zodiac-btn');
+    const result = document.querySelector('#zodiac-result');
+    if (!btn || !result) return;
+    btn.addEventListener('click', () => {
+        const yi = document.querySelector('#zodiac-year');
+        const year = yi ? parseInt(yi.value, 10) : NaN;
+        if (!year || year < 1900 || year > 2026) {
+            const lang = localStorage.getItem('lang') || 'en';
+            alert((translations[lang] && translations[lang]['zodiac-validate']) || 'Please enter your birth year.');
+            return;
+        }
+        window.__zodiac = { year: year };
+        renderZodiac();
+        result.hidden = false;
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    attachShare('zodiac-share', () => window.__zodiacShare, 'my-zodiac');
+}
+
 function initLanguage() {
     const langBtns = document.querySelectorAll('.lang-btn');
     const currentLang = localStorage.getItem('lang') || 'en';
@@ -1485,6 +1653,7 @@ function setLanguage(lang) {
     if (typeof renderFace === 'function' && window.__face) renderFace();
     if (typeof renderCompat === 'function' && window.__compat) renderCompat();
     if (typeof renderPremium === 'function' && window.__premium) renderPremium();
+    if (typeof renderZodiac === 'function' && window.__zodiac) renderZodiac();
 }
 
 function initTheme() {
@@ -1618,4 +1787,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initFaceLogic();
     initCompatLogic();
     initPremiumLogic();
+    initZodiacLogic();
 });

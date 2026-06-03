@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQN2B35JF5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WQN2B35JF5');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "wwnsjgqbpl");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinese Zodiac Fortune - Free Animal Sign & 2026 Reading</title>
+    <meta name="description" content="Find your Chinese zodiac animal from your birth year and get a free reading: your nature, today's fortune, your 2026 outlook, and lucky number & color.">
+    <meta name="keywords" content="chinese zodiac, zodiac animal, 띠별 운세, 2026 zodiac, year of birth animal, lucky number">
+
+    <!-- AdSense Verification & Account -->
+    <meta name="google-adsense-account" content="ca-pub-2256982043623627">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2256982043623627" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://timlikeanjimin.github.io/hijimin/zodiac.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="LottoSmart">
+    <meta property="og:title" content="Chinese Zodiac Fortune — Free Animal Sign & 2026 Reading">
+    <meta property="og:description" content="Find your Chinese zodiac animal and get your nature, today's fortune, 2026 outlook, and lucky number & color.">
+    <meta property="og:url" content="https://timlikeanjimin.github.io/hijimin/zodiac.html">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Chinese Zodiac Fortune — Free Reading">
+    <meta name="twitter:description" content="Your zodiac animal, today's fortune, 2026 outlook, and lucky number & color.">
+    <link rel="stylesheet" href="style.css?v=11">
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">LottoSmart</a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="fortune.html" data-i18n="nav-fortune">Fortune</a></li>
+                <li><a href="face.html" data-i18n="nav-face">Face Reading</a></li>
+                <li><a href="compatibility.html" data-i18n="nav-compat">Compatibility</a></li>
+                <li><a href="zodiac.html" data-i18n="nav-zodiac">Chinese Zodiac</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                <li><a href="privacy.html" data-i18n="nav-privacy">Privacy</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">KR</button>
+                    <button class="lang-btn" data-lang="zh">CN</button>
+                    <button class="lang-btn" data-lang="ja">JP</button>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        <main class="container">
+            <h1 data-i18n="zodiac-title">Chinese Zodiac Fortune</h1>
+            <p class="subtitle" data-i18n="zodiac-subtitle">Enter your birth year to find your zodiac animal and its fortune.</p>
+
+            <div class="fortune-form">
+                <div class="form-group">
+                    <label for="zodiac-year" data-i18n="zodiac-label-year">Birth year</label>
+                    <input type="number" id="zodiac-year" min="1920" max="2026" placeholder="1995">
+                </div>
+                <button id="zodiac-btn" class="submit-btn">
+                    <span data-i18n="zodiac-btn">See My Zodiac Fortune</span>
+                </button>
+            </div>
+
+            <div id="zodiac-result" class="fortune-result" hidden>
+                <button id="zodiac-share" class="cross-link" data-i18n="share-btn" style="border:none;cursor:pointer;margin-bottom:16px;">📸 Save / Share result image</button>
+
+                <div class="overall-score">
+                    <div id="zodiac-emoji" style="font-size:3.6rem;line-height:1;"></div>
+                    <div class="big-number" style="font-size:1.9rem;" id="zodiac-name"></div>
+                    <p class="summary-text" id="zodiac-trait"></p>
+                    <p class="privacy-note"><span data-i18n="zodiac-years-label">Birth years</span>: <span id="zodiac-years"></span></p>
+                </div>
+
+                <div class="fortune-card">
+                    <h3 data-i18n="zodiac-today-label">Today's Zodiac Fortune</h3>
+                    <div class="score-bar"><span id="zodiac-today-bar"></span></div>
+                    <p class="fortune-text" id="zodiac-today-text"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="zodiac-year-label">2026 Year Fortune</h3>
+                    <div class="score-bar"><span id="zodiac-year-bar"></span></div>
+                    <p class="fortune-text" id="zodiac-year-text"></p>
+                </div>
+
+                <div class="lucky-box">
+                    <div class="lucky-item">
+                        <span class="lucky-label" data-i18n="zodiac-number-label">Lucky Number</span>
+                        <span class="lucky-value" id="zodiac-number"></span>
+                    </div>
+                    <div class="lucky-item">
+                        <span class="lucky-label" data-i18n="zodiac-color-label">Lucky Color</span>
+                        <span class="lucky-value" id="zodiac-color"></span>
+                    </div>
+                </div>
+
+                <a href="index.html" class="cross-link" data-i18n="fortune-cross-link">Generate lottery numbers with your lucky number →</a>
+                <a href="fortune.html" class="cross-link" style="margin-top:10px;" data-i18n="index-fortune-cta">✨ See your free fortune for today →</a>
+            </div>
+        </main>
+
+        <section class="container content-section">
+            <h2 data-i18n="zodiac-info-title">About the Chinese Zodiac</h2>
+            <p data-i18n="zodiac-info-p">The Chinese zodiac assigns one of twelve animals to each birth year in a repeating 12-year cycle. Your animal is said to shape your personality and fortune. Enter your birth year to see your animal, its nature, today's reading, and your 2026 outlook.</p>
+        </section>
+
+        <section class="container content-section">
+            <h2 data-i18n="zodiac-disc-title">For Entertainment Only</h2>
+            <p data-i18n="zodiac-disc-p">This zodiac reading is for entertainment and self-reflection only and does not predict the actual future.</p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html" data-i18n="nav-home">Home</a>
+                <a href="fortune.html" data-i18n="nav-fortune">Fortune</a>
+                <a href="face.html" data-i18n="nav-face">Face Reading</a>
+                <a href="compatibility.html" data-i18n="nav-compat">Compatibility</a>
+                <a href="zodiac.html" data-i18n="nav-zodiac">Chinese Zodiac</a>
+                <a href="about.html" data-i18n="nav-about">About Us</a>
+                <a href="contact.html" data-i18n="nav-contact">Contact</a>
+                <a href="privacy.html" data-i18n="nav-privacy">Privacy Policy</a>
+            </div>
+            <p class="copyright" data-i18n="footer-copy">&copy; 2026 LottoSmart. All rights reserved.</p>
+            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;" data-i18n="zodiac-disc-p">This zodiac reading is for entertainment purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="main.js?v=12"></script>
+</body>
+</html>

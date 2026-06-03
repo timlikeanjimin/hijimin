@@ -100,9 +100,9 @@ const translations = {
         "premium-price-note": "One-time payment · instant full access",
         "premium-unlocked-badge": "✓ Payment complete — full report unlocked",
         "premium-info-title": "About This Report",
-        "premium-info-p": "The yearly summary and fortune by area are free to preview. The full report with all 12 monthly readings, lucky code, and overall advice unlocks permanently with a one-time payment.",
+        "premium-info-p": "Your full 2026 report — the yearly summary, all 12 monthly readings, lucky code, and overall advice — is currently free to read.",
         "premium-disc-title": "For Entertainment Only",
-        "premium-disc-p": "This report is for entertainment and self-reflection and does not predict the actual future. Refunds may be limited due to the nature of digital content.",
+        "premium-disc-p": "This report is for entertainment and self-reflection and does not predict the actual future.",
         "premium-config-missing": "The checkout link isn't set up yet. Please contact the site owner.",
         "hero-title": "Smart Lotto Number Generator",
         "hero-subtitle": "Generate your lucky numbers based on the last 100-draw statistics!",
@@ -262,9 +262,9 @@ const translations = {
         "premium-price-note": "1회 결제 · 즉시 전체 공개",
         "premium-unlocked-badge": "✓ 결제 완료 — 전체 리포트 열람 중",
         "premium-info-title": "리포트 안내",
-        "premium-info-p": "연간 종합 총평과 분야별 운세는 무료로 미리 보실 수 있고, 12개월 월별 운세·행운 코드·종합 조언이 담긴 전체 리포트는 1회 결제로 영구 열람됩니다.",
+        "premium-info-p": "2026 전체 리포트 — 연간 총평, 12개월 월별 운세, 행운 코드, 종합 조언 — 를 지금은 무료로 보실 수 있습니다.",
         "premium-disc-title": "재미로 보는 운세입니다",
-        "premium-disc-p": "이 리포트는 오락 및 자기 성찰용이며 실제 미래를 예측하지 않습니다. 디지털 콘텐츠 특성상 결제 후 환불은 제한될 수 있습니다.",
+        "premium-disc-p": "이 리포트는 오락 및 자기 성찰용이며 실제 미래를 예측하지 않습니다.",
         "premium-config-missing": "결제 링크가 아직 설정되지 않았습니다. 사이트 관리자에게 문의해 주세요.",
         "hero-title": "스마트 로또 번호 생성기",
         "hero-subtitle": "최근 100회차 당첨 통계를 기반으로 행운의 번호를 생성하세요!",
@@ -424,9 +424,9 @@ const translations = {
         "premium-price-note": "一次性付款 · 立即全面开放",
         "premium-unlocked-badge": "✓ 支付完成 —— 完整报告已解锁",
         "premium-info-title": "关于本报告",
-        "premium-info-p": "年度总评与分领域运势可免费预览。包含全部12个月运势、幸运密码与综合建议的完整报告，一次付款即可永久查看。",
+        "premium-info-p": "您的 2026 完整报告——年度总评、全部12个月运势、幸运密码与综合建议——目前可免费阅读。",
         "premium-disc-title": "仅供娱乐",
-        "premium-disc-p": "本报告仅供娱乐与自我反思，不预测真实未来。因数字内容性质，付款后退款可能受限。",
+        "premium-disc-p": "本报告仅供娱乐与自我反思，不预测真实未来。",
         "premium-config-missing": "结账链接尚未设置，请联系网站管理员。",
         "hero-title": "智能乐透号码生成器",
         "hero-subtitle": "根据最近100期的开奖统计数据生成您的幸运号码！",
@@ -586,9 +586,9 @@ const translations = {
         "premium-price-note": "一回の支払い · すぐに全公開",
         "premium-unlocked-badge": "✓ 支払い完了 — フルレポート閲覧中",
         "premium-info-title": "レポートについて",
-        "premium-info-p": "年間総評と分野別運勢は無料でプレビューできます。12か月分の月別運勢・ラッキーコード・総合アドバイスを含むフルレポートは、一回の支払いで永久に閲覧できます。",
+        "premium-info-p": "2026年のフルレポート（年間総評・12か月の月別運勢・ラッキーコード・総合アドバイス）は、現在無料でご覧いただけます。",
         "premium-disc-title": "娯楽目的のみ",
-        "premium-disc-p": "このレポートは娯楽・自己省察用で、実際の未来を予測しません。デジタルコンテンツの性質上、支払い後の返金は制限される場合があります。",
+        "premium-disc-p": "このレポートは娯楽・自己省察用で、実際の未来を予測しません。",
         "premium-config-missing": "決済リンクがまだ設定されていません。サイト管理者にお問い合わせください。",
         "hero-title": "スマートロト番号ジェネレーター",
         "hero-subtitle": "直近100回の抽選統計に基づいたラッキーナンバーを生成します！",
@@ -875,6 +875,9 @@ const compatPools = {
 //        3) Paste that Payment Link URL below.
 const PREMIUM_CHECKOUT_URL = 'https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK';
 const PREMIUM_UNLOCK_TOKEN = 'lucky2026';
+// While there is no payment provider set up, the full report is free for everyone.
+// Flip this to false (and set PREMIUM_CHECKOUT_URL) to re-enable the paywall later.
+const PREMIUM_FREE_FOR_NOW = true;
 
 const premiumPools = {
     en: {
@@ -1341,7 +1344,12 @@ function isPremiumUnlocked() {
 
 function applyPremiumLock() {
     const locked = document.querySelector('#premium-locked');
-    if (locked) locked.classList.toggle('unlocked', isPremiumUnlocked());
+    if (locked) locked.classList.toggle('unlocked', PREMIUM_FREE_FOR_NOW || isPremiumUnlocked());
+    // In free-for-now mode there is no payment, so hide the "payment complete" badge.
+    if (PREMIUM_FREE_FOR_NOW) {
+        const badge = document.querySelector('#premium-badge');
+        if (badge) badge.style.display = 'none';
+    }
 }
 
 function renderPremium() {

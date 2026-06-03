@@ -440,3 +440,85 @@ footer {
     line-height: 1.6;
     font-weight: 600;
 }
+
+/* ===== Mobile / Responsive ===== */
+/* Prevent iOS from auto-resizing text on orientation change. */
+html { -webkit-text-size-adjust: 100%; }
+
+/* Tablets and phones: header becomes static so a wrapped nav can never
+   overlap the page content, and spacing tightens up. */
+@media (max-width: 768px) {
+    header {
+        position: static;
+    }
+    body {
+        padding-top: 0;
+    }
+    .nav-container {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+    }
+    .nav-links {
+        justify-content: center;
+        gap: 8px 14px;
+    }
+    .nav-links a {
+        font-size: 0.85rem;
+    }
+    .main-wrapper {
+        padding: 14px;
+        gap: 20px;
+    }
+    .container {
+        padding: 1.6rem 1.3rem;
+        border-radius: 18px;
+    }
+    h1 {
+        font-size: 1.6rem;
+    }
+    .subtitle {
+        font-size: 0.95rem;
+    }
+    /* 16px inputs stop mobile Safari from zooming in on focus. */
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .upload-input {
+        font-size: 16px;
+    }
+}
+
+/* Small phones: tighten further and shrink the lotto balls / big score. */
+@media (max-width: 420px) {
+    .container {
+        padding: 1.3rem 1rem;
+    }
+    .nav-links {
+        gap: 6px 10px;
+    }
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+    .lotto-number {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+    }
+    .lotto-numbers,
+    .stats-list {
+        gap: 7px;
+    }
+    .overall-score .big-number {
+        font-size: 2.2rem;
+    }
+    .lucky-item {
+        min-width: 72px;
+    }
+    .lucky-value {
+        font-size: 1.1rem;
+    }
+    footer {
+        padding: 30px 16px;
+    }
+}

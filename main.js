@@ -75,6 +75,8 @@ const translations = {
         "compat-info-p2": "We score four areas and give you a short, encouraging note for each, plus an overall match score to spark a fun conversation between you and your partner.",
         "compat-disc-title": "For Entertainment Only",
         "compat-disc-p": "This compatibility reading is for entertainment purposes only and is not relationship, psychological, or professional advice.",
+        "share-btn": "📸 Save / Share result image",
+        "share-saved": "Image saved! Share it on your favorite app.",
         "hero-title": "Smart Lotto Number Generator",
         "hero-subtitle": "Generate your lucky numbers based on the last 100-draw statistics!",
         "gen-btn": "Generate Smart Numbers",
@@ -208,6 +210,8 @@ const translations = {
         "compat-info-p2": "네 영역을 점수화하고 각각 짧은 응원의 한마디를 드리며, 총점으로 두 분 사이의 즐거운 대화거리를 만들어 드립니다.",
         "compat-disc-title": "재미로 보는 궁합입니다",
         "compat-disc-p": "이 궁합은 오락 목적으로만 제공되며, 관계·심리·전문 상담이 아닙니다.",
+        "share-btn": "📸 결과 이미지로 저장 · 공유하기",
+        "share-saved": "이미지가 저장되었어요! 원하는 앱에 공유해 보세요.",
         "hero-title": "스마트 로또 번호 생성기",
         "hero-subtitle": "최근 100회차 당첨 통계를 기반으로 행운의 번호를 생성하세요!",
         "gen-btn": "스마트 번호 생성하기",
@@ -341,6 +345,8 @@ const translations = {
         "compat-info-p2": "我们为四个方面打分并各给一句简短的鼓励语，再加上一个总分，为你和对方制造有趣的话题。",
         "compat-disc-title": "仅供娱乐",
         "compat-disc-p": "本配对仅供娱乐之用，并非关系、心理或专业建议。",
+        "share-btn": "📸 保存 · 分享结果图",
+        "share-saved": "图片已保存！快分享到你喜欢的应用吧。",
         "hero-title": "智能乐透号码生成器",
         "hero-subtitle": "根据最近100期的开奖统计数据生成您的幸运号码！",
         "gen-btn": "生成智能号码",
@@ -474,6 +480,8 @@ const translations = {
         "compat-info-p2": "4つの領域を点数化し、それぞれに短い応援の一言を添え、総合スコアで二人の楽しい会話のきっかけを作ります。",
         "compat-disc-title": "娯楽目的のみ",
         "compat-disc-p": "この相性占いは娯楽目的のみで、関係・心理・専門的な助言ではありません。",
+        "share-btn": "📸 結果を画像で保存・シェア",
+        "share-saved": "画像を保存しました！好きなアプリでシェアしてね。",
         "hero-title": "スマートロト番号ジェネレーター",
         "hero-subtitle": "直近100回の抽選統計に基づいたラッキーナンバーを生成します！",
         "gen-btn": "スマート番号を生成",
@@ -826,6 +834,20 @@ function renderFortune() {
             dateEl.textContent = dateStr;
         }
     }
+
+    window.__fortuneShare = {
+        title: (translations[lang] && translations[lang]['fortune-title']) || "Today's Fortune",
+        subtitle: dateEl ? dateEl.textContent : '',
+        bigValue: luckyNumber,
+        bigLabel: (translations[lang] && translations[lang]['fortune-lucky-number']) || 'Lucky Number',
+        summary: cats.overall.text,
+        rows: [
+            { label: translations[lang]['fortune-overall'], score: cats.overall.score },
+            { label: translations[lang]['fortune-money'], score: cats.money.score },
+            { label: translations[lang]['fortune-love'], score: cats.love.score },
+            { label: translations[lang]['fortune-health'], score: cats.health.score }
+        ]
+    };
 }
 
 function initFortuneLogic() {
@@ -847,6 +869,8 @@ function initFortuneLogic() {
         result.hidden = false;
         result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
+
+    attachShare('fortune-share', () => window.__fortuneShare, 'my-fortune');
 }
 
 // Hash raw bytes (used for deriving a stable seed from an uploaded photo).
@@ -882,9 +906,11 @@ function renderFace() {
 
     const keys = ['forehead', 'eyes', 'nose', 'mouth', 'jaw'];
     let total = 0;
+    const shareRows = [];
     keys.forEach(k => {
         const r = feat(k, pool[k]);
         total += r.score;
+        shareRows.push({ label: translations[lang]['face-feature-' + k], score: r.score });
         const bar = document.querySelector('#face-score-' + k);
         const txt = document.querySelector('#face-text-' + k);
         if (bar) bar.style.width = r.score + '%';
@@ -896,11 +922,21 @@ function renderFace() {
     const ovNum = document.querySelector('#face-overall-num');
     if (ovBar) ovBar.style.width = overall + '%';
     if (ovNum) ovNum.textContent = overall;
+    const summaryText = pool.summary[tierIndex(overall, 70, 80, 90)];
     const sum = document.querySelector('#face-summary-text');
-    if (sum) sum.textContent = pool.summary[tierIndex(overall, 70, 80, 90)];
+    if (sum) sum.textContent = summaryText;
 
     const img = document.querySelector('#face-preview');
     if (img && window.__face.preview) { img.src = window.__face.preview; img.hidden = false; }
+
+    window.__faceShare = {
+        title: translations[lang]['face-title'],
+        subtitle: '',
+        bigValue: overall,
+        bigLabel: translations[lang]['face-overall-label'],
+        summary: summaryText,
+        rows: shareRows
+    };
 }
 
 function initFaceLogic() {
@@ -930,6 +966,8 @@ function initFaceLogic() {
         };
         byteReader.readAsArrayBuffer(file);
     });
+
+    attachShare('face-share', () => window.__faceShare, 'my-face-reading');
 }
 
 function renderCompat() {
@@ -948,9 +986,11 @@ function renderCompat() {
 
     const keys = ['personality', 'romance', 'money', 'future'];
     let total = 0;
+    const shareRows = [];
     keys.forEach(k => {
         const r = sub(k, pool[k]);
         total += r.score;
+        shareRows.push({ label: translations[lang]['compat-sub-' + k], score: r.score });
         const bar = document.querySelector('#compat-score-' + k);
         const txt = document.querySelector('#compat-text-' + k);
         if (bar) bar.style.width = r.score + '%';
@@ -962,8 +1002,18 @@ function renderCompat() {
     const ovNum = document.querySelector('#compat-overall-num');
     if (ovBar) ovBar.style.width = overall + '%';
     if (ovNum) ovNum.textContent = overall;
+    const summaryText = pool.summary[tierIndex(overall, 60, 75, 88)];
     const sum = document.querySelector('#compat-summary-text');
-    if (sum) sum.textContent = pool.summary[tierIndex(overall, 60, 75, 88)];
+    if (sum) sum.textContent = summaryText;
+
+    window.__compatShare = {
+        title: translations[lang]['compat-title'],
+        subtitle: '',
+        bigValue: overall,
+        bigLabel: translations[lang]['compat-overall-label'],
+        summary: summaryText,
+        rows: shareRows
+    };
 }
 
 function initCompatLogic() {
@@ -985,6 +1035,136 @@ function initCompatLogic() {
         renderCompat();
         result.hidden = false;
         result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    attachShare('compat-share', () => window.__compatShare, 'our-compatibility');
+}
+
+// ===== Shareable result card (canvas -> native share / download) =====
+function shareRoundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+}
+
+function shareWrapText(ctx, text, cx, y, maxWidth, lineHeight) {
+    const words = String(text).split(/\s+/);
+    let line = '';
+    const lines = [];
+    for (let i = 0; i < words.length; i++) {
+        const test = line ? line + ' ' + words[i] : words[i];
+        if (ctx.measureText(test).width > maxWidth && line) {
+            lines.push(line);
+            line = words[i];
+        } else {
+            line = test;
+        }
+    }
+    if (line) lines.push(line);
+    lines.forEach((l, i) => ctx.fillText(l, cx, y + i * lineHeight));
+    return y + lines.length * lineHeight;
+}
+
+function buildShareCanvas(data) {
+    const W = 1080, H = 1400;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, '#1b3a5b');
+    bg.addColorStop(1, '#0a1a29');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.textAlign = 'center';
+
+    // Title
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '700 70px Poppins, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
+    ctx.fillText(data.title, W / 2, 165);
+
+    // Subtitle (date etc.)
+    if (data.subtitle) {
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.font = '400 38px Poppins, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
+        ctx.fillText(data.subtitle, W / 2, 225);
+    }
+
+    // Big value
+    ctx.fillStyle = '#ffd86b';
+    ctx.font = '700 190px Poppins, sans-serif';
+    ctx.fillText(data.bigValue, W / 2, 470);
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.font = '500 42px Poppins, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
+    ctx.fillText(data.bigLabel, W / 2, 540);
+
+    // Summary (wrapped)
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '600 46px Poppins, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
+    let y = shareWrapText(ctx, data.summary, W / 2, 640, 880, 60) + 40;
+
+    // Rows: label (left) + score (right) + bar
+    const left = 130, right = W - 130, barW = right - left;
+    ctx.font = '600 40px Poppins, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
+    (data.rows || []).forEach(row => {
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(row.label, left, y);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#ffd86b';
+        ctx.fillText(row.score + '', right, y);
+        // bar
+        ctx.fillStyle = 'rgba(255,255,255,0.18)';
+        shareRoundRect(ctx, left, y + 18, barW, 16, 8); ctx.fill();
+        ctx.fillStyle = '#7fb0e0';
+        shareRoundRect(ctx, left, y + 18, barW * Math.max(0, Math.min(100, row.score)) / 100, 16, 8); ctx.fill();
+        y += 96;
+    });
+
+    // Footer watermark
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.font = '600 36px Poppins, sans-serif';
+    ctx.fillText('🔮 timlikeanjimin.github.io/hijimin', W / 2, H - 70);
+
+    return canvas;
+}
+
+function shareReading(data, filenameBase) {
+    const canvas = buildShareCanvas(data);
+    const lang = localStorage.getItem('lang') || 'en';
+    const shareText = data.title + ' | timlikeanjimin.github.io/hijimin';
+    canvas.toBlob(function (blob) {
+        if (!blob) return;
+        const file = new File([blob], filenameBase + '.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], title: data.title, text: shareText }).catch(function () { /* user cancelled */ });
+            return;
+        }
+        // Fallback: download the image.
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filenameBase + '.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        alert((translations[lang] && translations[lang]['share-saved']) || 'Image saved!');
+    }, 'image/png');
+}
+
+function attachShare(buttonId, getData, filenameBase) {
+    const btn = document.querySelector('#' + buttonId);
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+        const data = getData();
+        if (data) shareReading(data, filenameBase);
     });
 }
 

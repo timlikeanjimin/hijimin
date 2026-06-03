@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQN2B35JF5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WQN2B35JF5');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "wwnsjgqbpl");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Full Fortune Report - Yearly & Monthly Premium Reading</title>
+    <meta name="description" content="Your complete 2026 fortune report: yearly summary, fortune by area, all 12 monthly readings, lucky code, and overall advice. Free preview, full report with a one-time purchase.">
+    <meta name="keywords" content="2026 fortune report, yearly fortune, monthly horoscope, premium saju, 2026 신년운세, 종합운세 리포트">
+
+    <!-- AdSense Verification & Account -->
+    <meta name="google-adsense-account" content="ca-pub-2256982043623627">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2256982043623627" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=11">
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">LottoSmart</a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="fortune.html" data-i18n="nav-fortune">Fortune</a></li>
+                <li><a href="face.html" data-i18n="nav-face">Face Reading</a></li>
+                <li><a href="compatibility.html" data-i18n="nav-compat">Compatibility</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                <li><a href="privacy.html" data-i18n="nav-privacy">Privacy</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">KR</button>
+                    <button class="lang-btn" data-lang="zh">CN</button>
+                    <button class="lang-btn" data-lang="ja">JP</button>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        <main class="container">
+            <h1 data-i18n="premium-title">2026 Full Fortune Report</h1>
+            <p class="subtitle" data-i18n="premium-subtitle">Enter your birth date for a complete yearly + monthly fortune in one place.</p>
+
+            <div class="fortune-form">
+                <div class="form-group">
+                    <label for="premium-birth" data-i18n="fortune-label-birth">Date of Birth</label>
+                    <input type="date" id="premium-birth" min="1920-01-01" max="2026-12-31">
+                </div>
+                <button id="premium-btn" class="submit-btn">
+                    <span data-i18n="premium-btn">Generate Report</span>
+                </button>
+            </div>
+
+            <div id="premium-result" class="fortune-result" hidden>
+                <!-- FREE: yearly summary -->
+                <div class="overall-score">
+                    <div class="overall-label" data-i18n="premium-year-label">2026 Overall Summary</div>
+                    <div class="big-number"><span id="premium-year-num">0</span><span>/100</span></div>
+                    <p class="summary-text" id="premium-year-text"></p>
+                </div>
+
+                <!-- FREE: fortune by area -->
+                <h2 class="section-title" data-i18n="premium-fields-title">Yearly Fortune by Area</h2>
+                <div class="fortune-card">
+                    <h3 data-i18n="premium-field-overall">Overall</h3>
+                    <div class="score-bar"><span id="premium-overall-bar"></span></div>
+                    <p class="fortune-text" id="premium-overall-text"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="premium-field-money">Money</h3>
+                    <div class="score-bar"><span id="premium-money-bar"></span></div>
+                    <p class="fortune-text" id="premium-money-text"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="premium-field-love">Love</h3>
+                    <div class="score-bar"><span id="premium-love-bar"></span></div>
+                    <p class="fortune-text" id="premium-love-text"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="premium-field-career">Career</h3>
+                    <div class="score-bar"><span id="premium-career-bar"></span></div>
+                    <p class="fortune-text" id="premium-career-text"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="premium-field-health">Health</h3>
+                    <div class="score-bar"><span id="premium-health-bar"></span></div>
+                    <p class="fortune-text" id="premium-health-text"></p>
+                </div>
+
+                <!-- LOCKED: monthly + lucky + advice -->
+                <div id="premium-locked" class="premium-locked">
+                    <div class="premium-content">
+                        <h2 class="section-title" data-i18n="premium-months-title">Monthly Fortune (Jan–Dec)</h2>
+                        <div id="premium-months"></div>
+
+                        <h2 class="section-title" data-i18n="premium-lucky-title">This Year's Lucky Code</h2>
+                        <div class="lucky-box">
+                            <div class="lucky-item">
+                                <span class="lucky-label" data-i18n="premium-keyword-label">Lucky Keyword</span>
+                                <span class="lucky-value" id="premium-keyword"></span>
+                            </div>
+                            <div class="lucky-item">
+                                <span class="lucky-label" data-i18n="premium-color-label">Lucky Color</span>
+                                <span class="lucky-value" id="premium-color"></span>
+                            </div>
+                            <div class="lucky-item">
+                                <span class="lucky-label" data-i18n="premium-number-label">Lucky Number</span>
+                                <span class="lucky-value" id="premium-number"></span>
+                            </div>
+                        </div>
+
+                        <h2 class="section-title" data-i18n="premium-advice-title">Overall Advice</h2>
+                        <div class="fortune-card">
+                            <p class="fortune-text" id="premium-advice-text"></p>
+                        </div>
+                    </div>
+
+                    <div class="premium-paywall">
+                        <h3 data-i18n="premium-locked-title">🔒 Full Report Locked</h3>
+                        <p data-i18n="premium-locked-desc">Unlock all 12 monthly readings, your lucky code, and the overall advice.</p>
+                        <button id="premium-buy" class="submit-btn" style="max-width:320px;" data-i18n="premium-buy-btn">Unlock full report — ₩2,900</button>
+                        <p class="price-note" data-i18n="premium-price-note">One-time payment · instant full access</p>
+                    </div>
+                </div>
+                <div class="premium-badge" id="premium-badge" data-i18n="premium-unlocked-badge">✓ Payment complete — full report unlocked</div>
+            </div>
+        </main>
+
+        <section class="container content-section">
+            <h2 data-i18n="premium-info-title">About This Report</h2>
+            <p data-i18n="premium-info-p">The yearly summary and fortune by area are free to preview. The full report with all 12 monthly readings, lucky code, and overall advice unlocks permanently with a one-time payment.</p>
+        </section>
+
+        <section class="container content-section">
+            <h2 data-i18n="premium-disc-title">For Entertainment Only</h2>
+            <p data-i18n="premium-disc-p">This report is for entertainment and self-reflection and does not predict the actual future. Refunds may be limited due to the nature of digital content.</p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html" data-i18n="nav-home">Home</a>
+                <a href="fortune.html" data-i18n="nav-fortune">Fortune</a>
+                <a href="face.html" data-i18n="nav-face">Face Reading</a>
+                <a href="compatibility.html" data-i18n="nav-compat">Compatibility</a>
+                <a href="about.html" data-i18n="nav-about">About Us</a>
+                <a href="contact.html" data-i18n="nav-contact">Contact</a>
+                <a href="privacy.html" data-i18n="nav-privacy">Privacy Policy</a>
+            </div>
+            <p class="copyright" data-i18n="footer-copy">&copy; 2026 LottoSmart. All rights reserved.</p>
+            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;" data-i18n="premium-disc-p">This report is for entertainment purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="main.js?v=10"></script>
+</body>
+</html>

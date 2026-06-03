@@ -77,6 +77,33 @@ const translations = {
         "compat-disc-p": "This compatibility reading is for entertainment purposes only and is not relationship, psychological, or professional advice.",
         "share-btn": "📸 Save / Share result image",
         "share-saved": "Image saved! Share it on your favorite app.",
+        "premium-cta": "🌟 See the 2026 Full Fortune Report →",
+        "premium-title": "2026 Full Fortune Report",
+        "premium-subtitle": "Enter your birth date for a complete yearly + monthly fortune in one place.",
+        "premium-btn": "Generate Report",
+        "premium-year-label": "2026 Overall Summary",
+        "premium-fields-title": "Yearly Fortune by Area",
+        "premium-field-overall": "Overall",
+        "premium-field-money": "Money",
+        "premium-field-love": "Love",
+        "premium-field-career": "Career",
+        "premium-field-health": "Health",
+        "premium-months-title": "Monthly Fortune (Jan–Dec)",
+        "premium-lucky-title": "This Year's Lucky Code",
+        "premium-keyword-label": "Lucky Keyword",
+        "premium-color-label": "Lucky Color",
+        "premium-number-label": "Lucky Number",
+        "premium-advice-title": "Overall Advice",
+        "premium-locked-title": "🔒 Full Report Locked",
+        "premium-locked-desc": "Unlock all 12 monthly readings, your lucky code, and the overall advice.",
+        "premium-buy-btn": "Unlock full report — ₩2,900",
+        "premium-price-note": "One-time payment · instant full access",
+        "premium-unlocked-badge": "✓ Payment complete — full report unlocked",
+        "premium-info-title": "About This Report",
+        "premium-info-p": "The yearly summary and fortune by area are free to preview. The full report with all 12 monthly readings, lucky code, and overall advice unlocks permanently with a one-time payment.",
+        "premium-disc-title": "For Entertainment Only",
+        "premium-disc-p": "This report is for entertainment and self-reflection and does not predict the actual future. Refunds may be limited due to the nature of digital content.",
+        "premium-config-missing": "The checkout link isn't set up yet. Please contact the site owner.",
         "hero-title": "Smart Lotto Number Generator",
         "hero-subtitle": "Generate your lucky numbers based on the last 100-draw statistics!",
         "gen-btn": "Generate Smart Numbers",
@@ -212,6 +239,33 @@ const translations = {
         "compat-disc-p": "이 궁합은 오락 목적으로만 제공되며, 관계·심리·전문 상담이 아닙니다.",
         "share-btn": "📸 결과 이미지로 저장 · 공유하기",
         "share-saved": "이미지가 저장되었어요! 원하는 앱에 공유해 보세요.",
+        "premium-cta": "🌟 2026 종합운세 리포트 보기 →",
+        "premium-title": "2026 종합운세 리포트",
+        "premium-subtitle": "생년월일을 넣으면 올해의 연간·월별 운세를 한 번에 정리해 드립니다.",
+        "premium-btn": "리포트 생성하기",
+        "premium-year-label": "2026년 종합 총평",
+        "premium-fields-title": "분야별 연간 운세",
+        "premium-field-overall": "총운",
+        "premium-field-money": "금전운",
+        "premium-field-love": "애정운",
+        "premium-field-career": "직업운",
+        "premium-field-health": "건강운",
+        "premium-months-title": "월별 운세 (1~12월)",
+        "premium-lucky-title": "올해의 행운 코드",
+        "premium-keyword-label": "행운 키워드",
+        "premium-color-label": "행운 색",
+        "premium-number-label": "행운 숫자",
+        "premium-advice-title": "종합 조언",
+        "premium-locked-title": "🔒 전체 리포트 잠금",
+        "premium-locked-desc": "12개월 월별 운세 · 행운 코드 · 종합 조언을 모두 확인하세요.",
+        "premium-buy-btn": "₩2,900 결제하고 전체 보기",
+        "premium-price-note": "1회 결제 · 즉시 전체 공개",
+        "premium-unlocked-badge": "✓ 결제 완료 — 전체 리포트 열람 중",
+        "premium-info-title": "리포트 안내",
+        "premium-info-p": "연간 종합 총평과 분야별 운세는 무료로 미리 보실 수 있고, 12개월 월별 운세·행운 코드·종합 조언이 담긴 전체 리포트는 1회 결제로 영구 열람됩니다.",
+        "premium-disc-title": "재미로 보는 운세입니다",
+        "premium-disc-p": "이 리포트는 오락 및 자기 성찰용이며 실제 미래를 예측하지 않습니다. 디지털 콘텐츠 특성상 결제 후 환불은 제한될 수 있습니다.",
+        "premium-config-missing": "결제 링크가 아직 설정되지 않았습니다. 사이트 관리자에게 문의해 주세요.",
         "hero-title": "스마트 로또 번호 생성기",
         "hero-subtitle": "최근 100회차 당첨 통계를 기반으로 행운의 번호를 생성하세요!",
         "gen-btn": "스마트 번호 생성하기",
@@ -347,6 +401,33 @@ const translations = {
         "compat-disc-p": "本配对仅供娱乐之用，并非关系、心理或专业建议。",
         "share-btn": "📸 保存 · 分享结果图",
         "share-saved": "图片已保存！快分享到你喜欢的应用吧。",
+        "premium-cta": "🌟 查看 2026 综合运势报告 →",
+        "premium-title": "2026 综合运势报告",
+        "premium-subtitle": "输入出生日期，一次性整理今年的年度与每月运势。",
+        "premium-btn": "生成报告",
+        "premium-year-label": "2026 综合总评",
+        "premium-fields-title": "分领域年度运势",
+        "premium-field-overall": "综合运",
+        "premium-field-money": "财运",
+        "premium-field-love": "爱情运",
+        "premium-field-career": "事业运",
+        "premium-field-health": "健康运",
+        "premium-months-title": "每月运势（1–12月）",
+        "premium-lucky-title": "今年的幸运密码",
+        "premium-keyword-label": "幸运关键词",
+        "premium-color-label": "幸运颜色",
+        "premium-number-label": "幸运数字",
+        "premium-advice-title": "综合建议",
+        "premium-locked-title": "🔒 完整报告已锁定",
+        "premium-locked-desc": "解锁全部12个月运势、幸运密码与综合建议。",
+        "premium-buy-btn": "₩2,900 解锁完整报告",
+        "premium-price-note": "一次性付款 · 立即全面开放",
+        "premium-unlocked-badge": "✓ 支付完成 —— 完整报告已解锁",
+        "premium-info-title": "关于本报告",
+        "premium-info-p": "年度总评与分领域运势可免费预览。包含全部12个月运势、幸运密码与综合建议的完整报告，一次付款即可永久查看。",
+        "premium-disc-title": "仅供娱乐",
+        "premium-disc-p": "本报告仅供娱乐与自我反思，不预测真实未来。因数字内容性质，付款后退款可能受限。",
+        "premium-config-missing": "结账链接尚未设置，请联系网站管理员。",
         "hero-title": "智能乐透号码生成器",
         "hero-subtitle": "根据最近100期的开奖统计数据生成您的幸运号码！",
         "gen-btn": "生成智能号码",
@@ -482,6 +563,33 @@ const translations = {
         "compat-disc-p": "この相性占いは娯楽目的のみで、関係・心理・専門的な助言ではありません。",
         "share-btn": "📸 結果を画像で保存・シェア",
         "share-saved": "画像を保存しました！好きなアプリでシェアしてね。",
+        "premium-cta": "🌟 2026 総合運勢レポートを見る →",
+        "premium-title": "2026 総合運勢レポート",
+        "premium-subtitle": "生年月日を入れると、今年の年間・月別運勢をまとめてお届けします。",
+        "premium-btn": "レポート生成",
+        "premium-year-label": "2026年 総合総評",
+        "premium-fields-title": "分野別 年間運勢",
+        "premium-field-overall": "総合運",
+        "premium-field-money": "金運",
+        "premium-field-love": "恋愛運",
+        "premium-field-career": "仕事運",
+        "premium-field-health": "健康運",
+        "premium-months-title": "月別運勢（1〜12月）",
+        "premium-lucky-title": "今年のラッキーコード",
+        "premium-keyword-label": "ラッキーキーワード",
+        "premium-color-label": "ラッキーカラー",
+        "premium-number-label": "ラッキーナンバー",
+        "premium-advice-title": "総合アドバイス",
+        "premium-locked-title": "🔒 フルレポートはロック中",
+        "premium-locked-desc": "12か月分の月別運勢・ラッキーコード・総合アドバイスをすべて解放。",
+        "premium-buy-btn": "₩2,900 でフルレポート解放",
+        "premium-price-note": "一回の支払い · すぐに全公開",
+        "premium-unlocked-badge": "✓ 支払い完了 — フルレポート閲覧中",
+        "premium-info-title": "レポートについて",
+        "premium-info-p": "年間総評と分野別運勢は無料でプレビューできます。12か月分の月別運勢・ラッキーコード・総合アドバイスを含むフルレポートは、一回の支払いで永久に閲覧できます。",
+        "premium-disc-title": "娯楽目的のみ",
+        "premium-disc-p": "このレポートは娯楽・自己省察用で、実際の未来を予測しません。デジタルコンテンツの性質上、支払い後の返金は制限される場合があります。",
+        "premium-config-missing": "決済リンクがまだ設定されていません。サイト管理者にお問い合わせください。",
         "hero-title": "スマートロト番号ジェネレーター",
         "hero-subtitle": "直近100回の抽選統計に基づいたラッキーナンバーを生成します！",
         "gen-btn": "スマート番号を生成",
@@ -757,6 +865,65 @@ const compatPools = {
         money: ["金銭感覚が合い、共に貯め育てるチームです。", "消費スタイルは違っても、一緒なら均衡が取れます。", "共通の野心で、目標が同じ方向を向きます。", "お金の話を率直にすれば、共に栄えます。"],
         future: ["年々強くなる、有望な長期の縁です。", "土台が堅く、長く続く絆です。", "努力すれば、二人の未来は明るく安定します。", "信頼を育み続ければ、前途は大きく開けます。"],
         summary: ["丁寧さが要る関係 —— けれど真心の努力が花を咲かせます。", "温かく相性の良い縁 —— 育てれば着実に深まります。", "素晴らしい相性 —— 互いの最高を引き出す仲です。", "稀な運命の相手 —— 今の縁を大切に。"]
+    }
+};
+
+// ===== Premium report (single purchase via Stripe Payment Link) =====
+// SETUP: 1) Create a Stripe Payment Link for the report (e.g. ₩2,900).
+//        2) Set its "after payment" redirect to:
+//           https://timlikeanjimin.github.io/hijimin/premium.html?unlock=lucky2026
+//        3) Paste that Payment Link URL below.
+const PREMIUM_CHECKOUT_URL = 'https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK';
+const PREMIUM_UNLOCK_TOKEN = 'lucky2026';
+
+const premiumPools = {
+    en: {
+        yearIntro: ["2026 is a year of building. Lay strong foundations now and the second half rewards you.", "A balanced year — steady effort turns chances into reality.", "A rising year — opportunities arrive in a row for the prepared.", "A breakthrough year — move with confidence and reap big results."],
+        overall: ["Steady growth within stability is expected.", "Winds of change open new doors.", "Good people bring helpful support your way."],
+        money: ["Wealth builds up steadily.", "Unexpected side income may appear.", "Big spending favors the second half over the first."],
+        love: ["Your circle of connections widens.", "Existing bonds grow deeper.", "Honest expression attracts love."],
+        career: ["Your effort is recognized and secures your place.", "New challenges widen your path.", "Collaboration brings strong results."],
+        health: ["A regular routine keeps your energy up.", "Avoid overwork and your health stays good.", "Care for your mind and the body follows."],
+        months: ["Good energy flows into new beginnings.", "Patience is needed, but it ends well.", "Happy news comes from relationships.", "Money flow becomes smooth.", "A time to mind health and rest.", "An unexpected opportunity knocks."],
+        advice: ["This year's keyword is 'consistency' — small habits build big luck.", "Balance, not greed, invites fortune.", "What you give comes back as greater blessings."],
+        keywords: ["Growth", "Bonds", "Wealth", "Challenge", "Stability", "Health", "Harvest", "Change"],
+        monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    },
+    ko: {
+        yearIntro: ["2026년은 다지는 해입니다. 서두르기보다 기초를 단단히 하면 후반에 빛을 봅니다.", "균형 잡힌 한 해입니다. 꾸준함이 기회를 현실로 바꿔줍니다.", "상승 흐름의 해입니다. 준비된 만큼 좋은 기회가 연달아 찾아옵니다.", "도약의 해입니다. 자신감을 갖고 움직이면 큰 결실을 맺습니다."],
+        overall: ["전반적으로 안정 속 성장이 기대됩니다.", "변화의 바람이 새로운 문을 엽니다.", "인복이 좋아 귀인의 도움을 받습니다."],
+        money: ["재물운이 차곡차곡 쌓이는 흐름입니다.", "뜻밖의 부수입 기회가 보입니다.", "큰 지출은 상반기보다 하반기가 유리합니다."],
+        love: ["인연의 폭이 넓어지는 해입니다.", "기존 관계가 더 깊어집니다.", "솔직한 표현이 사랑을 끌어당깁니다."],
+        career: ["노력이 인정받아 자리를 굳힙니다.", "새로운 도전이 길을 넓혀줍니다.", "협업에서 큰 성과가 납니다."],
+        health: ["규칙적인 생활이 활력을 지켜줍니다.", "과로만 피하면 건강은 양호합니다.", "마음 건강을 챙기면 몸도 따라옵니다."],
+        months: ["새로운 시작에 좋은 기운이 흐릅니다.", "인내가 필요하지만 끝이 좋습니다.", "대인관계에서 기쁜 소식이 옵니다.", "금전 흐름이 원활해집니다.", "건강과 휴식에 신경 쓸 시기입니다.", "뜻밖의 기회가 문을 두드립니다."],
+        advice: ["올해의 키워드는 '꾸준함'입니다. 작은 습관이 큰 운을 만듭니다.", "무리한 욕심보다 균형이 행운을 부릅니다.", "주변에 베푼 만큼 더 큰 복으로 돌아옵니다."],
+        keywords: ["성장", "인연", "재물", "도전", "안정", "건강", "결실", "변화"],
+        monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+    },
+    zh: {
+        yearIntro: ["2026 是夯实根基的一年。先打牢基础，下半年自会迎来回报。", "平衡的一年——稳健的努力把机会变成现实。", "上升的一年——有准备的人会迎来接连的好机会。", "飞跃的一年——带着自信行动，将收获丰硕成果。"],
+        overall: ["总体可期稳中有进。", "变化之风开启新门。", "贵人相助，人缘极佳。"],
+        money: ["财运稳步积累。", "或有意外的额外收入。", "大额支出下半年比上半年更有利。"],
+        love: ["缘分的圈子不断扩大。", "既有关系更加深厚。", "坦诚的表达会吸引爱情。"],
+        career: ["努力获得认可，稳固地位。", "新的挑战拓宽道路。", "合作带来亮眼成果。"],
+        health: ["规律生活守护活力。", "只要不过劳，健康良好。", "照顾好心理，身体随之向好。"],
+        months: ["新的开始有好气运流动。", "需要耐心，但结局美好。", "人际关系传来喜讯。", "金钱流动变得顺畅。", "该多关注健康与休息。", "意外的机会前来敲门。"],
+        advice: ["今年的关键词是‘坚持’——小习惯成就大运势。", "平衡而非贪心，才招来好运。", "你付出多少，便以更大的福报回馈。"],
+        keywords: ["成长", "缘分", "财富", "挑战", "稳定", "健康", "收获", "变化"],
+        monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+    },
+    ja: {
+        yearIntro: ["2026年は基盤を固める年。今しっかり土台を築けば、後半に実を結びます。", "バランスの年——着実な努力がチャンスを現実に変えます。", "上昇の年——備えた人に好機が続けて訪れます。", "飛躍の年——自信を持って動けば大きな成果を得られます。"],
+        overall: ["全体に安定の中の成長が期待できます。", "変化の風が新しい扉を開きます。", "人に恵まれ、貴人の助けを得られます。"],
+        money: ["金運が着実に積み上がります。", "思わぬ副収入のチャンスが見えます。", "大きな出費は前半より後半が有利です。"],
+        love: ["ご縁の輪が広がる年です。", "既存の関係がより深まります。", "素直な表現が愛を引き寄せます。"],
+        career: ["努力が認められ、立場を固めます。", "新たな挑戦が道を広げます。", "協働で大きな成果が出ます。"],
+        health: ["規則正しい生活が活力を守ります。", "働きすぎを避ければ健康は良好です。", "心の健康を整えれば体もついてきます。"],
+        months: ["新しい始まりに良い気が流れます。", "忍耐が要りますが、終わりは良いです。", "人間関係から嬉しい知らせが来ます。", "金運の流れがスムーズになります。", "健康と休息に気を配る時期です。", "思いがけない機会が訪れます。"],
+        advice: ["今年のキーワードは『継続』——小さな習慣が大きな運を作ります。", "欲張りよりバランスが幸運を招きます。", "与えた分だけ、より大きな福として返ってきます。"],
+        keywords: ["成長", "ご縁", "財運", "挑戦", "安定", "健康", "実り", "変化"],
+        monthNames: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
     }
 };
 
@@ -1168,6 +1335,113 @@ function attachShare(buttonId, getData, filenameBase) {
     });
 }
 
+function isPremiumUnlocked() {
+    try { return localStorage.getItem('premiumUnlocked') === '1'; } catch (e) { return false; }
+}
+
+function applyPremiumLock() {
+    const locked = document.querySelector('#premium-locked');
+    if (locked) locked.classList.toggle('unlocked', isPremiumUnlocked());
+}
+
+function renderPremium() {
+    const result = document.querySelector('#premium-result');
+    if (!result || !window.__premium) return;
+    const lang = localStorage.getItem('lang') || 'en';
+    const pool = premiumPools[lang] || premiumPools.en;
+    const base = 'premium2026|' + window.__premium.birth;
+    const setSel = (sel, val) => { const el = document.querySelector(sel); if (el) el.textContent = val; };
+
+    const fields = ['overall', 'money', 'love', 'career', 'health'];
+    let total = 0;
+    fields.forEach(k => {
+        const r = mulberry32(fortuneHash(base + '|' + k));
+        const score = 55 + Math.floor(r() * 46);
+        total += score;
+        const bar = document.querySelector('#premium-' + k + '-bar');
+        if (bar) bar.style.width = score + '%';
+        setSel('#premium-' + k + '-text', pool[k][Math.floor(r() * pool[k].length)]);
+    });
+    const yearScore = Math.round(total / fields.length);
+    setSel('#premium-year-num', yearScore);
+    setSel('#premium-year-text', pool.yearIntro[tierIndex(yearScore, 65, 78, 90)]);
+
+    const mc = document.querySelector('#premium-months');
+    if (mc) {
+        mc.innerHTML = '';
+        for (let i = 0; i < 12; i++) {
+            const r = mulberry32(fortuneHash(base + '|m' + i));
+            const score = 50 + Math.floor(r() * 51);
+            const card = document.createElement('div');
+            card.className = 'fortune-card';
+            const h = document.createElement('h3');
+            h.textContent = pool.monthNames[i];
+            const barWrap = document.createElement('div');
+            barWrap.className = 'score-bar';
+            const span = document.createElement('span');
+            span.style.width = score + '%';
+            barWrap.appendChild(span);
+            const p = document.createElement('p');
+            p.className = 'fortune-text';
+            p.textContent = pool.months[Math.floor(r() * pool.months.length)];
+            card.appendChild(h); card.appendChild(barWrap); card.appendChild(p);
+            mc.appendChild(card);
+        }
+    }
+
+    const lr = mulberry32(fortuneHash(base + '|lucky'));
+    const colors = (fortunePools[lang] || fortunePools.en).colors;
+    setSel('#premium-keyword', pool.keywords[Math.floor(lr() * pool.keywords.length)]);
+    setSel('#premium-color', colors[Math.floor(lr() * colors.length)]);
+    setSel('#premium-number', 1 + Math.floor(lr() * 45));
+
+    const ar = mulberry32(fortuneHash(base + '|advice'));
+    setSel('#premium-advice-text', pool.advice[Math.floor(ar() * pool.advice.length)]);
+
+    applyPremiumLock();
+}
+
+function initPremiumLogic() {
+    // Handle the post-payment unlock redirect on any page that loads main.js.
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('unlock') === PREMIUM_UNLOCK_TOKEN) {
+            localStorage.setItem('premiumUnlocked', '1');
+            if (window.history && history.replaceState) {
+                history.replaceState({}, '', window.location.pathname);
+            }
+        }
+    } catch (e) { /* ignore */ }
+
+    const btn = document.querySelector('#premium-btn');
+    const result = document.querySelector('#premium-result');
+    if (!btn || !result) return;
+
+    btn.addEventListener('click', () => {
+        const bi = document.querySelector('#premium-birth');
+        const birth = bi ? bi.value : '';
+        if (!birth) {
+            const lang = localStorage.getItem('lang') || 'en';
+            alert((translations[lang] && translations[lang]['fortune-validate']) || 'Please enter your date of birth.');
+            return;
+        }
+        window.__premium = { birth };
+        renderPremium();
+        result.hidden = false;
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    const buy = document.querySelector('#premium-buy');
+    if (buy) buy.addEventListener('click', () => {
+        const lang = localStorage.getItem('lang') || 'en';
+        if (!PREMIUM_CHECKOUT_URL || PREMIUM_CHECKOUT_URL.indexOf('REPLACE_WITH') !== -1) {
+            alert((translations[lang] && translations[lang]['premium-config-missing']) || 'Checkout link is not set up yet.');
+            return;
+        }
+        window.location.href = PREMIUM_CHECKOUT_URL;
+    });
+}
+
 function initLanguage() {
     const langBtns = document.querySelectorAll('.lang-btn');
     const currentLang = localStorage.getItem('lang') || 'en';
@@ -1202,6 +1476,7 @@ function setLanguage(lang) {
     if (typeof renderFortune === 'function' && window.__fortune) renderFortune();
     if (typeof renderFace === 'function' && window.__face) renderFace();
     if (typeof renderCompat === 'function' && window.__compat) renderCompat();
+    if (typeof renderPremium === 'function' && window.__premium) renderPremium();
 }
 
 function initTheme() {
@@ -1334,4 +1609,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initFortuneLogic();
     initFaceLogic();
     initCompatLogic();
+    initPremiumLogic();
 });

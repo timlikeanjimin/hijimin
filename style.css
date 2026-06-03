@@ -441,6 +441,77 @@ footer {
     font-weight: 600;
 }
 
+.section-title {
+    margin: 26px 0 12px;
+    font-size: 1.15rem;
+}
+
+/* ===== Premium report paywall ===== */
+.premium-locked {
+    position: relative;
+    margin-top: 10px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.premium-locked .premium-content {
+    filter: blur(9px);
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.35s ease;
+}
+
+.premium-locked.unlocked .premium-content {
+    filter: none;
+    pointer-events: auto;
+    user-select: auto;
+}
+
+.premium-paywall {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 24px;
+    background: linear-gradient(180deg, rgba(16,42,67,0.35), rgba(16,42,67,0.75));
+    backdrop-filter: blur(2px);
+}
+
+.premium-locked.unlocked .premium-paywall {
+    display: none;
+}
+
+.premium-paywall h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.premium-paywall .price-note {
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+.premium-badge {
+    display: none;
+    text-align: center;
+    background: rgba(72, 101, 129, 0.18);
+    border: 1px solid var(--input-border);
+    border-radius: 12px;
+    padding: 10px;
+    margin: 6px 0 14px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.premium-locked.unlocked + .premium-badge,
+.premium-badge.show {
+    display: block;
+}
+
 /* ===== Mobile / Responsive ===== */
 /* Prevent iOS from auto-resizing text on orientation change. */
 html { -webkit-text-size-adjust: 100%; }

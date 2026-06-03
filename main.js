@@ -34,6 +34,47 @@ const translations = {
         "fortune-disc-p": "This fortune service is provided purely for entertainment and self-reflection purposes. It does not predict actual future events and should not be used as a basis for important financial, medical, or personal decisions.",
         "fortune-disc-short": "Disclaimer: This fortune service is for entertainment purposes only.",
         "index-fortune-cta": "✨ See your free fortune for today →",
+        "nav-face": "Face Reading",
+        "nav-compat": "Compatibility",
+        "cta-face": "🔮 Try AI face reading →",
+        "cta-compat": "💞 Check your love compatibility →",
+        "face-title": "Face Reading",
+        "face-subtitle": "Upload a selfie and discover what your features reveal about you.",
+        "face-label-upload": "Upload your photo",
+        "face-btn": "Read My Face",
+        "face-validate": "Please choose a photo first.",
+        "face-privacy": "🔒 Your photo is analyzed locally in your browser and is never uploaded to any server.",
+        "face-overall-label": "Face Reading Score",
+        "face-summary-label": "Overall Reading",
+        "face-feature-forehead": "Forehead · Early Life & Wisdom",
+        "face-feature-eyes": "Eyes · Relationships & Charm",
+        "face-feature-nose": "Nose · Wealth & Drive",
+        "face-feature-mouth": "Mouth · Love & Expression",
+        "face-feature-jaw": "Jaw · Later Life & Persistence",
+        "face-info-title": "How Face Reading Works",
+        "face-info-p1": "Face reading (physiognomy) is a traditional East Asian practice of interpreting personality and fortune from facial features. Upload a selfie and our tool gives you a playful reading of five key features, generated entirely on your device.",
+        "face-info-h2": "Your Privacy Comes First",
+        "face-info-p2": "Your image never leaves your phone or computer — it is read directly in your browser to create a consistent result for the same photo. Nothing is stored or sent anywhere.",
+        "face-disc-title": "For Entertainment Only",
+        "face-disc-p": "This face reading is for entertainment and self-reflection only. It is not a scientific, medical, or psychological assessment of any kind.",
+        "compat-title": "Love Compatibility",
+        "compat-subtitle": "Enter two birth dates to see how well your energies match.",
+        "compat-label-me": "Your birth date",
+        "compat-label-partner": "Partner's birth date",
+        "compat-btn": "Check Compatibility",
+        "compat-validate": "Please enter both birth dates.",
+        "compat-overall-label": "Compatibility Score",
+        "compat-summary-label": "Overall Match",
+        "compat-sub-personality": "Personality Match",
+        "compat-sub-romance": "Romantic Spark",
+        "compat-sub-money": "Money & Values",
+        "compat-sub-future": "Long-term Future",
+        "compat-info-title": "How Compatibility Works",
+        "compat-info-p1": "Compatibility readings combine both birth dates to explore how two people's energies interact across personality, romance, shared values, and long-term outlook.",
+        "compat-info-h2": "Four Dimensions of a Relationship",
+        "compat-info-p2": "We score four areas and give you a short, encouraging note for each, plus an overall match score to spark a fun conversation between you and your partner.",
+        "compat-disc-title": "For Entertainment Only",
+        "compat-disc-p": "This compatibility reading is for entertainment purposes only and is not relationship, psychological, or professional advice.",
         "hero-title": "Smart Lotto Number Generator",
         "hero-subtitle": "Generate your lucky numbers based on the last 100-draw statistics!",
         "gen-btn": "Generate Smart Numbers",
@@ -126,6 +167,47 @@ const translations = {
         "fortune-disc-p": "이 운세 서비스는 오로지 재미와 자기 성찰을 위한 것입니다. 실제 미래를 예측하지 않으며, 중요한 금전적·의료적·개인적 결정의 근거로 사용해서는 안 됩니다.",
         "fortune-disc-short": "면책 조항: 이 운세 서비스는 오락 목적으로만 제공됩니다.",
         "index-fortune-cta": "✨ 오늘의 운세 무료로 보기 →",
+        "nav-face": "관상",
+        "nav-compat": "궁합",
+        "cta-face": "🔮 AI 관상 보러 가기 →",
+        "cta-compat": "💞 우리 궁합 확인하기 →",
+        "face-title": "AI 관상",
+        "face-subtitle": "셀카를 올리고 당신의 얼굴이 말해주는 기질을 확인하세요.",
+        "face-label-upload": "사진 올리기",
+        "face-btn": "내 관상 보기",
+        "face-validate": "먼저 사진을 선택해 주세요.",
+        "face-privacy": "🔒 사진은 브라우저 안에서만 분석되며, 어떤 서버로도 업로드되지 않습니다.",
+        "face-overall-label": "관상 총점",
+        "face-summary-label": "종합 관상",
+        "face-feature-forehead": "이마 · 초년운과 지혜",
+        "face-feature-eyes": "눈 · 대인관계와 매력",
+        "face-feature-nose": "코 · 재물운과 추진력",
+        "face-feature-mouth": "입 · 애정과 표현력",
+        "face-feature-jaw": "턱 · 말년운과 끈기",
+        "face-info-title": "관상은 이렇게 봅니다",
+        "face-info-p1": "관상은 얼굴의 생김새로 성격과 운을 풀이하는 동양의 전통 문화입니다. 셀카를 올리면 다섯 가지 핵심 부위에 대한 재미있는 풀이를 모두 기기 안에서 생성해 드립니다.",
+        "face-info-h2": "개인정보가 최우선입니다",
+        "face-info-p2": "사진은 휴대폰이나 PC를 절대 벗어나지 않습니다. 같은 사진은 같은 결과가 나오도록 브라우저에서 직접 읽어 처리하며, 어디에도 저장하거나 전송하지 않습니다.",
+        "face-disc-title": "재미로 보는 관상입니다",
+        "face-disc-p": "이 관상은 오로지 재미와 자기 성찰을 위한 것입니다. 과학적·의학적·심리학적 진단이 결코 아닙니다.",
+        "compat-title": "궁합 보기",
+        "compat-subtitle": "두 사람의 생년월일을 넣고 서로의 기운이 얼마나 맞는지 확인하세요.",
+        "compat-label-me": "내 생년월일",
+        "compat-label-partner": "상대 생년월일",
+        "compat-btn": "궁합 확인하기",
+        "compat-validate": "두 사람의 생년월일을 모두 입력해 주세요.",
+        "compat-overall-label": "궁합 총점",
+        "compat-summary-label": "종합 궁합",
+        "compat-sub-personality": "성격 궁합",
+        "compat-sub-romance": "연애 케미",
+        "compat-sub-money": "금전·가치관",
+        "compat-sub-future": "장기적 미래",
+        "compat-info-title": "궁합은 이렇게 봅니다",
+        "compat-info-p1": "궁합 풀이는 두 사람의 생년월일을 결합해 성격, 연애, 가치관, 장기적 전망의 네 영역에서 두 기운이 어떻게 어울리는지 살펴봅니다.",
+        "compat-info-h2": "관계의 네 가지 영역",
+        "compat-info-p2": "네 영역을 점수화하고 각각 짧은 응원의 한마디를 드리며, 총점으로 두 분 사이의 즐거운 대화거리를 만들어 드립니다.",
+        "compat-disc-title": "재미로 보는 궁합입니다",
+        "compat-disc-p": "이 궁합은 오락 목적으로만 제공되며, 관계·심리·전문 상담이 아닙니다.",
         "hero-title": "스마트 로또 번호 생성기",
         "hero-subtitle": "최근 100회차 당첨 통계를 기반으로 행운의 번호를 생성하세요!",
         "gen-btn": "스마트 번호 생성하기",
@@ -218,6 +300,47 @@ const translations = {
         "fortune-disc-p": "本运势服务纯粹用于娱乐和自我反思目的。它不预测实际的未来事件，不应作为重要财务、医疗或个人决策的依据。",
         "fortune-disc-short": "免责声明：本运势服务仅供娱乐之用。",
         "index-fortune-cta": "✨ 免费查看你的今日运势 →",
+        "nav-face": "面相",
+        "nav-compat": "配对",
+        "cta-face": "🔮 来看 AI 面相 →",
+        "cta-compat": "💞 查看你们的配对 →",
+        "face-title": "AI 面相",
+        "face-subtitle": "上传一张自拍，看看你的面容透露了什么。",
+        "face-label-upload": "上传照片",
+        "face-btn": "查看我的面相",
+        "face-validate": "请先选择一张照片。",
+        "face-privacy": "🔒 照片仅在你的浏览器中分析，绝不会上传到任何服务器。",
+        "face-overall-label": "面相总分",
+        "face-summary-label": "综合面相",
+        "face-feature-forehead": "额头 · 早年运与智慧",
+        "face-feature-eyes": "眼睛 · 人际与魅力",
+        "face-feature-nose": "鼻子 · 财运与行动力",
+        "face-feature-mouth": "嘴 · 爱情与表达",
+        "face-feature-jaw": "下巴 · 晚年运与毅力",
+        "face-info-title": "面相是怎么看的",
+        "face-info-p1": "面相是东亚传统文化，通过面部特征解读性格与运势。上传自拍，我们的工具会就五个关键部位给出有趣的解读，全部在你的设备上生成。",
+        "face-info-h2": "隐私至上",
+        "face-info-p2": "你的照片绝不会离开手机或电脑——它直接在浏览器中读取，使同一张照片得到一致的结果，不会被存储或发送到任何地方。",
+        "face-disc-title": "仅供娱乐",
+        "face-disc-p": "本面相仅供娱乐与自我反思之用，绝非任何科学、医学或心理评估。",
+        "compat-title": "缘分配对",
+        "compat-subtitle": "输入两个出生日期，看看你们的气场有多契合。",
+        "compat-label-me": "你的出生日期",
+        "compat-label-partner": "对方的出生日期",
+        "compat-btn": "查看配对",
+        "compat-validate": "请输入两个出生日期。",
+        "compat-overall-label": "配对总分",
+        "compat-summary-label": "综合配对",
+        "compat-sub-personality": "性格契合",
+        "compat-sub-romance": "恋爱火花",
+        "compat-sub-money": "金钱与价值观",
+        "compat-sub-future": "长远未来",
+        "compat-info-title": "配对是怎么看的",
+        "compat-info-p1": "配对解读结合两人的出生日期，探讨两人的气场在性格、爱情、价值观与长远前景四个方面如何互动。",
+        "compat-info-h2": "关系的四个维度",
+        "compat-info-p2": "我们为四个方面打分并各给一句简短的鼓励语，再加上一个总分，为你和对方制造有趣的话题。",
+        "compat-disc-title": "仅供娱乐",
+        "compat-disc-p": "本配对仅供娱乐之用，并非关系、心理或专业建议。",
         "hero-title": "智能乐透号码生成器",
         "hero-subtitle": "根据最近100期的开奖统计数据生成您的幸运号码！",
         "gen-btn": "生成智能号码",
@@ -310,6 +433,47 @@ const translations = {
         "fortune-disc-p": "この運勢サービスは、純粋に娯楽と自己省察を目的として提供されています。実際の未来を予測するものではなく、重要な金銭的・医療的・個人的な決定の根拠として使用しないでください。",
         "fortune-disc-short": "免責事項：この運勢サービスは娯楽目的のみで提供されています。",
         "index-fortune-cta": "✨ 今日の運勢を無料でチェック →",
+        "nav-face": "観相",
+        "nav-compat": "相性",
+        "cta-face": "🔮 AI観相を見る →",
+        "cta-compat": "💞 二人の相性をチェック →",
+        "face-title": "AI観相",
+        "face-subtitle": "自撮りをアップして、あなたの顔が語る気質を確かめましょう。",
+        "face-label-upload": "写真をアップ",
+        "face-btn": "観相を見る",
+        "face-validate": "まず写真を選んでください。",
+        "face-privacy": "🔒 写真はブラウザ内でのみ分析され、サーバーには一切アップロードされません。",
+        "face-overall-label": "観相スコア",
+        "face-summary-label": "総合観相",
+        "face-feature-forehead": "額 · 初年運と知恵",
+        "face-feature-eyes": "目 · 対人関係と魅力",
+        "face-feature-nose": "鼻 · 金運と行動力",
+        "face-feature-mouth": "口 · 愛情と表現力",
+        "face-feature-jaw": "顎 · 晩年運と粘り強さ",
+        "face-info-title": "観相の見方",
+        "face-info-p1": "観相は、顔立ちから性格や運勢を読み解く東アジアの伝統文化です。自撮りをアップすると、5つの主要部位について楽しい読み解きを、すべて端末内で生成します。",
+        "face-info-h2": "プライバシーを最優先",
+        "face-info-p2": "写真はスマホやPCから決して外に出ません。同じ写真は同じ結果になるようブラウザ内で直接読み込み、どこにも保存・送信しません。",
+        "face-disc-title": "娯楽目的のみ",
+        "face-disc-p": "この観相は娯楽と自己省察のためのものです。科学的・医学的・心理学的な診断では一切ありません。",
+        "compat-title": "相性占い",
+        "compat-subtitle": "二人の生年月日を入力して、気の合い方を確かめましょう。",
+        "compat-label-me": "あなたの生年月日",
+        "compat-label-partner": "相手の生年月日",
+        "compat-btn": "相性をチェック",
+        "compat-validate": "二人の生年月日を入力してください。",
+        "compat-overall-label": "相性スコア",
+        "compat-summary-label": "総合相性",
+        "compat-sub-personality": "性格の相性",
+        "compat-sub-romance": "恋のときめき",
+        "compat-sub-money": "お金と価値観",
+        "compat-sub-future": "長期の未来",
+        "compat-info-title": "相性の見方",
+        "compat-info-p1": "相性占いは二人の生年月日を組み合わせ、性格・恋愛・価値観・長期的な見通しの4領域で二人の気がどう響き合うかを見ます。",
+        "compat-info-h2": "関係の4つの側面",
+        "compat-info-p2": "4つの領域を点数化し、それぞれに短い応援の一言を添え、総合スコアで二人の楽しい会話のきっかけを作ります。",
+        "compat-disc-title": "娯楽目的のみ",
+        "compat-disc-p": "この相性占いは娯楽目的のみで、関係・心理・専門的な助言ではありません。",
         "hero-title": "スマートロト番号ジェネレーター",
         "hero-subtitle": "直近100回の抽選統計に基づいたラッキーナンバーを生成します！",
         "gen-btn": "スマート番号を生成",
@@ -520,6 +684,74 @@ const fortunePools = {
     }
 };
 
+// --- Face reading text pools (index-aligned across languages) ---
+const facePools = {
+    en: {
+        forehead: ["A broad, clear forehead — you think things through and learn quickly.", "Your forehead suggests an early bloomer with strong curiosity.", "A thoughtful brow; you carry wisdom beyond your years.", "Signs of a planner — you see the big picture before others do."],
+        eyes: ["Bright, expressive eyes — people are naturally drawn to you.", "Your gaze shows warmth; friendships come easily to you.", "Perceptive eyes — you read people and rooms well.", "Calm eyes that hint at deep loyalty to those you love."],
+        nose: ["A strong nose — steady drive and a good sense for money.", "Your nose points to resourcefulness; you make the most of what you have.", "Signs of ambition — you turn effort into reward over time.", "A balanced nose; wealth comes through patience, not luck."],
+        mouth: ["An expressive mouth — you speak from the heart and charm easily.", "Your lips suggest warmth in love and honest words.", "A generous smile that opens doors in romance and work.", "Thoughtful speech; you say the right thing at the right time."],
+        jaw: ["A firm jaw — persistence carries you to a strong later life.", "Your chin shows resilience; you finish what you start.", "Steady determination — good fortune builds in your second half.", "A grounded jawline; loyalty and grit define your path."],
+        summary: ["A face full of quiet potential — your best chapters are still being written.", "A balanced, likeable face — steady fortune and warm connections ahead.", "A bright, fortunate face — charm and opportunity follow you.", "A truly auspicious face — rare warmth, drive, and luck all in one."]
+    },
+    ko: {
+        forehead: ["이마가 시원하게 트여 있어 생각이 깊고 배움이 빠른 상입니다.", "호기심이 강하고 일찍 두각을 드러내는 이마예요.", "또래보다 지혜로운 기운이 이마에 담겨 있습니다.", "큰 그림을 먼저 보는 기획가형 이마입니다."],
+        eyes: ["눈빛이 맑고 표현력이 좋아 사람을 끌어당깁니다.", "따뜻한 눈매라 인연과 친구가 쉽게 모입니다.", "통찰력 있는 눈이라 사람과 분위기를 잘 읽습니다.", "차분한 눈빛 속에 깊은 의리가 느껴집니다."],
+        nose: ["콧대가 단단해 추진력과 재물 감각이 좋은 상입니다.", "주어진 것을 알차게 활용하는 수완가형 코예요.", "노력을 보상으로 바꾸는 야망이 보이는 코입니다.", "균형 잡힌 코라 재물은 운보다 인내로 쌓입니다."],
+        mouth: ["표현이 풍부한 입이라 진심으로 말하고 매력을 줍니다.", "입매가 따뜻해 사랑과 말에 정직함이 묻어납니다.", "넉넉한 미소가 연애와 일의 문을 열어줍니다.", "사려 깊은 말솜씨로 때를 아는 한마디를 합니다."],
+        jaw: ["턱이 단단해 끈기로 든든한 말년을 맞는 상입니다.", "회복력이 좋은 턱이라 시작한 일을 끝까지 해냅니다.", "꾸준한 의지로 후반부에 운이 쌓입니다.", "안정된 턱선에 의리와 끈기가 담겨 있습니다."],
+        summary: ["조용한 잠재력이 가득한 상 — 최고의 장면은 아직 쓰이는 중입니다.", "균형 잡히고 호감 가는 상 — 꾸준한 운과 따뜻한 인연이 따릅니다.", "밝고 복이 많은 상 — 매력과 기회가 늘 따라다닙니다.", "보기 드문 길상 — 따뜻함·추진력·운을 모두 갖춘 얼굴입니다."]
+    },
+    zh: {
+        forehead: ["额头开阔，思虑周全、学习很快之相。", "好奇心旺盛、早早崭露头角的额头。", "额间藏有超越同龄的智慧之气。", "属于先看大局的策划型额头。"],
+        eyes: ["眼神清澈、表达力强，自然吸引他人。", "眼神温暖，缘分与朋友易聚。", "目光敏锐，善于读人与读场。", "沉静的眼神中透着深厚的情义。"],
+        nose: ["鼻梁坚挺，富有行动力与财运之相。", "善用所有资源的能手型鼻子。", "鼻露雄心，能把努力化为回报。", "鼻形匀称，财富靠耐心而非运气积累。"],
+        mouth: ["口型富于表达，真心说话且具魅力。", "唇形温厚，爱情与言语皆显诚实。", "宽厚的笑容为爱情与事业开门。", "言谈细致，懂得在对的时机说对的话。"],
+        jaw: ["下巴坚实，以毅力迎来稳健晚年之相。", "恢复力佳的下巴，凡事有始有终。", "凭借坚持，后半生运势渐旺。", "稳定的下颌线，蕴含情义与韧性。"],
+        summary: ["充满静默潜力之相 —— 最精彩的篇章仍在书写。", "均衡而讨喜之相 —— 稳定运势与温暖缘分相随。", "明亮多福之相 —— 魅力与机会常伴左右。", "难得的吉相 —— 温暖、行动力与运气兼备。"]
+    },
+    ja: {
+        forehead: ["額が広く開け、思慮深く学びが早い相です。", "好奇心が強く、早くから頭角を現す額です。", "同年代を超えた知恵の気が額に宿ります。", "全体像を先に見る企画家タイプの額です。"],
+        eyes: ["澄んだ眼差しと表現力で、自然と人を惹きつけます。", "温かい目元で、縁や友がすぐに集まります。", "洞察力のある目で、人や空気をよく読みます。", "落ち着いた眼差しに深い義理がにじみます。"],
+        nose: ["鼻筋がしっかりし、行動力と金運に恵まれる相です。", "与えられたものを活かす切れ者タイプの鼻です。", "努力を報酬に変える野心が見える鼻です。", "均整の取れた鼻で、財は運より忍耐で築かれます。"],
+        mouth: ["表現豊かな口で、真心で語り魅力を放ちます。", "口元が温かく、愛情にも言葉にも誠実さが出ます。", "おおらかな笑顔が恋と仕事の扉を開きます。", "思慮深い話し方で、ここぞの一言を言えます。"],
+        jaw: ["顎がしっかりし、粘り強さで安定した晩年を迎える相です。", "回復力のある顎で、始めたことを最後までやり遂げます。", "地道な意志で、後半に運が積み上がります。", "安定した顎のラインに義理と粘りが宿ります。"],
+        summary: ["静かな可能性に満ちた相 —— 最高の章はまだ書かれている途中です。", "バランスが取れ好感の持てる相 —— 着実な運と温かい縁が続きます。", "明るく福の多い相 —— 魅力と機会がいつも寄り添います。", "稀な吉相 —— 温かさ・行動力・運をすべて備えた顔です。"]
+    }
+};
+
+// --- Compatibility text pools (index-aligned across languages) ---
+const compatPools = {
+    en: {
+        personality: ["You balance each other well — differences become strengths.", "Similar values make everyday life feel easy together.", "A lively mix; you keep each other curious and growing.", "You'll need patience at times, but respect bridges the gaps."],
+        romance: ["Strong chemistry — sparks come naturally between you two.", "A tender, slow-burning warmth that deepens over time.", "Playful and affectionate; you bring out each other's joy.", "Passion is there; honest talk keeps the flame steady."],
+        money: ["Aligned on money — you build and save as a team.", "Different money styles, but together you find balance.", "Shared ambition; your goals pull in the same direction.", "Talk openly about finances and you'll thrive together."],
+        future: ["A promising long-term path — you grow stronger year by year.", "Solid foundations; this is a bond built to last.", "With effort, your future together looks bright and steady.", "Keep nurturing trust and the road ahead is wide open."],
+        summary: ["A relationship that asks for care — but real effort can make it bloom.", "A warm, workable match — nurture it and it grows steadily.", "A wonderful match — you bring out the best in each other.", "A rare, soulmate-level connection — cherish what you have."]
+    },
+    ko: {
+        personality: ["서로를 잘 보완해 차이가 강점이 되는 사이입니다.", "가치관이 비슷해 일상이 편안하게 맞물립니다.", "활기찬 조합이라 서로를 계속 성장시킵니다.", "때로 인내가 필요하지만 존중이 간극을 메웁니다."],
+        romance: ["케미가 강해 둘 사이에 불꽃이 자연스럽습니다.", "은근하게 깊어지는 따뜻함이 오래갑니다.", "장난스럽고 다정해 서로의 기쁨을 끌어냅니다.", "열정은 충분하니 솔직한 대화로 불씨를 지키세요."],
+        money: ["금전관이 잘 맞아 함께 모으고 키워가는 팀입니다.", "소비 스타일은 달라도 함께면 균형을 찾습니다.", "공동의 야망으로 목표가 같은 방향을 향합니다.", "돈 이야기를 솔직히 나누면 함께 번창합니다."],
+        future: ["해가 갈수록 단단해지는 유망한 장기 인연입니다.", "기반이 탄탄해 오래 지속될 인연입니다.", "노력하면 둘의 미래가 밝고 안정적입니다.", "신뢰를 계속 가꾸면 앞길이 활짝 열립니다."],
+        summary: ["정성이 필요한 관계 — 하지만 진심 어린 노력이 꽃피웁니다.", "따뜻하고 잘 맞는 인연 — 가꾸면 꾸준히 깊어집니다.", "훌륭한 궁합 — 서로의 최고를 끌어내는 사이입니다.", "보기 드문 천생연분 — 지금의 인연을 소중히 하세요."]
+    },
+    zh: {
+        personality: ["彼此互补，差异化为优势的一对。", "价值观相近，日常相处轻松契合。", "活泼的组合，让彼此不断成长。", "偶尔需要耐心，但尊重能弥合分歧。"],
+        romance: ["化学反应强烈，火花自然而生。", "含蓄而渐深的温暖，历久弥新。", "俏皮又亲密，激发彼此的快乐。", "激情充足，坦诚沟通能守住火苗。"],
+        money: ["金钱观契合，一同积累、共同成长的团队。", "消费风格不同，但在一起能找到平衡。", "共同的抱负，让目标朝同一方向。", "坦诚谈钱，便能一起兴旺。"],
+        future: ["前景可期的长久缘分，逐年愈加坚固。", "根基扎实，是能长久的羁绊。", "只要努力，两人的未来明亮而稳定。", "持续培育信任，前路将豁然开朗。"],
+        summary: ["需要用心经营的关系 —— 但真诚的努力能让它绽放。", "温暖契合的缘分 —— 用心呵护便会稳步加深。", "极佳的契合 —— 彼此激发出最好的一面。", "难得的天作之合 —— 请珍惜眼前的缘分。"]
+    },
+    ja: {
+        personality: ["互いをよく補い、違いが強みになる二人です。", "価値観が近く、日常が心地よくかみ合います。", "活気ある組み合わせで、互いを成長させます。", "時に忍耐が要りますが、尊重が溝を埋めます。"],
+        romance: ["ケミストリーが強く、火花が自然に生まれます。", "じんわり深まる温かさが長く続きます。", "茶目っ気と優しさで、互いの喜びを引き出します。", "情熱は十分、正直な対話で火を保てます。"],
+        money: ["金銭感覚が合い、共に貯め育てるチームです。", "消費スタイルは違っても、一緒なら均衡が取れます。", "共通の野心で、目標が同じ方向を向きます。", "お金の話を率直にすれば、共に栄えます。"],
+        future: ["年々強くなる、有望な長期の縁です。", "土台が堅く、長く続く絆です。", "努力すれば、二人の未来は明るく安定します。", "信頼を育み続ければ、前途は大きく開けます。"],
+        summary: ["丁寧さが要る関係 —— けれど真心の努力が花を咲かせます。", "温かく相性の良い縁 —— 育てれば着実に深まります。", "素晴らしい相性 —— 互いの最高を引き出す仲です。", "稀な運命の相手 —— 今の縁を大切に。"]
+    }
+};
+
 const FORTUNE_LOCALES = { en: 'en-US', ko: 'ko-KR', zh: 'zh-CN', ja: 'ja-JP' };
 
 // FNV-1a string hash -> 32-bit unsigned
@@ -617,6 +849,145 @@ function initFortuneLogic() {
     });
 }
 
+// Hash raw bytes (used for deriving a stable seed from an uploaded photo).
+function fortuneHashBytes(bytes) {
+    let h = 2166136261;
+    const step = Math.max(1, Math.floor(bytes.length / 100000));
+    for (let i = 0; i < bytes.length; i += step) {
+        h ^= bytes[i];
+        h = Math.imul(h, 16777619);
+    }
+    return (h ^ bytes.length) >>> 0;
+}
+
+function tierIndex(score, t1, t2, t3) {
+    if (score < t1) return 0;
+    if (score < t2) return 1;
+    if (score < t3) return 2;
+    return 3;
+}
+
+function renderFace() {
+    const result = document.querySelector('#face-result');
+    if (!result || !window.__face) return;
+    const lang = localStorage.getItem('lang') || 'en';
+    const pool = facePools[lang] || facePools.en;
+    const base = 'face|' + window.__face.seed;
+
+    function feat(key, list) {
+        const rng = mulberry32(fortuneHash(base + '|' + key));
+        const score = 60 + Math.floor(rng() * 41); // 60 - 100
+        return { score, text: list[Math.floor(rng() * list.length)] };
+    }
+
+    const keys = ['forehead', 'eyes', 'nose', 'mouth', 'jaw'];
+    let total = 0;
+    keys.forEach(k => {
+        const r = feat(k, pool[k]);
+        total += r.score;
+        const bar = document.querySelector('#face-score-' + k);
+        const txt = document.querySelector('#face-text-' + k);
+        if (bar) bar.style.width = r.score + '%';
+        if (txt) txt.textContent = r.text;
+    });
+
+    const overall = Math.round(total / keys.length);
+    const ovBar = document.querySelector('#face-overall-bar');
+    const ovNum = document.querySelector('#face-overall-num');
+    if (ovBar) ovBar.style.width = overall + '%';
+    if (ovNum) ovNum.textContent = overall;
+    const sum = document.querySelector('#face-summary-text');
+    if (sum) sum.textContent = pool.summary[tierIndex(overall, 70, 80, 90)];
+
+    const img = document.querySelector('#face-preview');
+    if (img && window.__face.preview) { img.src = window.__face.preview; img.hidden = false; }
+}
+
+function initFaceLogic() {
+    const btn = document.querySelector('#face-btn');
+    const fileInput = document.querySelector('#face-file');
+    const result = document.querySelector('#face-result');
+    if (!btn || !fileInput || !result) return;
+
+    btn.addEventListener('click', () => {
+        const file = fileInput.files && fileInput.files[0];
+        if (!file) {
+            const lang = localStorage.getItem('lang') || 'en';
+            alert((translations[lang] && translations[lang]['face-validate']) || 'Please choose a photo first.');
+            return;
+        }
+        const byteReader = new FileReader();
+        byteReader.onload = function (e) {
+            const seed = fortuneHashBytes(new Uint8Array(e.target.result));
+            const urlReader = new FileReader();
+            urlReader.onload = function (ev) {
+                window.__face = { seed: seed, preview: ev.target.result };
+                renderFace();
+                result.hidden = false;
+                result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            };
+            urlReader.readAsDataURL(file);
+        };
+        byteReader.readAsArrayBuffer(file);
+    });
+}
+
+function renderCompat() {
+    const result = document.querySelector('#compat-result');
+    if (!result || !window.__compat) return;
+    const lang = localStorage.getItem('lang') || 'en';
+    const pool = compatPools[lang] || compatPools.en;
+    // Order-independent: same pair gives the same result regardless of who is "me".
+    const base = 'compat|' + [window.__compat.me, window.__compat.partner].sort().join('|');
+
+    function sub(key, list) {
+        const rng = mulberry32(fortuneHash(base + '|' + key));
+        const score = 50 + Math.floor(rng() * 51); // 50 - 100
+        return { score, text: list[Math.floor(rng() * list.length)] };
+    }
+
+    const keys = ['personality', 'romance', 'money', 'future'];
+    let total = 0;
+    keys.forEach(k => {
+        const r = sub(k, pool[k]);
+        total += r.score;
+        const bar = document.querySelector('#compat-score-' + k);
+        const txt = document.querySelector('#compat-text-' + k);
+        if (bar) bar.style.width = r.score + '%';
+        if (txt) txt.textContent = r.text;
+    });
+
+    const overall = Math.round(total / keys.length);
+    const ovBar = document.querySelector('#compat-overall-bar');
+    const ovNum = document.querySelector('#compat-overall-num');
+    if (ovBar) ovBar.style.width = overall + '%';
+    if (ovNum) ovNum.textContent = overall;
+    const sum = document.querySelector('#compat-summary-text');
+    if (sum) sum.textContent = pool.summary[tierIndex(overall, 60, 75, 88)];
+}
+
+function initCompatLogic() {
+    const btn = document.querySelector('#compat-btn');
+    const result = document.querySelector('#compat-result');
+    if (!btn || !result) return;
+
+    btn.addEventListener('click', () => {
+        const me = document.querySelector('#compat-me');
+        const partner = document.querySelector('#compat-partner');
+        const meVal = me ? me.value : '';
+        const partnerVal = partner ? partner.value : '';
+        if (!meVal || !partnerVal) {
+            const lang = localStorage.getItem('lang') || 'en';
+            alert((translations[lang] && translations[lang]['compat-validate']) || 'Please enter both birth dates.');
+            return;
+        }
+        window.__compat = { me: meVal, partner: partnerVal };
+        renderCompat();
+        result.hidden = false;
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+}
+
 function initLanguage() {
     const langBtns = document.querySelectorAll('.lang-btn');
     const currentLang = localStorage.getItem('lang') || 'en';
@@ -647,10 +1018,10 @@ function setLanguage(lang) {
 
     document.documentElement.lang = lang;
 
-    // Re-render the fortune result in the newly selected language, if present.
-    if (typeof renderFortune === 'function' && window.__fortune) {
-        renderFortune();
-    }
+    // Re-render any active result in the newly selected language.
+    if (typeof renderFortune === 'function' && window.__fortune) renderFortune();
+    if (typeof renderFace === 'function' && window.__face) renderFace();
+    if (typeof renderCompat === 'function' && window.__compat) renderCompat();
 }
 
 function initTheme() {
@@ -781,4 +1152,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguage();
     initLottoLogic();
     initFortuneLogic();
+    initFaceLogic();
+    initCompatLogic();
 });

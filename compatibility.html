@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQN2B35JF5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WQN2B35JF5');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "wwnsjgqbpl");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Compatibility - Free Birth Date Compatibility Test</title>
+    <meta name="description" content="Free love compatibility test. Enter two birth dates to see your match across personality, romance, money, and long-term future, with an overall compatibility score.">
+    <meta name="keywords" content="love compatibility, compatibility test, birth date compatibility, 궁합, gunghap, couple test, relationship match">
+
+    <!-- AdSense Verification & Account -->
+    <meta name="google-adsense-account" content="ca-pub-2256982043623627">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2256982043623627" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">LottoSmart</a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="fortune.html" data-i18n="nav-fortune">Fortune</a></li>
+                <li><a href="face.html" data-i18n="nav-face">Face Reading</a></li>
+                <li><a href="compatibility.html" data-i18n="nav-compat">Compatibility</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                <li><a href="privacy.html" data-i18n="nav-privacy">Privacy</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">KR</button>
+                    <button class="lang-btn" data-lang="zh">CN</button>
+                    <button class="lang-btn" data-lang="ja">JP</button>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        <main class="container">
+            <h1 data-i18n="compat-title">Love Compatibility</h1>
+            <p class="subtitle" data-i18n="compat-subtitle">Enter two birth dates to see how well your energies match.</p>
+
+            <div class="fortune-form">
+                <div class="form-group">
+                    <label for="compat-me" data-i18n="compat-label-me">Your birth date</label>
+                    <input type="date" id="compat-me" min="1920-01-01" max="2026-12-31">
+                </div>
+                <div class="form-group">
+                    <label for="compat-partner" data-i18n="compat-label-partner">Partner's birth date</label>
+                    <input type="date" id="compat-partner" min="1920-01-01" max="2026-12-31">
+                </div>
+                <button id="compat-btn" class="submit-btn">
+                    <span data-i18n="compat-btn">Check Compatibility</span>
+                </button>
+            </div>
+
+            <div id="compat-result" class="fortune-result" hidden>
+                <div class="overall-score">
+                    <div class="overall-label" data-i18n="compat-overall-label">Compatibility Score</div>
+                    <div class="big-number"><span id="compat-overall-num">0</span><span>/100</span></div>
+                    <div class="score-bar" style="margin-top:12px;"><span id="compat-overall-bar"></span></div>
+                    <p class="summary-text" id="compat-summary-text"></p>
+                </div>
+
+                <div class="fortune-card">
+                    <h3 data-i18n="compat-sub-personality">Personality Match</h3>
+                    <div class="score-bar"><span id="compat-score-personality"></span></div>
+                    <p class="fortune-text" id="compat-text-personality"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="compat-sub-romance">Romantic Spark</h3>
+                    <div class="score-bar"><span id="compat-score-romance"></span></div>
+                    <p class="fortune-text" id="compat-text-romance"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="compat-sub-money">Money & Values</h3>
+                    <div class="score-bar"><span id="compat-score-money"></span></div>
+                    <p class="fortune-text" id="compat-text-money"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="compat-sub-future">Long-term Future</h3>
+                    <div class="score-bar"><span id="compat-score-future"></span></div>
+                    <p class="fortune-text" id="compat-text-future"></p>
+                </div>
+
+                <a href="face.html" class="cross-link" data-i18n="cta-face">🔮 Try AI face reading →</a>
+                <a href="fortune.html" class="cross-link" style="margin-top:10px;" data-i18n="index-fortune-cta">✨ See your free fortune for today →</a>
+            </div>
+        </main>
+
+        <section class="container content-section">
+            <h2 data-i18n="compat-info-title">How Compatibility Works</h2>
+            <p data-i18n="compat-info-p1">Compatibility readings combine both birth dates to explore how two people's energies interact across personality, romance, shared values, and long-term outlook.</p>
+            <h3 data-i18n="compat-info-h2">Four Dimensions of a Relationship</h3>
+            <p data-i18n="compat-info-p2">We score four areas and give you a short, encouraging note for each, plus an overall match score to spark a fun conversation between you and your partner.</p>
+        </section>
+
+        <section class="container content-section">
+            <h2 data-i18n="compat-disc-title">For Entertainment Only</h2>
+            <p data-i18n="compat-disc-p">This compatibility reading is for entertainment purposes only and is not relationship, psychological, or professional advice.</p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html" data-i18n="nav-home">Home</a>
+                <a href="fortune.html" data-i18n="nav-fortune">Fortune</a>
+                <a href="face.html" data-i18n="nav-face">Face Reading</a>
+                <a href="compatibility.html" data-i18n="nav-compat">Compatibility</a>
+                <a href="about.html" data-i18n="nav-about">About Us</a>
+                <a href="contact.html" data-i18n="nav-contact">Contact</a>
+                <a href="privacy.html" data-i18n="nav-privacy">Privacy Policy</a>
+            </div>
+            <p class="copyright" data-i18n="footer-copy">&copy; 2026 LottoSmart. All rights reserved.</p>
+            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;" data-i18n="compat-disc-p">This compatibility reading is for entertainment purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="main.js?v=8"></script>
+</body>
+</html>

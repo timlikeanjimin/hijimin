@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQN2B35JF5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WQN2B35JF5');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "wwnsjgqbpl");
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Face Reading - Free Physiognomy & Personality Analysis</title>
+    <meta name="description" content="Upload a selfie for a free, playful AI face reading. Discover what your forehead, eyes, nose, mouth, and jaw reveal about your personality and fortune.">
+    <meta name="keywords" content="face reading, physiognomy, AI face analysis, 관상, gwansang, personality test, free face reading">
+
+    <!-- AdSense Verification & Account -->
+    <meta name="google-adsense-account" content="ca-pub-2256982043623627">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2256982043623627" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <a href="index.html" class="logo">LottoSmart</a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
+                <li><a href="fortune.html" data-i18n="nav-fortune">Fortune</a></li>
+                <li><a href="face.html" data-i18n="nav-face">Face Reading</a></li>
+                <li><a href="compatibility.html" data-i18n="nav-compat">Compatibility</a></li>
+                <li><a href="about.html" data-i18n="nav-about">About</a></li>
+                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
+                <li><a href="privacy.html" data-i18n="nav-privacy">Privacy</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="lang-switcher">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="ko">KR</button>
+                    <button class="lang-btn" data-lang="zh">CN</button>
+                    <button class="lang-btn" data-lang="ja">JP</button>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        <main class="container">
+            <h1 data-i18n="face-title">Face Reading</h1>
+            <p class="subtitle" data-i18n="face-subtitle">Upload a selfie and discover what your features reveal about you.</p>
+
+            <div class="fortune-form">
+                <div class="form-group">
+                    <label for="face-file" data-i18n="face-label-upload">Upload your photo</label>
+                    <input type="file" id="face-file" class="upload-input" accept="image/*">
+                </div>
+                <button id="face-btn" class="submit-btn">
+                    <span data-i18n="face-btn">Read My Face</span>
+                </button>
+                <p class="privacy-note" data-i18n="face-privacy">🔒 Your photo is analyzed locally in your browser and is never uploaded to any server.</p>
+            </div>
+
+            <div id="face-result" class="fortune-result" hidden>
+                <img id="face-preview" class="face-preview" alt="" hidden>
+
+                <div class="overall-score">
+                    <div class="overall-label" data-i18n="face-overall-label">Face Reading Score</div>
+                    <div class="big-number"><span id="face-overall-num">0</span><span>/100</span></div>
+                    <div class="score-bar" style="margin-top:12px;"><span id="face-overall-bar"></span></div>
+                    <p class="summary-text" id="face-summary-text"></p>
+                </div>
+
+                <div class="fortune-card">
+                    <h3 data-i18n="face-feature-forehead">Forehead</h3>
+                    <div class="score-bar"><span id="face-score-forehead"></span></div>
+                    <p class="fortune-text" id="face-text-forehead"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="face-feature-eyes">Eyes</h3>
+                    <div class="score-bar"><span id="face-score-eyes"></span></div>
+                    <p class="fortune-text" id="face-text-eyes"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="face-feature-nose">Nose</h3>
+                    <div class="score-bar"><span id="face-score-nose"></span></div>
+                    <p class="fortune-text" id="face-text-nose"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="face-feature-mouth">Mouth</h3>
+                    <div class="score-bar"><span id="face-score-mouth"></span></div>
+                    <p class="fortune-text" id="face-text-mouth"></p>
+                </div>
+                <div class="fortune-card">
+                    <h3 data-i18n="face-feature-jaw">Jaw</h3>
+                    <div class="score-bar"><span id="face-score-jaw"></span></div>
+                    <p class="fortune-text" id="face-text-jaw"></p>
+                </div>
+
+                <a href="compatibility.html" class="cross-link" data-i18n="cta-compat">💞 Check your love compatibility →</a>
+                <a href="fortune.html" class="cross-link" style="margin-top:10px;" data-i18n="index-fortune-cta">✨ See your free fortune for today →</a>
+            </div>
+        </main>
+
+        <section class="container content-section">
+            <h2 data-i18n="face-info-title">How Face Reading Works</h2>
+            <p data-i18n="face-info-p1">Face reading (physiognomy) is a traditional East Asian practice of interpreting personality and fortune from facial features. Upload a selfie and our tool gives you a playful reading of five key features, generated entirely on your device.</p>
+            <h3 data-i18n="face-info-h2">Your Privacy Comes First</h3>
+            <p data-i18n="face-info-p2">Your image never leaves your phone or computer — it is read directly in your browser to create a consistent result for the same photo. Nothing is stored or sent anywhere.</p>
+        </section>
+
+        <section class="container content-section">
+            <h2 data-i18n="face-disc-title">For Entertainment Only</h2>
+            <p data-i18n="face-disc-p">This face reading is for entertainment and self-reflection only. It is not a scientific, medical, or psychological assessment of any kind.</p>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html" data-i18n="nav-home">Home</a>
+                <a href="fortune.html" data-i18n="nav-fortune">Fortune</a>
+                <a href="face.html" data-i18n="nav-face">Face Reading</a>
+                <a href="compatibility.html" data-i18n="nav-compat">Compatibility</a>
+                <a href="about.html" data-i18n="nav-about">About Us</a>
+                <a href="contact.html" data-i18n="nav-contact">Contact</a>
+                <a href="privacy.html" data-i18n="nav-privacy">Privacy Policy</a>
+            </div>
+            <p class="copyright" data-i18n="footer-copy">&copy; 2026 LottoSmart. All rights reserved.</p>
+            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;" data-i18n="face-disc-p">This face reading is for entertainment purposes only.</p>
+        </div>
+    </footer>
+
+    <script src="main.js?v=8"></script>
+</body>
+</html>

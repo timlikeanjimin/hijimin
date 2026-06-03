@@ -121,6 +121,22 @@ const translations = {
         "zodiac-info-p": "The Chinese zodiac assigns one of twelve animals to each birth year in a repeating 12-year cycle. Your animal is said to shape your personality and fortune. Enter your birth year to see your animal, its nature, today's reading, and your 2026 outlook.",
         "zodiac-disc-title": "For Entertainment Only",
         "zodiac-disc-p": "This zodiac reading is for entertainment and self-reflection only and does not predict the actual future.",
+        "nav-today": "Today",
+        "cta-today": "🌅 Open your daily dashboard →",
+        "today-title": "My Day",
+        "today-subtitle": "Your weather, fortune, and lucky number — all in one daily check.",
+        "today-weather-title": "Local Weather",
+        "today-weather-locating": "Finding your local weather…",
+        "today-weather-denied": "Location off — showing Seoul. Allow location for your own area.",
+        "today-weather-error": "Couldn't load the weather right now.",
+        "today-fortune-title": "Today's Fortune",
+        "today-lucky-title": "Today's Lucky Charm",
+        "today-quote-title": "Today's Words",
+        "today-dob-prompt": "Enter your birth date once, and your fortune appears here every day.",
+        "today-dob-save": "Save & show daily",
+        "today-dob-change": "Change birth date",
+        "today-info-title": "Make it a daily habit",
+        "today-info-p": "Check in each morning for your local weather, a personalized fortune, your lucky number and color, and a thought for the day. Add this page to your home screen for one-tap access.",
         "hero-title": "Smart Lotto Number Generator",
         "hero-subtitle": "Generate your lucky numbers based on the last 100-draw statistics!",
         "gen-btn": "Generate Smart Numbers",
@@ -300,6 +316,22 @@ const translations = {
         "zodiac-info-p": "십이지(띠)는 12년 주기로 태어난 해마다 하나의 동물이 배정되는 동양 문화입니다. 자신의 띠가 성격과 운을 좌우한다고 여겨집니다. 태어난 해를 입력하면 내 띠와 기질, 오늘의 운세, 2026년 전망을 보여드립니다.",
         "zodiac-disc-title": "재미로 보는 운세입니다",
         "zodiac-disc-p": "이 띠별 운세는 오락 및 자기 성찰용이며 실제 미래를 예측하지 않습니다.",
+        "nav-today": "오늘",
+        "cta-today": "🌅 나의 데일리 대시보드 열기 →",
+        "today-title": "나의 하루",
+        "today-subtitle": "날씨 · 오늘의 운세 · 행운의 숫자를 한 번에 확인하세요.",
+        "today-weather-title": "우리 동네 날씨",
+        "today-weather-locating": "동네 날씨를 불러오는 중…",
+        "today-weather-denied": "위치 꺼짐 — 서울 기준으로 표시합니다. 동네 날씨는 위치를 허용해 주세요.",
+        "today-weather-error": "지금은 날씨를 불러오지 못했어요.",
+        "today-fortune-title": "오늘의 운세",
+        "today-lucky-title": "오늘의 행운",
+        "today-quote-title": "오늘의 한 줄",
+        "today-dob-prompt": "생년월일을 한 번만 입력하면, 매일 이 자리에서 운세를 보여드려요.",
+        "today-dob-save": "저장하고 매일 보기",
+        "today-dob-change": "생년월일 변경",
+        "today-info-title": "매일의 습관으로",
+        "today-info-p": "매일 아침 우리 동네 날씨, 맞춤 운세, 행운의 숫자와 색, 오늘의 한 줄을 확인하세요. 홈 화면에 추가하면 한 번의 탭으로 열 수 있어요.",
         "hero-title": "스마트 로또 번호 생성기",
         "hero-subtitle": "최근 100회차 당첨 통계를 기반으로 행운의 번호를 생성하세요!",
         "gen-btn": "스마트 번호 생성하기",
@@ -479,6 +511,22 @@ const translations = {
         "zodiac-info-p": "生肖以12年为周期，为每个出生年份指定一种动物，被认为影响性格与运势。输入出生年份，即可查看你的生肖、气质、今日运势与2026年展望。",
         "zodiac-disc-title": "仅供娱乐",
         "zodiac-disc-p": "本生肖运势仅供娱乐与自我反思，不预测真实未来。",
+        "nav-today": "今天",
+        "cta-today": "🌅 打开每日面板 →",
+        "today-title": "我的一天",
+        "today-subtitle": "天气 · 今日运势 · 幸运数字，一次看齐。",
+        "today-weather-title": "本地天气",
+        "today-weather-locating": "正在获取本地天气…",
+        "today-weather-denied": "定位关闭——按首尔显示。开启定位查看本地天气。",
+        "today-weather-error": "暂时无法加载天气。",
+        "today-fortune-title": "今日运势",
+        "today-lucky-title": "今日幸运",
+        "today-quote-title": "今日一句",
+        "today-dob-prompt": "只需输入一次出生日期，每天都会在这里显示你的运势。",
+        "today-dob-save": "保存并每天查看",
+        "today-dob-change": "修改出生日期",
+        "today-info-title": "养成每日习惯",
+        "today-info-p": "每天早晨查看本地天气、专属运势、幸运数字与颜色，以及今日一句。把本页添加到主屏幕，一键打开。",
         "hero-title": "智能乐透号码生成器",
         "hero-subtitle": "根据最近100期的开奖统计数据生成您的幸运号码！",
         "gen-btn": "生成智能号码",
@@ -658,6 +706,22 @@ const translations = {
         "zodiac-info-p": "干支は12年周期で、生まれた年ごとに一つの動物が割り当てられる東洋の文化です。自分の干支が性格や運を左右すると言われます。生まれた年を入れると、干支・気質・今日の運勢・2026年の見通しを表示します。",
         "zodiac-disc-title": "娯楽目的のみ",
         "zodiac-disc-p": "この干支占いは娯楽・自己省察用で、実際の未来を予測しません。",
+        "nav-today": "今日",
+        "cta-today": "🌅 デイリーダッシュボードを開く →",
+        "today-title": "私の一日",
+        "today-subtitle": "天気・今日の運勢・ラッキーナンバーをまとめてチェック。",
+        "today-weather-title": "地域の天気",
+        "today-weather-locating": "地域の天気を取得中…",
+        "today-weather-denied": "位置オフ — ソウル基準で表示。地域の天気は位置を許可してください。",
+        "today-weather-error": "今は天気を読み込めませんでした。",
+        "today-fortune-title": "今日の運勢",
+        "today-lucky-title": "今日のラッキー",
+        "today-quote-title": "今日の一言",
+        "today-dob-prompt": "生年月日を一度入れれば、毎日ここに運勢が表示されます。",
+        "today-dob-save": "保存して毎日見る",
+        "today-dob-change": "生年月日を変更",
+        "today-info-title": "毎日の習慣に",
+        "today-info-p": "毎朝、地域の天気・あなたの運勢・ラッキーナンバーとカラー・今日の一言をチェック。ホーム画面に追加すればワンタップで開けます。",
         "hero-title": "スマートロト番号ジェネレーター",
         "hero-subtitle": "直近100回の抽選統計に基づいたラッキーナンバーを生成します！",
         "gen-btn": "スマート番号を生成",
@@ -1618,6 +1682,180 @@ function initZodiacLogic() {
     attachShare('zodiac-share', () => window.__zodiacShare, 'my-zodiac');
 }
 
+// --- Daily dashboard: weather labels + daily quotes (4 languages) ---
+const weatherPools = {
+    en: { clear: "Clear", cloudy: "Cloudy", fog: "Foggy", rain: "Rain", snow: "Snow", storm: "Storm", tipRain: "Don't forget an umbrella ☂️", tipSnow: "Bundle up and watch your step ❄️", tipClear: "A great day to catch some sunshine ☀️", tipMild: "Have a wonderful day 🍀" },
+    ko: { clear: "맑음", cloudy: "구름", fog: "안개", rain: "비", snow: "눈", storm: "천둥번개", tipRain: "우산 꼭 챙기세요 ☂️", tipSnow: "따뜻하게 입고 미끄럼 조심하세요 ❄️", tipClear: "햇살 쬐기 좋은 날이에요 ☀️", tipMild: "오늘도 좋은 하루 보내세요 🍀" },
+    zh: { clear: "晴", cloudy: "多云", fog: "雾", rain: "雨", snow: "雪", storm: "雷雨", tipRain: "别忘了带伞 ☂️", tipSnow: "穿暖些，小心路滑 ❄️", tipClear: "适合晒太阳的好天气 ☀️", tipMild: "祝你今天愉快 🍀" },
+    ja: { clear: "晴れ", cloudy: "くもり", fog: "霧", rain: "雨", snow: "雪", storm: "雷雨", tipRain: "傘を忘れずに ☂️", tipSnow: "暖かくして足元に注意 ❄️", tipClear: "日光浴に良い日です ☀️", tipMild: "今日も良い一日を 🍀" }
+};
+
+const quotePools = {
+    en: ["Small steps today shape a big tomorrow.", "A calm mind attracts good luck.", "Today is a fresh page — write something kind.", "Your effort is quietly compounding.", "Smile first; the day will follow.", "Luck favors the prepared and the cheerful.", "One good habit beats ten good intentions.", "Be the reason someone smiles today."],
+    ko: ["오늘의 작은 한 걸음이 큰 내일을 만듭니다.", "차분한 마음이 좋은 운을 부릅니다.", "오늘은 새 페이지 — 다정한 한 줄을 적어보세요.", "당신의 노력은 조용히 쌓이고 있어요.", "먼저 웃으면 하루가 따라옵니다.", "행운은 준비된 사람과 밝은 사람을 좋아합니다.", "좋은 습관 하나가 좋은 결심 열 개를 이깁니다.", "오늘 누군가를 웃게 하는 사람이 되어보세요."],
+    zh: ["今天的一小步，塑造美好的明天。", "平静的心吸引好运。", "今天是崭新的一页——写下温柔的一笔。", "你的努力正在悄悄累积。", "先微笑，美好的一天随之而来。", "好运偏爱有准备又开朗的人。", "一个好习惯胜过十个好愿望。", "今天，做让别人微笑的理由。"],
+    ja: ["今日の小さな一歩が、大きな明日をつくる。", "穏やかな心が幸運を呼ぶ。", "今日は新しいページ——優しい一言を書こう。", "あなたの努力は静かに積み重なっている。", "まず笑顔を。一日があとからついてくる。", "幸運は備えと明るさを好む。", "一つの良い習慣は十の決意に勝る。", "今日、誰かが笑う理由になろう。"]
+};
+
+function weatherCategory(code) {
+    if (code === 0) return { emoji: "☀️", key: "clear", tip: "tipClear" };
+    if (code === 1 || code === 2 || code === 3) return { emoji: "⛅", key: "cloudy", tip: "tipMild" };
+    if (code === 45 || code === 48) return { emoji: "🌫️", key: "fog", tip: "tipMild" };
+    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return { emoji: "🌧️", key: "rain", tip: "tipRain" };
+    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return { emoji: "🌨️", key: "snow", tip: "tipSnow" };
+    if (code >= 95) return { emoji: "⛈️", key: "storm", tip: "tipRain" };
+    return { emoji: "⛅", key: "cloudy", tip: "tipMild" };
+}
+
+function dailyT(key) {
+    const lang = localStorage.getItem('lang') || 'en';
+    return (translations[lang] && translations[lang][key]) || (translations.en[key]) || key;
+}
+
+function renderWeatherText() {
+    if (!window.__weather) return;
+    const lang = localStorage.getItem('lang') || 'en';
+    const wp = weatherPools[lang] || weatherPools.en;
+    const w = window.__weather;
+    const cat = weatherCategory(w.code);
+    const set = (s, v) => { const e = document.querySelector(s); if (e) e.textContent = v; };
+    set('#today-weather-emoji', cat.emoji);
+    set('#today-weather-temp', w.temp + '°');
+    set('#today-weather-label', wp[cat.key] + '  ·  ' + w.tmin + '° / ' + w.tmax + '°');
+    set('#today-weather-tip', wp[cat.tip]);
+}
+
+function loadWeather(lat, lon) {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon +
+        '&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto';
+    fetch(url).then(function (r) { return r.json(); }).then(function (d) {
+        window.__weather = {
+            code: d.current.weather_code,
+            temp: Math.round(d.current.temperature_2m),
+            tmax: Math.round(d.daily.temperature_2m_max[0]),
+            tmin: Math.round(d.daily.temperature_2m_min[0])
+        };
+        renderWeatherText();
+    }).catch(function () {
+        const line = document.querySelector('#today-weather-tip');
+        if (line) line.textContent = dailyT('today-weather-error');
+    });
+}
+
+function initWeather() {
+    const box = document.querySelector('#today-weather');
+    if (!box) return;
+    const tip = document.querySelector('#today-weather-tip');
+    if (tip) tip.textContent = dailyT('today-weather-locating');
+    if (!navigator.geolocation) { loadWeather(37.5665, 126.9780); return; }
+    navigator.geolocation.getCurrentPosition(
+        function (p) { loadWeather(p.coords.latitude, p.coords.longitude); },
+        function () { if (tip) tip.textContent = dailyT('today-weather-denied'); loadWeather(37.5665, 126.9780); },
+        { timeout: 8000, maximumAge: 1800000 }
+    );
+}
+
+function renderDailyFortune() {
+    const lang = localStorage.getItem('lang') || 'en';
+    let dob = '';
+    try { dob = localStorage.getItem('dob') || ''; } catch (e) { }
+    const form = document.querySelector('#today-dob-form');
+    const box = document.querySelector('#today-fortune-box');
+    if (!box) return;
+    if (!dob) { if (form) form.hidden = false; box.hidden = true; return; }
+    if (form) form.hidden = true;
+    box.hidden = false;
+
+    const pool = fortunePools[lang] || fortunePools.en;
+    const today = new Date();
+    const ds = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const base = dob + '|x|' + ds;
+    const r = mulberry32(fortuneHash(base + '|overall'));
+    const score = 45 + Math.floor(r() * 56);
+    const text = pool.overall[Math.floor(r() * pool.overall.length)];
+    const lr = mulberry32(fortuneHash(base + '|lucky'));
+    const luckyNumber = 1 + Math.floor(lr() * 45);
+    const colors = pool.colors;
+    const color = colors[Math.floor(lr() * colors.length)];
+
+    const set = (s, v) => { const e = document.querySelector(s); if (e) e.textContent = v; };
+    const bar = document.querySelector('#today-fortune-bar'); if (bar) bar.style.width = score + '%';
+    set('#today-fortune-text', text);
+    set('#today-lucky-number', luckyNumber);
+    set('#today-lucky-color', color);
+
+    window.__dailyShare = {
+        title: dailyT('today-title'),
+        subtitle: '',
+        bigValue: luckyNumber,
+        bigLabel: dailyT('fortune-lucky-number'),
+        summary: text,
+        rows: [{ label: dailyT('fortune-overall'), score: score }]
+    };
+}
+
+function renderDailyQuote() {
+    const lang = localStorage.getItem('lang') || 'en';
+    const pool = quotePools[lang] || quotePools.en;
+    const today = new Date();
+    const ds = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const idx = fortuneHash('quote|' + ds) % pool.length;
+    const el = document.querySelector('#today-quote-text');
+    if (el) el.textContent = pool[idx];
+}
+
+function renderDaily() {
+    renderDailyFortune();
+    renderDailyQuote();
+    renderWeatherText();
+}
+
+function initDailyLogic() {
+    const page = document.querySelector('#today-page');
+    if (!page) return;
+
+    // Localized greeting date.
+    const dateEl = document.querySelector('#today-date');
+    if (dateEl) {
+        const lang = localStorage.getItem('lang') || 'en';
+        try {
+            dateEl.textContent = new Date().toLocaleDateString(FORTUNE_LOCALES[lang] || 'en-US',
+                { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+        } catch (e) { }
+    }
+
+    const saveBtn = document.querySelector('#today-dob-save');
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+        const inp = document.querySelector('#today-dob-input');
+        const v = inp ? inp.value : '';
+        if (!v) { alert(dailyT('fortune-validate')); return; }
+        try { localStorage.setItem('dob', v); } catch (e) { }
+        renderDailyFortune();
+    });
+
+    const changeBtn = document.querySelector('#today-dob-change');
+    if (changeBtn) changeBtn.addEventListener('click', function () {
+        try { localStorage.removeItem('dob'); } catch (e) { }
+        const form = document.querySelector('#today-dob-form');
+        const box = document.querySelector('#today-fortune-box');
+        if (form) form.hidden = false;
+        if (box) box.hidden = true;
+    });
+
+    renderDailyQuote();
+    renderDailyFortune();
+    initWeather();
+    attachShare('today-share', () => window.__dailyShare, 'my-day');
+}
+
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('sw.js').catch(function () { /* ignore */ });
+        });
+    }
+}
+
 function initLanguage() {
     const langBtns = document.querySelectorAll('.lang-btn');
     const currentLang = localStorage.getItem('lang') || 'en';
@@ -1654,6 +1892,7 @@ function setLanguage(lang) {
     if (typeof renderCompat === 'function' && window.__compat) renderCompat();
     if (typeof renderPremium === 'function' && window.__premium) renderPremium();
     if (typeof renderZodiac === 'function' && window.__zodiac) renderZodiac();
+    if (typeof renderDaily === 'function' && document.querySelector('#today-page')) renderDaily();
 }
 
 function initTheme() {
@@ -1788,4 +2027,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initCompatLogic();
     initPremiumLogic();
     initZodiacLogic();
+    initDailyLogic();
+    registerServiceWorker();
 });

@@ -512,6 +512,33 @@ footer {
     display: block;
 }
 
+/* ===== Daily dashboard ===== */
+.daily-weather {
+    text-align: center;
+}
+.daily-weather .w-emoji {
+    font-size: 3.4rem;
+    line-height: 1;
+}
+.daily-weather .w-temp {
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.daily-weather .w-label {
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+.daily-weather .w-tip {
+    margin-top: 10px;
+    font-weight: 600;
+}
+.today-greeting {
+    text-align: center;
+    opacity: 0.75;
+    margin-top: -6px;
+}
+
 /* ===== Mobile / Responsive ===== */
 /* Prevent iOS from auto-resizing text on orientation change. */
 html { -webkit-text-size-adjust: 100%; }

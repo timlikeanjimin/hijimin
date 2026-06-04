@@ -1,12 +1,13 @@
 {
-  "name": "LottoSmart — Daily Fortune, Weather & Lucky Numbers",
-  "short_name": "LottoSmart",
-  "start_url": "./today.html",
+  "name": "SORTED — AI 구매 결정 도우미",
+  "short_name": "SORTED",
+  "description": "사기 전에 AI한테 물어보세요. 충동구매를 줄여드립니다.",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#102a43",
-  "theme_color": "#102a43",
-  "description": "Your daily check-in: local weather, personalized fortune, lucky number, and a thought for the day.",
+  "background_color": "#ffffff",
+  "theme_color": "#6366F1",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "icon.svg",

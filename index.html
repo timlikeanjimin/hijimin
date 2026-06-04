@@ -1,173 +1,313 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WQN2B35JF5"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-WQN2B35JF5');
-    </script>
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "wwnsjgqbpl");
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Lotto Number Generator - Statistical Analysis Based</title>
-    <meta name="description" content="Generate lotto numbers using statistical analysis of the last 100 draws. Free, smart, and data-driven lucky number generator.">
-    <meta name="keywords" content="lotto generator, smart lotto, lottery statistics, hot numbers, cold numbers, lucky numbers">
-    
-    <!-- AdSense Verification & Account -->
-    <meta name="google-adsense-account" content="ca-pub-2256982043623627">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2256982043623627" crossorigin="anonymous"></script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="canonical" href="https://timlikeanjimin.github.io/hijimin/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="LottoSmart">
-    <meta property="og:title" content="Smart Lotto Generator, Daily Fortune, Face Reading & Compatibility">
-    <meta property="og:description" content="Free smart lotto numbers plus daily fortune, AI face reading, and love compatibility — all in one place.">
-    <meta property="og:url" content="https://timlikeanjimin.github.io/hijimin/">
-    <meta property="og:locale" content="en_US">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#102a43">
-    <link rel="apple-touch-icon" href="icon.svg">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Smart Lotto Generator, Daily Fortune & More">
-    <meta name="twitter:description" content="Free lotto numbers, daily fortune, AI face reading, and love compatibility.">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "LottoSmart",
-      "url": "https://timlikeanjimin.github.io/hijimin/",
-      "description": "Free smart lotto number generator, daily fortune, AI face reading, and love compatibility."
-    }
-    </script>
-    <link rel="stylesheet" href="style.css?v=12">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>SORTED — AI 구매 결정 도우미</title>
+  <meta name="description" content="사기 전에 AI한테 물어보세요. 충동구매 줄이고 소비 패턴 파악하는 AI 구매 결정 도우미" />
+  <meta name="theme-color" content="#6366F1" />
+  <meta property="og:title" content="SORTED — AI 구매 결정 도우미" />
+  <meta property="og:description" content="사기 전에 AI한테 물어보세요. 충동구매를 줄여드립니다." />
+  <meta property="og:type" content="website" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <nav class="nav-container">
-            <a href="index.html" class="logo">LottoSmart</a>
-            <ul class="nav-links">
-                <li><a href="index.html" data-i18n="nav-home">Home</a></li>
-                <li><a href="today.html" data-i18n="nav-today">Today</a></li>
-                <li><a href="fortune.html" data-i18n="nav-fortune">Fortune</a></li>
-                <li><a href="face.html" data-i18n="nav-face">Face Reading</a></li>
-                <li><a href="compatibility.html" data-i18n="nav-compat">Compatibility</a></li>
-                <li><a href="zodiac.html" data-i18n="nav-zodiac">Chinese Zodiac</a></li>
-                <li><a href="about.html" data-i18n="nav-about">About</a></li>
-                <li><a href="contact.html" data-i18n="nav-contact">Contact</a></li>
-                <li><a href="privacy.html" data-i18n="nav-privacy">Privacy</a></li>
-            </ul>
-            <div class="nav-right">
-                <div class="lang-switcher">
-                    <button class="lang-btn" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="ko">KR</button>
-                    <button class="lang-btn" data-lang="zh">CN</button>
-                    <button class="lang-btn" data-lang="ja">JP</button>
-                </div>
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme"></button>
-            </div>
-        </nav>
-    </header>
 
-    <div class="main-wrapper">
-        <!-- Lotto Number Generator -->
-        <main class="container">
-            <h1 data-i18n="hero-title">Smart Lotto Number Generator</h1>
-            <p class="subtitle" data-i18n="hero-subtitle">Generate your lucky numbers based on the last 100-draw statistics!</p>
-            <div class="lotto-numbers"></div>
-            <button id="generate-btn">
-                <span class="button-text" data-i18n="gen-btn">Generate Smart Numbers</span>
-            </button>
-            <a href="today.html" class="cross-link" data-i18n="cta-today" style="margin-top:20px;background:#1b6e4b;">🌅 Open your daily dashboard →</a>
-            <a href="fortune.html" class="cross-link" data-i18n="index-fortune-cta" style="margin-top:10px;">✨ See your free fortune for today →</a>
-            <a href="face.html" class="cross-link" data-i18n="cta-face" style="margin-top:10px;">🔮 Try AI face reading →</a>
-            <a href="compatibility.html" class="cross-link" data-i18n="cta-compat" style="margin-top:10px;">💞 Check your love compatibility →</a>
-            <a href="premium.html" class="cross-link" data-i18n="premium-cta" style="margin-top:10px;background:#b8860b;">🌟 See the 2026 Full Fortune Report →</a>
-            <a href="zodiac.html" class="cross-link" data-i18n="cta-zodiac" style="margin-top:10px;">🐯 See your Chinese zodiac fortune →</a>
-        </main>
+<!-- LANDING -->
+<div class="landing" id="landing">
+  <header class="land-header">
+    <div class="logo">SOR<span>TED</span></div>
+    <button class="btn-start-sm" onclick="openApp()">무료 시작</button>
+  </header>
 
-        <!-- Lotto Number Statistics -->
-        <section class="container stats-container">
-            <h2 data-i18n="stats-title">로또 번호 통계 (Lotto Statistics)</h2>
-            <p class="subtitle" data-i18n="stats-subtitle">최근 100회차의 당첨 번호를 기반으로 분석한 결과입니다.</p>
-            <div class="stats-box">
-                <h3 data-i18n="hot-title">Most Frequent Numbers (Hot)</h3>
-                <p data-i18n="hot-desc">Numbers that appeared most often in the last 100 draws.</p>
-                <div id="hot-numbers" class="stats-list"></div>
-            </div>
-            <div class="stats-box">
-                <h3 data-i18n="cold-title">Least Frequent Numbers (Cold)</h3>
-                <p data-i18n="cold-desc">Numbers that appeared least often in the last 100 draws.</p>
-                <div id="cold-numbers" class="stats-list"></div>
-            </div>
-        </section>
+  <section class="hero">
+    <div class="hero-badge">🧠 AI 구매 결정 도우미</div>
+    <h1>사기 전에<br><em>AI한테 물어보세요</em></h1>
+    <p>충동구매인지 진짜 필요한 건지<br>30초 안에 AI가 분석해드립니다.</p>
+    <button class="btn-start-lg" onclick="openApp()">지금 무료로 시작하기 →</button>
 
-        <!-- Information Content for AdSense Quality -->
-        <section class="container content-section">
-            <h2 data-i18n="how-title">How the Smart Generator Works</h2>
-            <p data-i18n="how-p1">Our algorithm doesn't just pick numbers at random. It analyzes the historical data from the most recent 100 draws to identify patterns. We categorize numbers into two main groups:</p>
-            
-            <h3 data-i18n="how-hot-title">1. Hot Numbers</h3>
-            <p data-i18n="how-hot-desc">These are numbers that have a high frequency of appearing in recent draws. Some players believe that "hot" numbers are more likely to appear again as they follow a current trend.</p>
-            
-            <h3 data-i18n="how-cold-title">2. Cold Numbers</h3>
-            <p data-i18n="how-cold-desc">These are numbers that haven't appeared for a while. The "law of averages" suggests that these numbers might be "due" to appear soon, making them a popular choice for strategic players.</p>
-            
-            <h3 data-i18n="how-balance-title">Statistical Balance</h3>
-            <p data-i18n="how-balance-desc">The Smart Generator combines these insights to provide a balanced set of numbers, giving you a mix of trending and overdue numbers for your next ticket.</p>
-        </section>
-
-        <!-- Responsible Gaming -->
-        <section class="container content-section">
-            <h2 data-i18n="gaming-title">Responsible Gaming</h2>
-            <p data-i18n="gaming-desc1">Lottery is a game of chance. While our generator uses statistical data to help you choose numbers, it does not guarantee a win. Please play responsibly and only spend what you can afford to lose.</p>
-            <p data-i18n="gaming-desc2">If you or someone you know has a gambling problem, please seek help from professional organizations in your region.</p>
-        </section>
-
-        <!-- Disqus Comments -->
-        <div class="container comments-container">
-            <h2 data-i18n="community-title">Community Discussion</h2>
-            <div id="disqus_thread"></div>
-            <script>
-                (function() {
-                var d = document, s = d.createElement('script');
-                s.src = 'https://hijimin.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
-            </script>
-            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div class="hero-visual">
+      <div class="visual-row">
+        <span class="visual-emoji">👟</span>
+        <div class="visual-info">
+          <strong>나이키 운동화 (₩149,000)</strong>
+          <small>인스타그램에서 봄 · 비슷한 거 있음</small>
         </div>
+        <span class="verdict-tag skip">참으세요</span>
+      </div>
+      <div class="visual-row">
+        <span class="visual-emoji">💻</span>
+        <div class="visual-info">
+          <strong>모니터 암 (₩89,000)</strong>
+          <small>직접 필요 · 매일 사용 예정</small>
+        </div>
+        <span class="verdict-tag go">사도 됩니다</span>
+      </div>
+      <div class="visual-row">
+        <span class="visual-emoji">🎧</span>
+        <div class="visual-info">
+          <strong>무선 이어폰 (₩230,000)</strong>
+          <small>유튜브 광고 · 다음 달 필요</small>
+        </div>
+        <span class="verdict-tag wait">기다려요</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <p class="section-title">왜 SORTED인가요?</p>
+    <p class="section-sub">충동구매가 줄면 삶의 질이 올라갑니다.</p>
+
+    <div class="feature-card">
+      <div class="feature-icon fi-purple">🎯</div>
+      <div class="feature-text">
+        <strong>30초 구매 분석</strong>
+        <p>상품명과 가격만 입력하면 AI가 필요도, 충동 여부, 활용도를 즉시 분석합니다.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-green">📊</div>
+      <div class="feature-text">
+        <strong>소비 패턴 인사이트</strong>
+        <p>내 구매 충동이 주로 어디서 오는지, 얼마나 자주 후회하는지 데이터로 보여드립니다.</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-amber">⭐</div>
+      <div class="feature-text">
+        <strong>24시간 위시리스트</strong>
+        <p>지금 당장 사지 않고 위시리스트에 담으면 24시간 뒤 다시 확인해드립니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="stat-box"><div class="sn">87%</div><div class="sl">충동구매 감소율</div></div>
+    <div class="stat-box"><div class="sn">₩24만</div><div class="sl">월 평균 절약액</div></div>
+    <div class="stat-box"><div class="sn">30초</div><div class="sl">평균 분석 시간</div></div>
+  </div>
+
+  <section class="pricing">
+    <p class="section-title">요금제</p>
+    <p class="section-sub">처음엔 무료로 써보세요.</p>
+
+    <div class="price-card">
+      <div class="price-header">
+        <div class="price-name">무료</div>
+        <div class="price-amount">₩0 <small>/ 월</small></div>
+      </div>
+      <div class="price-features">
+        <div class="pf"><span class="ck">✓</span> 월 5회 구매 분석</div>
+        <div class="pf"><span class="ck">✓</span> 기본 결과 확인</div>
+        <div class="pf"><span class="ck">✓</span> 위시리스트 기능</div>
+        <div class="pf"><span class="lk">✗</span> 소비 패턴 분석</div>
+        <div class="pf"><span class="lk">✗</span> 무제한 분석</div>
+      </div>
+      <button class="btn-price outline" onclick="openApp()">무료로 시작</button>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="index.html" data-i18n="nav-home">Home</a>
-                <a href="fortune.html" data-i18n="nav-fortune">Fortune</a>
-                <a href="face.html" data-i18n="nav-face">Face Reading</a>
-                <a href="compatibility.html" data-i18n="nav-compat">Compatibility</a>
-                <a href="about.html" data-i18n="nav-about">About Us</a>
-                <a href="contact.html" data-i18n="nav-contact">Contact</a>
-                <a href="privacy.html" data-i18n="nav-privacy">Privacy Policy</a>
-            </div>
-            <p class="copyright" data-i18n="footer-copy">&copy; 2026 LottoSmart. All rights reserved.</p>
-            <p class="copyright" style="margin-top: 10px; font-size: 0.7rem;" data-i18n="footer-disclaimer">Disclaimer: This site is not affiliated with any official lottery organization.</p>
-        </div>
-    </footer>
+    <div class="price-card featured">
+      <div class="price-header">
+        <div class="price-badge">가장 인기</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">₩3,900 <small>/ 월</small></div>
+      </div>
+      <div class="price-features">
+        <div class="pf"><span class="ck">✓</span> 무제한 구매 분석</div>
+        <div class="pf"><span class="ck">✓</span> 소비 패턴 심층 분석</div>
+        <div class="pf"><span class="ck">✓</span> 충동구매 경향 리포트</div>
+        <div class="pf"><span class="ck">✓</span> 월별 절약 금액 계산</div>
+        <div class="pf"><span class="ck">✓</span> 위시리스트 무제한</div>
+      </div>
+      <button class="btn-price primary" onclick="showToast('오픈 준비 중이에요! 곧 알려드릴게요 🙏')">Pro 시작하기</button>
+    </div>
+  </section>
 
-    <script src="main.js?v=13"></script>
+  <footer class="land-footer">
+    <div style="margin-bottom:12px">
+      <a href="privacy.html">개인정보처리방침</a>
+      <a href="#">이용약관</a>
+    </div>
+    © 2026 SORTED. 현명한 소비를 위해.
+  </footer>
+</div>
+
+<!-- APP SHELL -->
+<div class="app" id="app">
+  <header class="app-header">
+    <div class="app-header-row">
+      <div class="app-logo">SOR<span>TED</span></div>
+      <div id="usage-badge" class="free-badge">무료 5/5</div>
+    </div>
+  </header>
+
+  <!-- HOME TAB -->
+  <div class="tab-content active" id="tab-home">
+    <div class="greeting">
+      <h2>오늘도 현명하게 👋</h2>
+      <p>사기 전에 한번만 더 생각해요</p>
+    </div>
+
+    <div class="quick-decide" onclick="switchTab('decide')">
+      <div class="qd-text">
+        <strong>구매 결정 하기</strong>
+        <span>30초면 결과가 나와요</span>
+      </div>
+      <div class="qd-icon">🛍️</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="sc-label">총 결정 횟수</div>
+        <div class="sc-value primary" id="stat-total">0회</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">이번 달 결정</div>
+        <div class="sc-value primary" id="stat-month">0회</div>
+      </div>
+      <div class="stat-card">
+        <div class="sc-label">절약한 금액 (추정)</div>
+        <div class="sc-value green" id="stat-saved">₩0</div>
+        <div class="sc-sub">참은 결정 기준</div>
+      </div>
+      <div class="stat-card full">
+        <div class="sc-label">충동 구매 지수</div>
+        <div class="sc-value" id="stat-impulse">0%</div>
+        <div class="impulse-track"><div class="impulse-fill" id="impulse-fill" style="width:0%"></div></div>
+        <div class="sc-sub" style="margin-top:6px">SNS 등 광고 경유 비율</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h3>최근 결정</h3>
+      <a onclick="switchTab('history')">전체 보기</a>
+    </div>
+    <div id="recent-list">
+      <div style="text-align:center;padding:20px;font-size:14px;color:var(--gray-400)">아직 결정 기록이 없어요</div>
+    </div>
+  </div>
+
+  <!-- DECIDE TAB -->
+  <div class="tab-content" id="tab-decide">
+    <div id="decide-content"></div>
+  </div>
+
+  <!-- HISTORY TAB -->
+  <div class="tab-content" id="tab-history">
+    <div class="section-header" style="margin-bottom:12px">
+      <h3>결정 기록</h3>
+    </div>
+    <div class="filter-row">
+      <div class="filter-chip active" data-filter="all" onclick="setFilter('all',this)">전체</div>
+      <div class="filter-chip" data-filter="go" onclick="setFilter('go',this)">✅ 구매 OK</div>
+      <div class="filter-chip" data-filter="wait" onclick="setFilter('wait',this)">⏳ 기다려요</div>
+      <div class="filter-chip" data-filter="skip" onclick="setFilter('skip',this)">🛑 참아요</div>
+    </div>
+    <div id="history-list"></div>
+  </div>
+
+  <!-- PATTERN TAB -->
+  <div class="tab-content" id="tab-pattern">
+    <div class="section-header" style="margin-bottom:16px">
+      <h3>내 소비 패턴</h3>
+    </div>
+
+    <div class="pattern-card">
+      <h3>총 절약 금액</h3>
+      <div class="big-num saved" id="pat-saved">₩0</div>
+      <div class="big-num-sub">참거나 기다린 결정 기준</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div class="pattern-card" style="margin-bottom:0">
+        <h3>총 결정 수</h3>
+        <div class="big-num primary" id="pat-total">0</div>
+      </div>
+      <div class="pattern-card" style="margin-bottom:0">
+        <h3>후회한 구매</h3>
+        <div class="big-num" style="color:var(--red)" id="pat-regret">0회</div>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <h3>구매 충동 경로</h3>
+      <div class="bar-chart" id="trigger-chart">
+        <p style="color:var(--gray-400);font-size:14px">아직 데이터 없음</p>
+      </div>
+    </div>
+
+    <div class="pattern-card">
+      <h3>결정 유형 비율</h3>
+      <div class="verdict-split">
+        <div id="verdict-pie" style="width:80px;height:80px;border-radius:50%;background:var(--gray-200);flex-shrink:0"></div>
+        <div class="pie-legend" id="pie-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>구매 OK <span class="legend-pct">-</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>기다려요 <span class="legend-pct">-</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>참아요 <span class="legend-pct">-</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pro-gate">
+      <h3>🔒 심층 분석 리포트</h3>
+      <p>어떤 카테고리에서 가장 많이 충동구매하는지,<br>요일/시간대별 소비 패턴까지 분석해드려요.</p>
+      <button class="btn-upgrade" onclick="showToast('Pro 출시 준비 중이에요 🙏')">Pro 업그레이드 — ₩3,900/월</button>
+    </div>
+  </div>
+
+  <!-- WISHLIST TAB -->
+  <div class="tab-content" id="tab-wishlist">
+    <div class="section-header" style="margin-bottom:16px">
+      <h3>위시리스트</h3>
+    </div>
+    <div style="background:var(--amber-light);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--gray-700)">
+      ⏳ 24시간이 지난 뒤에도 원한다면 진짜 필요한 거예요
+    </div>
+    <div id="wishlist-list"></div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
+      <span class="nav-icon">🏠</span><span class="nav-label">홈</span>
+    </div>
+    <div class="nav-item" data-tab="decide" onclick="switchTab('decide')">
+      <span class="nav-icon">🎯</span><span class="nav-label">결정하기</span>
+    </div>
+    <div class="nav-item" data-tab="history" onclick="switchTab('history')">
+      <span class="nav-icon">📋</span><span class="nav-label">기록</span>
+    </div>
+    <div class="nav-item" data-tab="pattern" onclick="switchTab('pattern')">
+      <span class="nav-icon">📊</span><span class="nav-label">패턴</span>
+    </div>
+    <div class="nav-item" data-tab="wishlist" onclick="switchTab('wishlist')">
+      <span class="nav-icon">⭐</span><span class="nav-label">위시리스트</span>
+    </div>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function openApp() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+  switchTab('home');
+}
+function setFilter(val, el) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderHistory(val);
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 2200);
+}
+</script>
+<script src="sorted.js"></script>
 </body>
 </html>

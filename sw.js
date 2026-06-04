@@ -1,17 +1,12 @@
-// Simple offline cache for LottoSmart (bump CACHE to invalidate).
-const CACHE = 'lottosmart-v1';
+// SORTED — AI 구매 결정 도우미
+const CACHE = 'sorted-v1';
 const CORE = [
   './',
   './index.html',
-  './today.html',
-  './fortune.html',
-  './face.html',
-  './compatibility.html',
-  './zodiac.html',
-  './premium.html',
-  './style.css?v=12',
-  './main.js?v=13',
-  './icon.svg'
+  './style.css',
+  './sorted.js',
+  './icon.svg',
+  './manifest.json'
 ];
 
 self.addEventListener('install', function (e) {

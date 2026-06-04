@@ -118,7 +118,7 @@ function analyze(data) {
 
   // 세부 점수
   const needScore = Math.min(10, Math.max(1, Math.round((score + (data.hasSimilar === '없어요' ? 20 : -10)) / 10)));
-  const impScore = Math.min(10, Math.max(1, 10 - Math.round((['인스타그램','틱톡','유튜브','광고'].includes(data.trigger) ? 4 : 0)));
+  const impScore = Math.min(10, Math.max(1, 10 - Math.round((['인스타그램','틱톡','유튜브','광고'].includes(data.trigger) ? 4 : 0))));
   const useScore = Math.min(10, Math.max(1, { '매일': 9, '주 2~3회': 7, '가끔': 4, '거의 안 씀': 2 }[data.usage] || 5));
 
   return { score, verdict, verdictText, verdictEmoji, verdictSub, reasons, needScore, impScore, useScore };

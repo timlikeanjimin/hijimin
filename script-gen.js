@@ -230,7 +230,7 @@ work: `
 };
 
 // Cloudflare Worker URL — worker.js 배포 후 여기에 입력
-const WORKER_URL = '';
+const WORKER_URL = 'https://satd.rkdalwjd080522.workers.dev';
 
 async function buildScripts(cat, d) {
   if (WORKER_URL) {

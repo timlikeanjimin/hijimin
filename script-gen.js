@@ -229,7 +229,25 @@ work: `
 
 };
 
-function buildScripts(cat, d) {
+// Cloudflare Worker URL — worker.js 배포 후 여기에 입력
+const WORKER_URL = '';
+
+async function buildScripts(cat, d) {
+  if (WORKER_URL) {
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cat, formData: d })
+      });
+      if (res.ok) {
+        const scripts = await res.json();
+        if (Array.isArray(scripts) && scripts.length === 3) return scripts;
+      }
+    } catch (e) {
+      console.warn('Worker 호출 실패, 템플릿으로 대체:', e);
+    }
+  }
   return BUILDERS[cat](d);
 }
 

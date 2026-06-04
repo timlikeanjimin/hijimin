@@ -340,8 +340,7 @@
     });
   }
 
-  function generateScript() {
-    // collect form data
+  async function generateScript() {
     document.querySelectorAll('#form-content input, #form-content textarea, #form-content select').forEach(el => {
       if (el.id) currentFormData[el.id] = el.value;
     });
@@ -349,13 +348,17 @@
     document.getElementById('form-section').classList.remove('active');
     document.getElementById('loading-section').style.display = 'block';
 
-    setTimeout(() => {
+    try {
+      const scripts = await buildScripts(currentCat, currentFormData);
       document.getElementById('loading-section').style.display = 'none';
       document.getElementById('result-section').classList.add('active');
       document.getElementById('app-title').textContent = '완성된 스크립트';
-      const scripts = buildScripts(currentCat, currentFormData);
       renderResult(scripts);
-    }, 1800);
+    } catch (e) {
+      document.getElementById('loading-section').style.display = 'none';
+      document.getElementById('form-section').classList.add('active');
+      showToast('생성 중 오류가 발생했어요. 다시 시도해주세요.');
+    }
   }
 
   function renderResult(scripts) {
@@ -382,13 +385,18 @@
     });
   }
 
-  function regenerate(i) {
-    const scripts = buildScripts(currentCat, currentFormData);
-    const labels = ['버전 A — 정중하고 단호하게', '버전 B — 부드럽고 협력적으로', '버전 C — 간결하고 직접적으로'];
-    const s = scripts[i];
+  async function regenerate(i) {
     const card = document.getElementById('sc' + i);
-    card.querySelector('.script-text').textContent = s.text;
-    showToast('새 버전으로 바꿨어요');
+    const prevText = card.querySelector('.script-text').textContent;
+    card.querySelector('.script-text').textContent = '다시 작성 중...';
+    try {
+      const scripts = await buildScripts(currentCat, currentFormData);
+      card.querySelector('.script-text').textContent = scripts[i].text;
+      showToast('새 버전으로 바꿨어요');
+    } catch (e) {
+      card.querySelector('.script-text').textContent = prevText;
+      showToast('오류가 발생했어요. 다시 시도해주세요.');
+    }
   }
 </script>
 </body>

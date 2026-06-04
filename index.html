@@ -267,25 +267,27 @@
     <div id="wishlist-list"></div>
   </div>
 
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
-      <span class="nav-icon">🏠</span><span class="nav-label">홈</span>
-    </div>
-    <div class="nav-item" data-tab="decide" onclick="switchTab('decide')">
-      <span class="nav-icon">🎯</span><span class="nav-label">결정하기</span>
-    </div>
-    <div class="nav-item" data-tab="history" onclick="switchTab('history')">
-      <span class="nav-icon">📋</span><span class="nav-label">기록</span>
-    </div>
-    <div class="nav-item" data-tab="pattern" onclick="switchTab('pattern')">
-      <span class="nav-icon">📊</span><span class="nav-label">패턴</span>
-    </div>
-    <div class="nav-item" data-tab="wishlist" onclick="switchTab('wishlist')">
-      <span class="nav-icon">⭐</span><span class="nav-label">위시리스트</span>
-    </div>
-  </nav>
+
 </div>
+
+<!-- BOTTOM NAV — .app 바깥에 독립 배치 (iOS Safari touch 버그 방지) -->
+<nav class="bottom-nav" id="bottom-nav" style="display:none">
+  <div class="nav-item active" data-tab="home" onclick="switchTab('home')">
+    <span class="nav-icon">🏠</span><span class="nav-label">홈</span>
+  </div>
+  <div class="nav-item" data-tab="decide" onclick="switchTab('decide')">
+    <span class="nav-icon">🎯</span><span class="nav-label">결정하기</span>
+  </div>
+  <div class="nav-item" data-tab="history" onclick="switchTab('history')">
+    <span class="nav-icon">📋</span><span class="nav-label">기록</span>
+  </div>
+  <div class="nav-item" data-tab="pattern" onclick="switchTab('pattern')">
+    <span class="nav-icon">📊</span><span class="nav-label">패턴</span>
+  </div>
+  <div class="nav-item" data-tab="wishlist" onclick="switchTab('wishlist')">
+    <span class="nav-icon">⭐</span><span class="nav-label">위시리스트</span>
+  </div>
+</nav>
 
 <div class="toast" id="toast"></div>
 
@@ -293,6 +295,7 @@
 function openApp() {
   document.getElementById('landing').style.display = 'none';
   document.getElementById('app').classList.add('active');
+  document.getElementById('bottom-nav').style.display = 'flex';
   switchTab('home');
 }
 function setFilter(val, el) {

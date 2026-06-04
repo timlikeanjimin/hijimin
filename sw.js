@@ -1,5 +1,5 @@
 // SORTED — AI 구매 결정 도우미
-const CACHE = 'sorted-v1';
+const CACHE = 'sorted-v3';
 const CORE = [
   './',
   './index.html',

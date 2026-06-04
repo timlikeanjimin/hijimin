@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>SCRIPT — 뭐라고 해야 할지 모를 때</title>
+  <meta name="description" content="연봉협상, 상사 거절, 소개팅 첫 메시지... AI가 대신 써드립니다."/>
+  <meta name="theme-color" content="#0EA5E9"/>
+  <meta property="og:title" content="SCRIPT — 뭐라고 해야 할지 모를 때"/>
+  <meta property="og:description" content="연봉협상, 상사 거절, 소개팅 첫 메시지... AI가 한국 상황에 맞게 써드립니다."/>
+  <style>
+    :root {
+      --primary: #0EA5E9;
+      --primary-dark: #0284C7;
+      --primary-light: #F0F9FF;
+      --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB;
+      --gray-400: #9CA3AF; --gray-500: #6B7280; --gray-600: #4B5563;
+      --gray-700: #374151; --gray-800: #1F2937; --gray-900: #111827;
+      --radius: 16px; --radius-sm: 10px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Noto Sans KR', sans-serif; background: #fff; color: var(--gray-900); max-width: 480px; margin: 0 auto; }
+
+    /* LANDING */
+    .land { display: block; }
+    .app  { display: none; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-bottom: 1px solid var(--gray-100); position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 10; }
+    .logo { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+    .btn-nav { background: var(--primary); color: #fff; border: none; border-radius: 20px; padding: 8px 18px; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+    .hero { padding: 44px 24px 36px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: var(--primary-light); color: var(--primary); border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+    .hero h1 { font-size: 32px; font-weight: 800; line-height: 1.2; letter-spacing: -1px; margin-bottom: 16px; }
+    .hero h1 em { color: var(--primary); font-style: normal; }
+    .hero p { font-size: 16px; color: var(--gray-500); line-height: 1.65; margin-bottom: 32px; }
+    .btn-cta { display: block; width: 100%; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); padding: 18px; font-size: 17px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 20px rgba(14,165,233,0.35); font-family: inherit; }
+    .btn-cta:active { transform: scale(0.98); }
+
+    /* 상황 카드 미리보기 */
+    .demo-wrap { margin: 32px 24px 0; }
+    .demo-title { font-size: 13px; font-weight: 600; color: var(--gray-400); margin-bottom: 12px; letter-spacing: 0.5px; }
+    .demo-card { background: var(--gray-50); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; border: 1px solid var(--gray-200); }
+    .demo-situation { font-size: 13px; color: var(--gray-500); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .demo-script { font-size: 14px; line-height: 1.6; color: var(--gray-800); background: #fff; border-radius: var(--radius-sm); padding: 12px 14px; border-left: 3px solid var(--primary); }
+
+    .features { padding: 40px 24px; }
+    .section-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .section-sub { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
+    .feat-card { background: var(--gray-50); border-radius: var(--radius); padding: 20px; margin-bottom: 10px; display: flex; gap: 16px; align-items: flex-start; }
+    .feat-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .feat-text strong { display: block; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .feat-text p { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+
+    .situations { padding: 0 24px 40px; }
+    .sit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .sit-card { background: var(--gray-50); border-radius: var(--radius); padding: 16px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; }
+    .sit-card:active { transform: scale(0.97); }
+    .sit-card:hover { border-color: var(--primary); }
+    .sit-emoji { font-size: 28px; margin-bottom: 8px; display: block; }
+    .sit-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .sit-desc { font-size: 12px; color: var(--gray-500); }
+
+    footer { text-align: center; padding: 24px; font-size: 13px; color: var(--gray-400); border-top: 1px solid var(--gray-100); }
+
+    /* APP SHELL */
+    .app-header { background: #fff; padding: 14px 20px; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; }
+    .btn-back-app { background: none; border: none; font-size: 20px; cursor: pointer; padding: 4px; }
+    .app-title { font-size: 17px; font-weight: 700; flex: 1; }
+    .app-logo-sm { font-size: 16px; font-weight: 800; color: var(--primary); }
+
+    .app-body { padding: 20px; padding-bottom: 40px; }
+
+    /* CATEGORY SELECT */
+    .cat-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; }
+    .cat-sub { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; }
+    .cat-list { display: flex; flex-direction: column; gap: 10px; }
+    .cat-item { background: var(--gray-50); border-radius: var(--radius); padding: 18px; display: flex; align-items: center; gap: 16px; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; }
+    .cat-item:active { transform: scale(0.98); }
+    .cat-item:hover { border-color: var(--primary); background: var(--primary-light); }
+    .cat-emoji { font-size: 28px; flex-shrink: 0; }
+    .cat-info strong { display: block; font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+    .cat-info span { font-size: 13px; color: var(--gray-500); }
+    .cat-arrow { margin-left: auto; font-size: 18px; color: var(--gray-300); }
+
+    /* FORM */
+    .form-section { display: none; }
+    .form-section.active { display: block; }
+    .form-back { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--primary); cursor: pointer; margin-bottom: 20px; background: none; border: none; font-family: inherit; }
+    .form-category { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .form-cat-emoji { font-size: 28px; }
+    .form-cat-name { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .form-sub { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.5; }
+
+    .input-group { margin-bottom: 16px; }
+    .input-group label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 8px; }
+    .input-field { width: 100%; padding: 14px 16px; border-radius: var(--radius-sm); border: 2px solid var(--gray-200); font-size: 16px; outline: none; transition: border-color 0.2s; background: var(--gray-50); font-family: inherit; }
+    .input-field:focus { border-color: var(--primary); background: #fff; }
+    .input-field::placeholder { color: var(--gray-400); }
+    textarea.input-field { resize: none; min-height: 90px; }
+    select.input-field { cursor: pointer; }
+
+    .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; border: 2px solid var(--gray-200); background: #fff; cursor: pointer; color: var(--gray-600); transition: all 0.15s; font-family: inherit; }
+    .chip.selected { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
+
+    .btn-generate { display: block; width: 100%; background: var(--primary); color: #fff; border: none; border-radius: var(--radius); padding: 18px; font-size: 17px; font-weight: 700; cursor: pointer; margin-top: 24px; font-family: inherit; }
+    .btn-generate:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-generate:not(:disabled):active { transform: scale(0.98); }
+
+    /* RESULT */
+    .result-section { display: none; }
+    .result-section.active { display: block; }
+    .result-header { margin-bottom: 20px; }
+    .result-header h3 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .result-header p { font-size: 14px; color: var(--gray-500); margin-top: 4px; }
+
+    .script-card { background: #fff; border-radius: var(--radius); border: 2px solid var(--gray-200); padding: 20px; margin-bottom: 12px; position: relative; transition: border-color 0.2s; }
+    .script-card.selected-script { border-color: var(--primary); }
+    .script-label { font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 3px 10px; border-radius: 10px; display: inline-block; margin-bottom: 12px; }
+    .script-text { font-size: 15px; line-height: 1.7; color: var(--gray-800); white-space: pre-wrap; }
+    .script-actions { display: flex; gap: 8px; margin-top: 14px; }
+    .btn-copy { flex: 1; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
+    .btn-copy:active { transform: scale(0.97); }
+    .btn-regen { padding: 12px 16px; background: var(--gray-100); color: var(--gray-600); border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+    .tip-box { background: #FFF7ED; border: 1px solid #FED7AA; border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 16px; }
+    .tip-box strong { display: block; font-size: 13px; font-weight: 700; color: #92400E; margin-bottom: 6px; }
+    .tip-box p { font-size: 13px; color: #78350F; line-height: 1.5; }
+
+    .btn-new { display: block; width: 100%; background: var(--gray-100); color: var(--gray-700); border: none; border-radius: var(--radius); padding: 16px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 16px; font-family: inherit; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 40px 20px; }
+    .loading-emoji { font-size: 48px; display: block; margin-bottom: 16px; animation: pulse 1.2s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
+    .loading h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+    .loading p { font-size: 14px; color: var(--gray-500); }
+
+    .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gray-800); color: #fff; padding: 12px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 1000; opacity: 0; transition: opacity 0.3s; white-space: nowrap; pointer-events: none; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ===== LANDING ===== -->
+<div class="land" id="land">
+  <nav>
+    <div class="logo">SCRIPT</div>
+    <button class="btn-nav" onclick="openApp()">무료 사용</button>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">✍️ AI 대화 스크립트</div>
+    <h1>뭐라고 해야 할지<br><em>AI가 대신</em> 써드려요</h1>
+    <p>연봉협상, 상사 거절, 소개팅 첫 메시지...<br>막막한 그 순간, 30초 만에 스크립트 완성.</p>
+    <button class="btn-cta" onclick="openApp()">지금 무료로 써보기 →</button>
+
+    <div class="demo-wrap">
+      <div class="demo-title">실제 생성 예시</div>
+      <div class="demo-card">
+        <div class="demo-situation">💼 <span>연봉협상 · 현재 3,200만 → 목표 3,800만</span></div>
+        <div class="demo-script">"팀에서 맡은 OO 프로젝트 결과로 매출이 XX% 개선됐습니다. 이런 기여를 감안해 연봉을 3,800만원으로 조정해주실 수 있을까요? 구체적인 근거 자료도 준비했습니다."</div>
+      </div>
+      <div class="demo-card">
+        <div class="demo-situation">🙅 <span>거절 · 선배 부탁 · 주말 추가업무</span></div>
+        <div class="demo-script">"선배님, 도움드리고 싶은 마음은 굴뚝같은데요, 이번 주말은 이미 다른 일정이 있어서요. 다른 방법으로 도울 수 있는 게 있다면 말씀해 주세요."</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <p class="section-title">왜 SCRIPT인가요?</p>
+    <p class="section-sub">ChatGPT와 다른 한 가지</p>
+    <div class="feat-card">
+      <div class="feat-icon">🇰🇷</div>
+      <div class="feat-text"><strong>한국 위계·눈치 완벽 반영</strong><p>높임말 단계, 관계 친밀도, 상황 맥락을 모두 고려해 어색하지 않은 한국어로.</p></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">⚡</div>
+      <div class="feat-text"><strong>30초 완성</strong><p>복잡한 프롬프트 없이 상황만 입력하면 바로 3가지 버전을 드려요.</p></div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🎯</div>
+      <div class="feat-text"><strong>상황별 최적화</strong><p>연봉협상, 거절, 소개팅, 가족, 계약·민원까지 각 상황에 맞는 전략으로.</p></div>
+    </div>
+  </section>
+
+  <section class="situations">
+    <p class="section-title">어떤 상황에서 쓰나요?</p>
+    <p class="section-sub">탭해서 바로 써보세요</p>
+    <div class="sit-grid">
+      <div class="sit-card" onclick="openApp('salary')">
+        <span class="sit-emoji">💼</span>
+        <div class="sit-name">연봉협상</div>
+        <div class="sit-desc">인상 요청 스크립트</div>
+      </div>
+      <div class="sit-card" onclick="openApp('reject')">
+        <span class="sit-emoji">🙅</span>
+        <div class="sit-name">거절하기</div>
+        <div class="sit-desc">정중하지만 단호하게</div>
+      </div>
+      <div class="sit-card" onclick="openApp('dating')">
+        <span class="sit-emoji">💌</span>
+        <div class="sit-name">소개팅/관계</div>
+        <div class="sit-desc">첫 메시지·고백·화해</div>
+      </div>
+      <div class="sit-card" onclick="openApp('family')">
+        <span class="sit-emoji">👨‍👩‍👧</span>
+        <div class="sit-name">가족 대화</div>
+        <div class="sit-desc">부모님·형제 설득</div>
+      </div>
+      <div class="sit-card" onclick="openApp('complaint')">
+        <span class="sit-emoji">📋</span>
+        <div class="sit-name">계약·민원</div>
+        <div class="sit-desc">집주인·환불·항의</div>
+      </div>
+      <div class="sit-card" onclick="openApp('work')">
+        <span class="sit-emoji">🏢</span>
+        <div class="sit-name">직장 대화</div>
+        <div class="sit-desc">상사·동료 어려운 말</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 SCRIPT · <a href="#" style="color:var(--gray-500)">개인정보처리방침</a></footer>
+</div>
+
+<!-- ===== APP ===== -->
+<div class="app" id="app">
+  <div class="app-header">
+    <button class="btn-back-app" onclick="closeApp()">←</button>
+    <div class="app-title" id="app-title">상황 선택</div>
+    <div class="app-logo-sm">SCRIPT</div>
+  </div>
+
+  <div class="app-body" id="app-body">
+
+    <!-- CATEGORY SELECT -->
+    <div id="cat-section">
+      <div class="cat-title">어떤 상황인가요?</div>
+      <div class="cat-sub">상황을 선택하면 맞춤 질문을 드려요.</div>
+      <div class="cat-list">
+        <div class="cat-item" onclick="selectCat('salary')"><span class="cat-emoji">💼</span><div class="cat-info"><strong>연봉협상</strong><span>인상 요청, 오퍼 협상, 처우 개선</span></div><span class="cat-arrow">›</span></div>
+        <div class="cat-item" onclick="selectCat('reject')"><span class="cat-emoji">🙅</span><div class="cat-info"><strong>거절하기</strong><span>부탁 거절, 미팅 거절, 호의 거절</span></div><span class="cat-arrow">›</span></div>
+        <div class="cat-item" onclick="selectCat('dating')"><span class="cat-emoji">💌</span><div class="cat-info"><strong>소개팅 / 관계</strong><span>첫 메시지, 고백, 화해, 이별</span></div><span class="cat-arrow">›</span></div>
+        <div class="cat-item" onclick="selectCat('family')"><span class="cat-emoji">👨‍👩‍👧</span><div class="cat-info"><strong>가족 대화</strong><span>부모님 설득, 독립 선언, 갈등 해결</span></div><span class="cat-arrow">›</span></div>
+        <div class="cat-item" onclick="selectCat('complaint')"><span class="cat-emoji">📋</span><div class="cat-info"><strong>계약 · 민원</strong><span>집주인, 환불 요청, 회사 항의</span></div><span class="cat-arrow">›</span></div>
+        <div class="cat-item" onclick="selectCat('work')"><span class="cat-emoji">🏢</span><div class="cat-info"><strong>직장 대화</strong><span>상사에게 어려운 말, 동료 갈등</span></div><span class="cat-arrow">›</span></div>
+      </div>
+    </div>
+
+    <!-- FORMS (per category) -->
+    <div id="form-section" class="form-section">
+      <button class="form-back" onclick="backToCat()">← 다시 선택</button>
+      <div id="form-content"></div>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loading-section" style="display:none">
+      <div class="loading">
+        <span class="loading-emoji">✍️</span>
+        <h3>스크립트 작성 중...</h3>
+        <p>상황을 분석하고 있어요</p>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result-section" class="result-section">
+      <button class="form-back" onclick="backToForm()">← 다시 입력</button>
+      <div class="result-header">
+        <h3>✅ 스크립트 완성!</h3>
+        <p>마음에 드는 버전을 골라 복사하세요</p>
+      </div>
+      <div id="result-content"></div>
+      <button class="btn-new" onclick="startOver()">+ 다른 상황 작성하기</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script-gen.js"></script>
+<script>
+  let currentCat = null;
+  let currentFormData = {};
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  function openApp(cat) {
+    document.getElementById('land').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    if (cat) selectCat(cat);
+  }
+
+  function closeApp() {
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('land').style.display = 'block';
+  }
+
+  function selectCat(cat) {
+    currentCat = cat;
+    document.getElementById('cat-section').style.display = 'none';
+    document.getElementById('form-section').classList.add('active');
+    document.getElementById('result-section').classList.remove('active');
+    document.getElementById('loading-section').style.display = 'none';
+    document.getElementById('app-title').textContent = CATEGORIES[cat].name;
+    renderForm(cat);
+  }
+
+  function backToCat() {
+    document.getElementById('cat-section').style.display = 'block';
+    document.getElementById('form-section').classList.remove('active');
+    document.getElementById('app-title').textContent = '상황 선택';
+  }
+
+  function backToForm() {
+    document.getElementById('result-section').classList.remove('active');
+    document.getElementById('form-section').classList.add('active');
+  }
+
+  function startOver() {
+    document.getElementById('result-section').classList.remove('active');
+    document.getElementById('cat-section').style.display = 'block';
+    document.getElementById('form-section').classList.remove('active');
+    document.getElementById('app-title').textContent = '상황 선택';
+    currentCat = null; currentFormData = {};
+  }
+
+  function selectChip(groupId, value, field) {
+    currentFormData[field] = value;
+    document.querySelectorAll(`#${groupId} .chip`).forEach(c => {
+      c.classList.toggle('selected', c.dataset.value === value);
+    });
+  }
+
+  function generateScript() {
+    // collect form data
+    document.querySelectorAll('#form-content input, #form-content textarea, #form-content select').forEach(el => {
+      if (el.id) currentFormData[el.id] = el.value;
+    });
+
+    document.getElementById('form-section').classList.remove('active');
+    document.getElementById('loading-section').style.display = 'block';
+
+    setTimeout(() => {
+      document.getElementById('loading-section').style.display = 'none';
+      document.getElementById('result-section').classList.add('active');
+      document.getElementById('app-title').textContent = '완성된 스크립트';
+      const scripts = buildScripts(currentCat, currentFormData);
+      renderResult(scripts);
+    }, 1800);
+  }
+
+  function renderResult(scripts) {
+    const container = document.getElementById('result-content');
+    const labels = ['버전 A — 정중하고 단호하게', '버전 B — 부드럽고 협력적으로', '버전 C — 간결하고 직접적으로'];
+    container.innerHTML = scripts.map((s, i) => `
+      <div class="script-card" id="sc${i}">
+        <div class="script-label">${labels[i] || `버전 ${i+1}`}</div>
+        <div class="script-text">${s.text}</div>
+        ${s.tip ? `<div class="tip-box"><strong>💡 팁</strong><p>${s.tip}</p></div>` : ''}
+        <div class="script-actions">
+          <button class="btn-copy" onclick="copyScript(${i}, \`${s.text.replace(/`/g,'\\`')}\`)">복사하기</button>
+          <button class="btn-regen" onclick="regenerate(${i})">다시 쓰기</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function copyScript(i, text) {
+    navigator.clipboard.writeText(text).then(() => showToast('✅ 복사됐어요!')).catch(() => {
+      const el = document.createElement('textarea');
+      el.value = text; document.body.appendChild(el); el.select();
+      document.execCommand('copy'); document.body.removeChild(el);
+      showToast('✅ 복사됐어요!');
+    });
+  }
+
+  function regenerate(i) {
+    const scripts = buildScripts(currentCat, currentFormData);
+    const labels = ['버전 A — 정중하고 단호하게', '버전 B — 부드럽고 협력적으로', '버전 C — 간결하고 직접적으로'];
+    const s = scripts[i];
+    const card = document.getElementById('sc' + i);
+    card.querySelector('.script-text').textContent = s.text;
+    showToast('새 버전으로 바꿨어요');
+  }
+</script>
+</body>
+</html>

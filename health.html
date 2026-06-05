@@ -204,6 +204,18 @@ button,input{font-family:inherit}
 .dreset{width:100%;padding:12px;background:transparent;border:2px solid var(--bd);
   border-radius:16px;color:var(--sub);font-size:13px;font-weight:700;cursor:pointer}
 
+/* WORLD CARD */
+.wcard{background:var(--s2);border:2px solid var(--bd);border-radius:16px;
+  padding:12px 8px 10px;text-align:center;cursor:pointer;position:relative;transition:all .18s;overflow:hidden}
+.wcard:active{transform:scale(.93)}
+.wcard.cur{border-color:var(--mint)}
+.wcard.lk{opacity:.4}
+.wcard canvas{display:block;margin:0 auto 6px;image-rendering:pixelated}
+.wcard-nm{font-size:10px;color:var(--sub);line-height:1.3}
+.wcard-day{font-size:7px;color:var(--dim);margin-top:4px;font-family:'Press Start 2P',monospace}
+.wcard-cur{position:absolute;top:-8px;right:-8px;background:var(--mint);
+  color:#0d0b14;font-size:7px;padding:3px 6px;border-radius:6px;font-weight:900}
+
 /* WORLD MODAL */
 #world-modal{position:fixed;inset:0;background:rgba(5,3,15,.92);z-index:200;
   display:none;align-items:center;justify-content:center;padding:24px;
@@ -390,6 +402,10 @@ button,input{font-family:inherit}
     <div class="shop-hdr">
       <div class="px" style="font-size:11px;color:var(--mint)">꾸미기 상점</div>
       <div style="font-size:12px;color:var(--sub);margin-top:6px">연속 기록으로 아이템 해금 🗝️</div>
+    </div>
+    <div class="shop-sec">
+      <div class="ss-title">🌍 세계 둘러보기</div>
+      <div class="igrid" id="g-worlds"></div>
     </div>
     <div class="shop-sec"><div class="ss-title">🎩 모자 / 액세서리</div><div class="igrid" id="g-hat"></div></div>
     <div class="shop-sec"><div class="ss-title">🎨 캐릭터 컬러</div><div class="igrid" id="g-color"></div></div>
@@ -818,6 +834,27 @@ function equipItem(item){
   showToast(S.eq[item.type]?`${item.name} 장착!`:`${item.name} 해제`);
 }
 function renderShop(){
+  // World gallery
+  const gw=document.getElementById('g-worlds');
+  if(gw){
+    gw.innerHTML='';
+    WORLDS.forEach(world=>{
+      const isCur=curWorld().id===world.id;
+      const isLocked=S.streak<world.unlock;
+      const c=document.createElement('div');
+      c.className=`wcard${isCur?' cur':''}${isLocked?' lk':''}`;
+      c.onclick=()=>previewWorld(world);
+      const cv=document.createElement('canvas');
+      cv.width=48;cv.height=48;cv.style.cssText='width:48px;height:48px';
+      if(WORLD_FNS[world.id]) WORLD_FNS[world.id](cv.getContext('2d'));
+      c.innerHTML=isCur?'<div class="wcard-cur">현재</div>':'';
+      c.appendChild(cv);
+      const nm=document.createElement('div');nm.className='wcard-nm';nm.textContent=`${world.emoji} ${world.name}`;
+      c.appendChild(nm);
+      if(isLocked){const d=document.createElement('div');d.className='wcard-day';d.textContent=`${world.unlock}DAY`;c.appendChild(d);}
+      gw.appendChild(c);
+    });
+  }
   ['hat','color','bg'].forEach(type=>{
     const g=document.getElementById(`g-${type}`);if(!g)return;g.innerHTML='';
     ITEMS.filter(i=>i.type===type).forEach(item=>{
@@ -831,6 +868,17 @@ function renderShop(){
       g.appendChild(c);
     });
   });
+}
+
+function previewWorld(world){
+  document.getElementById('wm-title').textContent=`${world.name} ${world.emoji}`;
+  document.getElementById('wm-desc').textContent=S.streak<world.unlock
+    ?`${world.unlock}일 연속 달성 시 해금돼요 🔒`
+    :world.desc;
+  const cv=document.getElementById('wm-canvas');
+  const ctx=cv.getContext('2d');ctx.clearRect(0,0,48,48);
+  if(WORLD_FNS[world.id]) WORLD_FNS[world.id](ctx);
+  document.getElementById('world-modal').classList.add('on');
 }
 
 // ── CHAR SCREEN ───────────────────────────────────────────────────────────────

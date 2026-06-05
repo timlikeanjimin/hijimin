@@ -193,6 +193,10 @@ button,input{font-family:inherit}
 .iday{font-size:7px;color:var(--dim);margin-top:5px;font-family:'Press Start 2P',monospace}
 .eq-tag{position:absolute;top:-8px;right:-8px;background:var(--mint);
   color:#0d0b14;font-size:7px;padding:3px 6px;border-radius:6px;font-weight:900}
+.rar-tag{position:absolute;top:-8px;left:-8px;color:#0d0b14;font-size:7px;padding:3px 6px;
+  border-radius:6px;font-weight:900;font-family:'Press Start 2P',monospace}
+.rar-tag.r-R{background:var(--blue)}
+.rar-tag.r-SR{background:var(--purple)}
 
 /* DRAW */
 .dh{display:flex;align-items:center;gap:12px;margin-bottom:18px}
@@ -320,6 +324,38 @@ button,input{font-family:inherit}
 
 /* COLLECTION COUNT */
 .coll-count{font-size:10px;color:var(--gold);margin-top:6px;font-family:'Galmuri11',monospace}
+.coin-bal{display:inline-flex;align-items:center;gap:5px;background:var(--s2);border:1px solid var(--bd);
+  border-radius:99px;padding:6px 14px;margin-top:10px;font-size:13px;font-weight:900;color:var(--gold)}
+.sec-note{font-size:10px;color:var(--dim);font-weight:400;margin-left:6px}
+
+/* GACHA */
+.gacha-card{background:linear-gradient(135deg,#2a2142,#1e1b2f);border:1px solid rgba(196,181,253,.3);
+  border-radius:18px;padding:18px 16px;text-align:center}
+.gacha-desc{font-size:12px;color:var(--sub);line-height:1.7;margin-bottom:16px}
+.gacha-btns{display:flex;gap:10px}
+.gacha-btn{flex:1;padding:13px 4px;background:var(--s3);border:1px solid var(--bd);border-radius:14px;
+  color:var(--text);font-size:13px;font-weight:900;cursor:pointer;line-height:1.5;transition:all .15s}
+.gacha-btn span{font-size:11px;color:var(--gold)}
+.gacha-btn:active{transform:scale(.94)}
+.gacha-btn.g10{background:linear-gradient(135deg,var(--purple),var(--pink));color:#0d0b14;border:none}
+.gacha-btn.g10 span{color:#0d0b14}
+#gacha-modal{position:fixed;inset:0;background:rgba(5,3,15,.94);z-index:200;display:none;
+  align-items:center;justify-content:center;padding:24px;max-width:480px;margin:0 auto}
+#gacha-modal.on{display:flex;animation:fadeUp .3s ease}
+.gm-box{background:var(--s1);border:2px solid var(--purple);border-radius:24px;padding:28px 22px;text-align:center;width:100%;max-height:80vh;overflow-y:auto}
+.gm-label{font-size:13px;color:var(--purple);margin-bottom:18px;letter-spacing:1px}
+.gm-results{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:22px}
+.gm-item{width:74px;background:var(--s2);border:2px solid var(--bd);border-radius:14px;padding:12px 4px;position:relative;animation:gmPop .4s ease backwards}
+.gm-item.r-R{border-color:var(--blue)}
+.gm-item.r-SR{border-color:var(--purple);box-shadow:0 0 12px rgba(196,181,253,.4)}
+.gm-item.r-SR .gm-rar{color:var(--purple)}
+.gm-item.r-R .gm-rar{color:var(--blue)}
+.gm-ico{font-size:26px;display:block;margin-bottom:5px}
+.gm-nm{font-size:9px;color:var(--sub);line-height:1.3}
+.gm-rar{font-size:8px;font-weight:900;font-family:'Press Start 2P',monospace;margin-top:4px}
+.gm-dup{position:absolute;top:-6px;right:-6px;background:var(--dim);color:#fff;font-size:7px;padding:2px 5px;border-radius:5px}
+@keyframes gmPop{from{opacity:0;transform:scale(.4) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.gm-btn{width:100%;padding:15px;background:var(--purple);border:none;border-radius:14px;color:#0d0b14;font-size:14px;font-weight:900;cursor:pointer}
 
 /* PREMIUM SECTION */
 .premium-tag{background:linear-gradient(90deg,var(--gold),var(--orange));color:#0d0b14;
@@ -564,14 +600,25 @@ button,input{font-family:inherit}
   <!-- SHOP -->
   <div id="s-shop" class="screen">
     <div class="shop-hdr">
-      <div class="px" style="font-size:11px;color:var(--mint)">꾸미기 상점</div>
-      <div style="font-size:12px;color:var(--sub);margin-top:6px">연속 기록으로 아이템 해금 🗝️</div>
+      <div class="px" style="font-size:12px;color:var(--mint)">꾸미기 상점</div>
+      <div class="coin-bal"><span>🪙</span><span id="coin-bal">0</span> 코인</div>
       <div class="coll-count" id="coll-count">0 / 14 수집</div>
+    </div>
+    <div class="shop-sec">
+      <div class="ss-title">🎰 픽셀 친구 뽑기 <span class="premium-tag" style="background:linear-gradient(90deg,#c4b5fd,#f9a8d4)">GACHA</span></div>
+      <div class="gacha-card">
+        <div class="gacha-desc">한복·우주복 등 특별 의상을 뽑아보세요!<br>희귀 의상(<b style="color:var(--purple)">SR</b>)도 만날 수 있어요 ✨</div>
+        <div class="gacha-btns">
+          <button class="gacha-btn" onclick="doGacha(1)">1회 뽑기<br><span>🪙 30</span></button>
+          <button class="gacha-btn g10" onclick="doGacha(10)">10연차<br><span>🪙 270</span></button>
+        </div>
+      </div>
     </div>
     <div class="shop-sec">
       <div class="ss-title">🌍 세계 둘러보기</div>
       <div class="igrid" id="g-worlds"></div>
     </div>
+    <div class="shop-sec"><div class="ss-title">👘 의상 <span class="sec-note" id="outfit-note"></span></div><div class="igrid" id="g-outfit"></div></div>
     <div class="shop-sec"><div class="ss-title">🎩 모자 / 액세서리</div><div class="igrid" id="g-hat"></div></div>
     <div class="shop-sec"><div class="ss-title">🎨 캐릭터 컬러</div><div class="igrid" id="g-color"></div></div>
     <div class="shop-sec">
@@ -680,6 +727,15 @@ button,input{font-family:inherit}
   </div>
 </div>
 
+<!-- GACHA MODAL -->
+<div id="gacha-modal">
+  <div class="gm-box">
+    <div class="gm-label px" id="gm-label">뽑기 결과</div>
+    <div class="gm-results" id="gm-results"></div>
+    <button class="gm-btn" onclick="closeGacha()">확인 ✓</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -714,6 +770,12 @@ const ITEMS=[
   {id:'bg_forest',  name:'숲속',      type:'bg',    unlock:0, ico:'🌿', bg:'#071a07'},
   {id:'bg_sunset',  name:'노을',      type:'bg',    unlock:0, ico:'🌅', bg:'#1a0a05'},
   {id:'bg_ocean',   name:'바다',      type:'bg',    unlock:0, ico:'🌊', bg:'#040d1a'},
+  // 가챠 전용 의상 (뽑기로만 획득)
+  {id:'out_hanbok_pink',name:'분홍 한복', type:'outfit',unlock:999,gacha:true,rarity:'R', ico:'👘'},
+  {id:'out_hanbok_blue',name:'청 한복',   type:'outfit',unlock:999,gacha:true,rarity:'R', ico:'👘'},
+  {id:'out_dino',       name:'공룡 잠옷', type:'outfit',unlock:999,gacha:true,rarity:'R', ico:'🦖'},
+  {id:'out_hanbok_gold',name:'금장 한복', type:'outfit',unlock:999,gacha:true,rarity:'SR',ico:'👘'},
+  {id:'out_space',      name:'우주복',    type:'outfit',unlock:999,gacha:true,rarity:'SR',ico:'🧑‍🚀'},
 ];
 
 const WORLDS=[
@@ -742,9 +804,9 @@ const DEF={
   onboarded:false,charName:'친구',
   streak:0,total:0,lastDate:null,bestStreak:0,
   today:{ex:null,water:0,mood:null,sleep:null,done:false,score:0},
-  eq:{hat:null,color:null,bg:null,world:null},
+  eq:{hat:null,color:null,bg:null,world:null,outfit:null},
   unlocked:[],history:[],customPixels:null,celebratedWorlds:[],achievements:[],
-  care:{affection:0,acts:{}},cheers:{}
+  care:{affection:0,acts:{}},cheers:{},coins:120
 };
 let S=JSON.parse(JSON.stringify(DEF));
 function save(){localStorage.setItem('pikpik_v2',JSON.stringify(S))}
@@ -1223,6 +1285,10 @@ function drawChar(id){
   // Body (lower, peeking below head)
   fillCirc(ctx,24,40,9,out);fillCirc(ctx,24,40,8,shadow);fillCirc(ctx,24,40,7,bc);
 
+  // Outfit (clothing on body)
+  const outfit=S.eq.outfit;
+  if(outfit&&OUTFIT_FNS[outfit]) OUTFIT_FNS[outfit](ctx);
+
   // Round ears with pink inner
   fillCirc(ctx,12,10,5,out);fillCirc(ctx,12,10,4,bc);fillCirc(ctx,12,11,2,'#e8a0b8');
   fillCirc(ctx,36,10,5,out);fillCirc(ctx,36,10,4,bc);fillCirc(ctx,36,11,2,'#e8a0b8');
@@ -1377,6 +1443,46 @@ function drawGlassesHat(ctx){
   ctx.fillStyle='rgba(255,255,255,.55)';ctx.fillRect(11,21,2,2);ctx.fillRect(29,21,2,2);
 }
 
+// ── OUTFITS (의상, 몸에 입힘) ───────────────────────────────────────────────────
+function hanbok(ctx,skirt,top,line){
+  // 치마 (skirt) — 하단
+  fillCirc(ctx,24,42,8,skirt);
+  ctx.fillStyle=darken(line,.7);ctx.fillRect(16,46,16,2);
+  // 주름
+  ctx.fillStyle='rgba(255,255,255,.12)';ctx.fillRect(20,40,1,8);ctx.fillRect(24,40,1,8);ctx.fillRect(28,40,1,8);
+  // 저고리 (top)
+  ctx.fillStyle=top;ctx.fillRect(17,33,14,5);ctx.fillRect(18,38,12,2);
+  ctx.fillStyle=lighten(top,.3);ctx.fillRect(17,33,14,1);
+  // 깃 + 고름
+  ctx.fillStyle=line;ctx.fillRect(22,33,4,6);
+  ctx.fillStyle=darken(line,.75);ctx.fillRect(23,38,2,5);
+  ctx.fillStyle=line;ctx.fillRect(21,38,1,4);
+}
+function drawHanbokPink(ctx){hanbok(ctx,'#f3c6da','#fdeef4','#d83b78');}
+function drawHanbokBlue(ctx){hanbok(ctx,'#bcd6f2','#eef4fd','#2f6fc4');}
+function drawHanbokGold(ctx){hanbok(ctx,'#f3e0a8','#fdf6e3','#d89a2f');}
+function drawSpaceSuit(ctx){
+  fillCirc(ctx,24,41,8,'#dde6f0');fillCirc(ctx,24,41,7,'#eef3f8');
+  ctx.fillStyle='#c2cedd';ctx.fillRect(17,40,14,1);ctx.fillRect(16,44,16,1);
+  // 가슴 패널
+  ctx.fillStyle='#2b3a52';ctx.fillRect(21,38,6,4);
+  ctx.fillStyle='#6ee7b7';ctx.fillRect(22,39,1,1);ctx.fillStyle='#fbbf24';ctx.fillRect(24,39,1,1);ctx.fillStyle='#fca5a5';ctx.fillRect(25,40,1,1);
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.fillRect(18,38,1,6);
+}
+function drawDinoPajama(ctx){
+  fillCirc(ctx,24,41,8,'#9ae6a8');fillCirc(ctx,24,41,7,'#b6f0c0');
+  // 배 무늬
+  ctx.fillStyle='#defae4';ctx.fillRect(20,42,8,5);
+  // 등 가시
+  ctx.fillStyle='#f9a8d4';
+  [[19,35],[23,33],[27,35]].forEach(([x,y])=>{ctx.fillRect(x,y,2,2);ctx.fillRect(x+1,y-1,1,1);});
+  ctx.fillStyle='rgba(255,255,255,.3)';ctx.fillRect(18,38,1,6);
+}
+const OUTFIT_FNS={
+  out_hanbok_pink:drawHanbokPink,out_hanbok_blue:drawHanbokBlue,out_hanbok_gold:drawHanbokGold,
+  out_space:drawSpaceSuit,out_dino:drawDinoPajama
+};
+
 // ── CHECKIN ─────────────────────────────────────────────────────────────────
 function pick(field,val,btn){
   S.today[field]=val;haptic();
@@ -1424,13 +1530,16 @@ function doSubmit(){
   S.lastDate=td;S.total=(S.total||0)+1;
   S.bestStreak=Math.max(S.bestStreak||0,S.streak);
   S.history=[...S.history,{date:td,score,ex:S.today.ex,water:S.today.water,mood:S.today.mood,sleep:S.today.sleep}].slice(-90);
+  const coinGain=score*3+5; // 점수 × 3 + 출석 보너스
+  S.coins=(S.coins||0)+coinGain;
   const prev=S.unlocked.length;
-  ITEMS.forEach(item=>{if(!S.unlocked.includes(item.id)&&S.streak>=item.unlock)S.unlocked.push(item.id);});
+  ITEMS.forEach(item=>{if(!item.gacha&&!S.unlocked.includes(item.id)&&S.streak>=item.unlock)S.unlocked.push(item.id);});
   save();
   showDone(score);
+  setTimeout(()=>showToast(`🪙 +${coinGain} 코인 획득!`),1100);
   if(S.unlocked.length>prev){
     const ni=ITEMS.find(i=>i.id===S.unlocked[S.unlocked.length-1]);
-    if(ni) setTimeout(()=>showToast(`🎁 "${ni.name}" 해금!`),1400);
+    if(ni) setTimeout(()=>showToast(`🎁 "${ni.name}" 해금!`),1700);
   }
   checkMilestone(S.streak);
   setTimeout(()=>checkWorldUnlock(),800);
@@ -1540,14 +1649,18 @@ function updateBubble(){const el=document.getElementById('bubble-today');if(el)e
 // ── SHOP ─────────────────────────────────────────────────────────────────────
 function isUnlocked(item){return S.unlocked.includes(item.id)||S.streak>=item.unlock}
 function equipItem(item){
-  if(!isUnlocked(item)){showToast(`${item.unlock}일 연속 달성 시 해금!`);return;}
+  if(!isUnlocked(item)){showToast(item.gacha?`🎰 '${item.name}'은(는) 뽑기로 얻을 수 있어요!`:`${item.unlock}일 연속 달성 시 해금!`);return;}
   S.eq[item.type]=S.eq[item.type]===item.id?null:item.id;
   save();renderShop();drawChar('cc-today');drawChar('cc-char');
   showToast(S.eq[item.type]?`${item.name} 장착!`:`${item.name} 해제`);
 }
 function renderShop(){
+  const cb=document.getElementById('coin-bal');if(cb)cb.textContent=S.coins||0;
+  const collectable=ITEMS.filter(i=>i.type!=='bg');
   const cc=document.getElementById('coll-count');
-  if(cc)cc.textContent=`${S.unlocked.length} / ${ITEMS.filter(i=>i.type!=='bg').length} 수집`;
+  if(cc)cc.textContent=`${S.unlocked.filter(id=>collectable.some(i=>i.id===id)).length} / ${collectable.length} 수집`;
+  const on=document.getElementById('outfit-note');
+  if(on){const oc=ITEMS.filter(i=>i.type==='outfit');on.textContent=`(${oc.filter(i=>S.unlocked.includes(i.id)).length}/${oc.length} · 뽑기로 획득)`;}
   // World gallery
   const gw=document.getElementById('g-worlds');
   if(gw){
@@ -1569,7 +1682,7 @@ function renderShop(){
       gw.appendChild(c);
     });
   }
-  ['hat','color'].forEach(type=>{
+  ['outfit','hat','color'].forEach(type=>{
     const g=document.getElementById(`g-${type}`);if(!g)return;g.innerHTML='';
     ITEMS.filter(i=>i.type===type).forEach(item=>{
       const ul=isUnlocked(item),eq=S.eq[item.type]===item.id;
@@ -1578,11 +1691,49 @@ function renderShop(){
       c.onclick=()=>equipItem(item);
       let ico=`<span class="iico">${item.ico}</span>`;
       if(type==='color'&&ul) ico=`<div style="width:36px;height:36px;border-radius:50%;background:${item.col};margin:0 auto 8px;border:2px solid var(--bd)"></div>`;
-      c.innerHTML=`${eq?'<div class="eq-tag">ON</div>':''}${ico}<div class="inm">${item.name}</div>${!ul?`<div class="iday">${item.unlock}DAY</div>`:''}`;
+      const lockLbl=item.gacha?`<div class="iday">${item.rarity} · 뽑기</div>`:`<div class="iday">${item.unlock}DAY</div>`;
+      c.innerHTML=`${eq?'<div class="eq-tag">ON</div>':''}${item.gacha&&ul?`<div class="rar-tag r-${item.rarity}">${item.rarity}</div>`:''}${ico}<div class="inm">${item.name}</div>${!ul?lockLbl:''}`;
       g.appendChild(c);
     });
   });
 }
+
+// ── GACHA (뽑기) ──────────────────────────────────────────────────────────────
+const GACHA_REFUND={R:12,SR:30};
+function gachaPull(){
+  // 희귀도 추첨: SR 22%, R 78%
+  const rarity=Math.random()<0.22?'SR':'R';
+  const pool=ITEMS.filter(i=>i.gacha&&i.rarity===rarity);
+  return pool[~~(Math.random()*pool.length)];
+}
+function doGacha(n){
+  const cost=n===10?270:30;
+  if((S.coins||0)<cost){showToast(`🪙 코인이 부족해요! (${cost} 필요)`);return;}
+  haptic([10,40,10]);
+  S.coins-=cost;
+  const results=[];
+  for(let i=0;i<n;i++){
+    const item=gachaPull();
+    const dup=S.unlocked.includes(item.id);
+    if(dup){const rf=GACHA_REFUND[item.rarity]||10;S.coins+=rf;results.push({item,dup:true,refund:rf});}
+    else{S.unlocked.push(item.id);results.push({item,dup:false});}
+  }
+  save();
+  showGachaResults(results);
+  renderShop();
+}
+function showGachaResults(results){
+  const box=document.getElementById('gm-results');box.innerHTML='';
+  const hasSR=results.some(r=>r.item.rarity==='SR');
+  document.getElementById('gm-label').textContent=hasSR?'✨ SR 등장! ✨':'뽑기 결과';
+  results.forEach((r,i)=>{
+    const el=document.createElement('div');el.className=`gm-item r-${r.item.rarity}`;el.style.animationDelay=(i*0.07)+'s';
+    el.innerHTML=`${r.dup?`<div class="gm-dup">+${r.refund}🪙</div>`:''}<span class="gm-ico">${r.item.ico}</span><div class="gm-nm">${r.item.name}</div><div class="gm-rar">${r.item.rarity}</div>`;
+    box.appendChild(el);
+  });
+  document.getElementById('gacha-modal').classList.add('on');
+}
+function closeGacha(){document.getElementById('gacha-modal').classList.remove('on');}
 
 let _previewWorldId=null;
 function previewWorld(world){

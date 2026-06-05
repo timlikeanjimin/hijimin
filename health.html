@@ -447,7 +447,7 @@ button,input{font-family:inherit}
     <canvas id="wm-canvas" width="48" height="48" class="wm-canvas" style="width:144px;height:144px"></canvas>
     <div class="wm-title" id="wm-title">제주도 🌊</div>
     <div class="wm-desc" id="wm-desc">바다가 보여요! 제주 도착!</div>
-    <button class="wm-btn" onclick="closeWorldModal()">탐험 시작! 🚀</button>
+    <button class="wm-btn" id="wm-btn" onclick="selectWorld()">탐험 시작! 🚀</button>
   </div>
 </div>
 
@@ -472,10 +472,10 @@ const ITEMS=[
 
 const WORLDS=[
   {id:'seoul', name:'서울',  emoji:'🌆', unlock:0,  desc:'화이팅! 서울에서 출발해요 🌆',      sky:'#0c0820'},
-  {id:'jeju',  name:'제주도',emoji:'🌊', unlock:7,  desc:'바다 냄새가 나요! 제주 도착! 🌊',   sky:'#062030'},
-  {id:'kyoto', name:'교토',  emoji:'🌸', unlock:14, desc:'벚꽃이 흩날려요. 교토에 왔어요 🌸', sky:'#2d0818'},
-  {id:'paris', name:'파리',  emoji:'🗼', unlock:30, desc:'에펠탑이 보여요! 파리 도착! 🗼',    sky:'#1a0508'},
-  {id:'space', name:'우주',  emoji:'🚀', unlock:60, desc:'우주까지 날아왔어요! 전설! 🚀',    sky:'#020008'},
+  {id:'jeju',  name:'제주도',emoji:'🌊', unlock:0,  desc:'바다 냄새가 나요! 제주 도착! 🌊',   sky:'#062030'},
+  {id:'kyoto', name:'교토',  emoji:'🌸', unlock:0,  desc:'벚꽃이 흩날려요. 교토에 왔어요 🌸', sky:'#2d0818'},
+  {id:'paris', name:'파리',  emoji:'🗼', unlock:0,  desc:'에펠탑이 보여요! 파리 도착! 🗼',    sky:'#1a0508'},
+  {id:'space', name:'우주',  emoji:'🚀', unlock:0,  desc:'우주까지 날아왔어요! 전설! 🚀',    sky:'#020008'},
 ];
 
 const PALETTE=[
@@ -491,7 +491,7 @@ const DEF={
   onboarded:false,charName:'친구',
   streak:0,total:0,lastDate:null,
   today:{ex:null,water:0,mood:null,sleep:null,done:false,score:0},
-  eq:{hat:null,color:null,bg:null},
+  eq:{hat:null,color:null,bg:null,world:null},
   unlocked:[],history:[],customPixels:null,celebratedWorlds:[]
 };
 let S=JSON.parse(JSON.stringify(DEF));
@@ -520,7 +520,10 @@ function darken(h,f){const[r,g,b]=hrgb(h);return`rgb(${~~(r*f)},${~~(g*f)},${~~(
 function lighten(h,f){const[r,g,b]=hrgb(h);return`rgb(${~~Math.min(255,r+(255-r)*f)},${~~Math.min(255,g+(255-g)*f)},${~~Math.min(255,b+(255-b)*f)})`}
 function bodyCol(){const c=ITEMS.find(i=>i.id===S.eq.color);return c?c.col:'#6ee7b7'}
 function moodState(){if(!S.today.done)return'neu';const s=S.today.score;return s>=6?'happy':s>=3?'neu':'sad'}
-function curWorld(){let w=WORLDS[0];for(const x of WORLDS){if(S.streak>=x.unlock)w=x;}return w;}
+function curWorld(){
+  if(S.eq.world){const f=WORLDS.find(w=>w.id===S.eq.world);if(f)return f;}
+  let w=WORLDS[0];for(const x of WORLDS){if(S.streak>=x.unlock)w=x;}return w;
+}
 function nextWorld(){for(const x of WORLDS){if(S.streak<x.unlock)return x;}return null;}
 function getLevel(){const s=S.streak;if(s>=60)return{n:5,name:'전설 ✨'};if(s>=30)return{n:4,name:'마스터 🌟'};if(s>=14)return{n:3,name:'여행자 🌍'};if(s>=7)return{n:2,name:'성장중 🌱'};return{n:1,name:'새싹 🌿'};}
 function haptic(ms=10){try{navigator.vibrate&&navigator.vibrate(ms);}catch(e){}}
@@ -784,8 +787,13 @@ function showWorldModal(world){
   document.getElementById('world-modal').classList.add('on');
 }
 
+function selectWorld(){
+  if(_previewWorldId) S.eq.world=_previewWorldId;
+  save();closeWorldModal();renderShop();
+}
 function closeWorldModal(){
   document.getElementById('world-modal').classList.remove('on');
+  _previewWorldId=null;
   drawChar('cc-today');drawChar('cc-char');
 }
 
@@ -840,7 +848,7 @@ function renderShop(){
     gw.innerHTML='';
     WORLDS.forEach(world=>{
       const isCur=curWorld().id===world.id;
-      const isLocked=S.streak<world.unlock;
+      const isLocked=false;
       const c=document.createElement('div');
       c.className=`wcard${isCur?' cur':''}${isLocked?' lk':''}`;
       c.onclick=()=>previewWorld(world);
@@ -870,11 +878,15 @@ function renderShop(){
   });
 }
 
+let _previewWorldId=null;
 function previewWorld(world){
+  _previewWorldId=world.id;
   document.getElementById('wm-title').textContent=`${world.name} ${world.emoji}`;
-  document.getElementById('wm-desc').textContent=S.streak<world.unlock
-    ?`${world.unlock}일 연속 달성 시 해금돼요 🔒`
-    :world.desc;
+  document.getElementById('wm-desc').textContent=world.desc;
+  const isCur=curWorld().id===world.id;
+  const btn=document.getElementById('wm-btn');
+  btn.textContent=isCur?'현재 세계예요 ✓':'이 세계로 이동! 🚀';
+  btn.disabled=isCur;btn.style.opacity=isCur?'.5':'1';
   const cv=document.getElementById('wm-canvas');
   const ctx=cv.getContext('2d');ctx.clearRect(0,0,48,48);
   if(WORLD_FNS[world.id]) WORLD_FNS[world.id](ctx);

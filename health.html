@@ -409,7 +409,6 @@ button,input{font-family:inherit}
     </div>
     <div class="shop-sec"><div class="ss-title">🎩 모자 / 액세서리</div><div class="igrid" id="g-hat"></div></div>
     <div class="shop-sec"><div class="ss-title">🎨 캐릭터 컬러</div><div class="igrid" id="g-color"></div></div>
-    <div class="shop-sec"><div class="ss-title">🌆 배경</div><div class="igrid" id="g-bg"></div></div>
   </div>
 
   <!-- DRAW -->
@@ -611,11 +610,9 @@ function drawChar(id){
   const ctx=cv.getContext('2d');
   ctx.clearRect(0,0,48,48);
 
-  // World background
+  // World background always takes priority
   const w=curWorld();
-  const bgItem=ITEMS.find(i=>i.id===S.eq.bg);
-  if(!bgItem&&WORLD_FNS[w.id]) WORLD_FNS[w.id](ctx);
-  else if(bgItem){ctx.fillStyle=bgItem.bg;ctx.fillRect(0,0,48,48);}
+  if(WORLD_FNS[w.id]) WORLD_FNS[w.id](ctx);
 
   if(S.customPixels&&S.customPixels.some(p=>p)){
     for(let i=0;i<256;i++){if(S.customPixels[i]){ctx.fillStyle=S.customPixels[i];ctx.fillRect((i%16)*3,~~(i/16)*3,3,3);}}
@@ -863,7 +860,7 @@ function renderShop(){
       gw.appendChild(c);
     });
   }
-  ['hat','color','bg'].forEach(type=>{
+  ['hat','color'].forEach(type=>{
     const g=document.getElementById(`g-${type}`);if(!g)return;g.innerHTML='';
     ITEMS.filter(i=>i.type===type).forEach(item=>{
       const ul=isUnlocked(item),eq=S.eq[item.type]===item.id;

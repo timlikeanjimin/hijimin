@@ -546,173 +546,250 @@ function fillCirc(ctx,cx,cy,r,col){
 }
 
 // ── WORLD SCENES ────────────────────────────────────────────────────────────
-function drawWorldSeoul(ctx){
-  ctx.fillStyle='#040216';ctx.fillRect(0,0,48,16);
-  ctx.fillStyle='#070325';ctx.fillRect(0,16,48,12);
-  ctx.fillStyle='#0a0632';ctx.fillRect(0,28,48,12);
-  ctx.fillStyle='#0e0a3c';ctx.fillRect(0,40,48,8);
-  // Moon (crescent)
-  fillCirc(ctx,40,8,4,'#fef5d0');fillCirc(ctx,41,7,3,'#070325');
-  // Stars
-  ctx.fillStyle='#fff';
-  [[3,2],[8,5],[13,1],[18,4],[22,2],[27,6],[31,2],[36,5],[43,3],[5,11],[10,13],[17,11],[24,14],[33,12],[44,10]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  ctx.fillStyle='rgba(255,255,255,.4)';[[6,7],[16,8],[29,5],[39,10]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  // N Seoul Tower spire
-  ctx.fillStyle='#0c0840';ctx.fillRect(22,12,4,4);ctx.fillRect(23,10,2,4);ctx.fillRect(23,8,2,3);
-  ctx.fillStyle='#ff2828';ctx.fillRect(23,8,2,2);
-  // Back buildings (mid-layer)
-  ctx.fillStyle='#09053a';
-  [[0,26,7,22],[7,22,5,26],[12,19,7,29],[19,24,6,24],[25,18,5,30],[30,23,9,25],[39,26,5,22],[44,30,4,18]].forEach(([x,y,w,h])=>ctx.fillRect(x,y,w,h));
-  // Front buildings (darker)
-  ctx.fillStyle='#060320';
-  [[0,34,6,14],[6,30,6,18],[12,27,6,21],[18,22,9,26],[27,31,7,17],[34,26,7,22],[41,33,4,15],[45,29,3,19]].forEach(([x,y,w,h])=>ctx.fillRect(x,y,w,h));
-  // Warm windows (yellow/blue)
-  ctx.fillStyle='#fbbf24';
-  [[1,36],[3,39],[7,32],[8,35],[13,29],[19,24],[20,28],[20,32],[28,33],[35,28],[35,32],[42,35]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  ctx.fillStyle='#93c5fd';
-  [[2,39],[9,32],[14,28],[21,24],[29,36],[36,26],[43,38]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  // Han River + ground
-  ctx.fillStyle='#060320';ctx.fillRect(0,45,48,3);
-  ctx.fillStyle='#08152c';ctx.fillRect(0,43,48,3);
-  ctx.fillStyle='rgba(147,197,253,.12)';ctx.fillRect(0,43,48,3);
+function drawWorldSeoul(ctx,W=48,H=48){
+  const s=W/48,p=(x,y,w=1,h=1)=>ctx.fillRect(~~(x*s),~~(y*s),Math.max(1,~~(w*s)),Math.max(1,~~(h*s)));
+  const fc=(x,y,r,c)=>fillCirc(ctx,~~(x*s),~~(y*s),r*s,c);
+  // Sky gradient
+  let g=ctx.createLinearGradient(0,0,0,H*.78);
+  g.addColorStop(0,'#010010');g.addColorStop(.4,'#060228');g.addColorStop(.8,'#0e0838');g.addColorStop(1,'#160e48');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,~~(H*.78));ctx.fillStyle='#120c42';ctx.fillRect(0,~~(H*.76),W,~~(H*.24));
+  // City light glow on horizon
+  g=ctx.createRadialGradient(W*.5,H*.72,0,W*.5,H*.72,W*.75);
+  g.addColorStop(0,'rgba(255,110,40,.28)');g.addColorStop(.55,'rgba(255,70,20,.1)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,~~(H*.42),W,~~(H*.45));
+  // Moon crescent
+  fc(40,8,4,'#fef5d0');fc(41,7,3,'#060228');
+  // Stars (bright + dim)
+  [[3,2],[8,5],[13,1],[18,4],[22,2],[27,6],[31,2],[36,5],[43,3],[5,11],[10,13],[17,11],[24,14],[33,12],[44,10]].forEach(([x,y])=>{ctx.fillStyle='#fff';p(x,y);});
+  [[6,7],[16,8],[29,5],[39,10],[2,15],[20,7],[41,6],[11,16],[37,8]].forEach(([x,y])=>{ctx.fillStyle='rgba(255,255,255,.5)';p(x,y);});
+  // N Seoul Tower
+  ctx.fillStyle='#0c0840';p(22,12,4,4);p(23,10,2,4);p(23,8,2,3);p(22,14,5,2);
+  ctx.fillStyle='#ff2828';p(23,8,2,2);fc(24,9,2.5,'rgba(255,40,40,.22)');
+  // Buildings: far layer
+  ctx.fillStyle='#0b0640';
+  [[0,26,7,22],[7,22,5,26],[12,19,7,29],[19,24,6,24],[25,18,5,30],[30,23,9,25],[39,26,5,22],[44,30,4,18]].forEach(([x,y,w,h])=>p(x,y,w,h));
+  // Buildings: mid layer
+  ctx.fillStyle='#080430';
+  [[2,29,3,19],[8,25,3,23],[14,22,4,26],[20,27,4,21],[27,21,3,27],[32,26,5,22],[41,29,3,19]].forEach(([x,y,w,h])=>p(x,y,w,h));
+  // Buildings: front layer
+  ctx.fillStyle='#05021c';
+  [[0,34,6,14],[6,30,6,18],[12,28,6,20],[18,22,9,26],[27,31,7,17],[34,27,7,21],[41,33,4,15],[45,29,3,19]].forEach(([x,y,w,h])=>p(x,y,w,h));
+  // Rooftop ledges (slight glow)
+  ctx.fillStyle='#160e60';
+  [[0,33,7,1],[5,29,7,1],[11,27,7,1],[17,21,10,1],[26,30,8,1],[33,26,8,1],[40,32,5,1]].forEach(([x,y,w,h])=>p(x,y,w,h));
+  // Windows: yellow
+  [[1,35,1,2],[3,38,1,2],[7,31,1,2],[8,34,1,2],[13,29,1,2],[19,23,1,2],[20,27,1,2],[20,31,1,2],[28,33,1,2],[35,28,1,2],[35,32,1,2],[42,34,1,2],[44,31,1,2],[46,35,1,2]].forEach(([x,y,w,h])=>{ctx.fillStyle='#fde68a';p(x,y,w,h);});
+  // Windows: blue-white
+  [[2,38,1,2],[9,32,1,2],[14,28,1,2],[21,24,1,2],[29,36,1,2],[36,25,1,2],[43,38,1,2],[2,32,1,2]].forEach(([x,y,w,h])=>{ctx.fillStyle='#bfdbfe';p(x,y,w,h);});
+  // Neon accents
+  ctx.fillStyle='rgba(249,115,22,.55)';p(6,32,3,1);ctx.fillStyle='rgba(167,139,250,.55)';p(34,28,4,1);ctx.fillStyle='rgba(52,211,153,.45)';p(20,24,5,1);
+  // Han River gradient
+  g=ctx.createLinearGradient(0,~~(H*.87),0,H);
+  g.addColorStop(0,'#0e2040');g.addColorStop(.6,'#091828');g.addColorStop(1,'#05101a');
+  ctx.fillStyle=g;ctx.fillRect(0,~~(H*.87),W,~~(H*.13));
+  ctx.fillStyle='rgba(147,197,253,.15)';ctx.fillRect(0,~~(H*.87),W,~~(H*.13));
+  // River reflections
+  [[3,45,4,1,'rgba(253,230,138,.18)'],[11,44,5,1,'rgba(147,197,253,.22)'],[19,45,6,1,'rgba(255,100,50,.12)'],[29,44,5,1,'rgba(253,230,138,.18)'],[38,45,4,1,'rgba(147,197,253,.2)']].forEach(([x,y,w,h,c])=>{ctx.fillStyle=c;p(x,y,w,h);});
 }
-function drawWorldJeju(ctx){
-  ctx.fillStyle='#030d18';ctx.fillRect(0,0,48,14);
-  ctx.fillStyle='#051828';ctx.fillRect(0,14,48,12);
-  ctx.fillStyle='#07233c';ctx.fillRect(0,26,48,12);
-  ctx.fillStyle='#0a2e4e';ctx.fillRect(0,38,48,10);
+function drawWorldJeju(ctx,W=48,H=48){
+  const s=W/48,p=(x,y,w=1,h=1)=>ctx.fillRect(~~(x*s),~~(y*s),Math.max(1,~~(w*s)),Math.max(1,~~(h*s)));
+  const fc=(x,y,r,c)=>fillCirc(ctx,~~(x*s),~~(y*s),r*s,c);
+  // Sky → ocean gradient
+  let g=ctx.createLinearGradient(0,0,0,H*.65);
+  g.addColorStop(0,'#020c16');g.addColorStop(.45,'#041826');g.addColorStop(1,'#07243a');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,~~(H*.65));ctx.fillStyle='#092c44';ctx.fillRect(0,~~(H*.62),W,~~(H*.38));
+  // Moonlight shimmer on horizon
+  g=ctx.createRadialGradient(W*.9,H*.18,0,W*.9,H*.18,W*.55);
+  g.addColorStop(0,'rgba(220,240,255,.14)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,~~(H*.5));
   // Stars
-  ctx.fillStyle='#fff';
-  [[4,3],[9,1],[14,5],[19,3],[24,1],[28,5],[33,2],[38,6],[44,3],[6,9],[11,11],[21,8],[30,12],[40,10]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  // Crescent moon
-  fillCirc(ctx,43,8,3,'#fef9d0');fillCirc(ctx,44,7,2,'#051828');
-  // Hallasan (smooth cone)
-  ctx.fillStyle='#071a0a';
-  for(let y=18;y<44;y++){const w=Math.max(0,~~((y-18)*1.18)+2);ctx.fillRect(24-~~(w/2),y,w,1);}
-  ctx.fillStyle='#0c2510';
-  for(let y=22;y<44;y++){const w=Math.max(0,~~((y-22)*.95));ctx.fillRect(24-~~(w/2),y,w,1);}
-  // Snow cap
-  fillCirc(ctx,24,19,4,'#d8e8f0');fillCirc(ctx,24,19,3,'#eef4f8');fillCirc(ctx,24,18,1,'#ffffff');
-  // Tangerine trees (left + right of mountain)
-  ctx.fillStyle='#0a2010';
-  ctx.fillRect(3,36,2,6);ctx.fillRect(5,34,3,8);ctx.fillRect(39,36,2,6);ctx.fillRect(41,34,3,8);
-  ctx.fillStyle='#c45a08';fillCirc(ctx,5,33,4,'#c45a08');fillCirc(ctx,42,33,4,'#c45a08');
-  ctx.fillStyle='#f97316';fillCirc(ctx,4,32,2,'#f97316');fillCirc(ctx,43,32,2,'#f97316');
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect(5,31,1,1);ctx.fillRect(42,31,1,1);
-  // Ocean
-  ctx.fillStyle='#0b3248';ctx.fillRect(0,42,48,6);
-  ctx.fillStyle='#0d3a54';ctx.fillRect(0,40,48,4);
-  ctx.fillStyle='rgba(255,255,255,.16)';
-  [[2,41],[9,42],[16,40],[23,42],[31,41],[38,42],[44,40]].forEach(([x,y])=>ctx.fillRect(x,y,3,1));
-  ctx.fillStyle='#091808';ctx.fillRect(0,44,48,4);
+  [[4,3],[9,1],[14,5],[19,3],[24,1],[28,5],[33,2],[38,6],[44,3],[6,9],[11,11],[21,8],[30,12],[40,10],[2,6],[16,7],[36,4]].forEach(([x,y])=>{ctx.fillStyle='#fff';p(x,y);});
+  [[7,4],[17,9],[26,6],[42,8]].forEach(([x,y])=>{ctx.fillStyle='rgba(255,255,255,.5)';p(x,y);});
+  // Crescent moon + glow
+  fc(43,8,3,'#fef9d0');fc(44,7,2,'#041826');
+  fc(43,8,5,'rgba(220,240,200,.1)');
+  // Grassy field (behind mountain)
+  g=ctx.createLinearGradient(0,~~(H*.72),0,~~(H*.88));
+  g.addColorStop(0,'#0a1e0c');g.addColorStop(1,'#091608');
+  ctx.fillStyle=g;ctx.fillRect(0,~~(H*.72),W,~~(H*.16));
+  // Hallasan mountain (layered depth)
+  ctx.fillStyle='#060e06';
+  for(let y=15;y<44;y++){const w=Math.max(0,~~((y-15)*1.25)+2);p(24-~~(w/2),y,w,1);}
+  ctx.fillStyle='#0a1c0a';
+  for(let y=20;y<44;y++){const w=Math.max(0,~~((y-20)*.98));p(24-~~(w/2),y,w,1);}
+  ctx.fillStyle='#0f2a10';
+  for(let y=28;y<44;y++){const w=Math.max(0,~~((y-28)*.7));p(24-~~(w/2),y,w,1);}
+  // Snow cap (layered)
+  fc(24,16,5,'#c0d8e8');fc(24,16,4,'#d8ecf4');fc(24,15,3,'#eef5f8');fc(24,14,1.5,'#fff');
+  // Mountain ridge highlight
+  ctx.fillStyle='rgba(220,240,255,.2)';p(20,20,2,4);p(19,24,1,4);
+  // Tangerine trees (left + right)
+  ctx.fillStyle='#091608';p(3,36,2,8);p(5,33,3,11);p(39,36,2,8);p(41,33,3,11);
+  fc(5,32,5,'#a04808');fc(5,31,4,'#c45a10');fc(5,30,2.5,'#e8700a');
+  fc(42,32,5,'#a04808');fc(42,31,4,'#c45a10');fc(42,30,2.5,'#e8700a');
+  // Orange fruits
+  [[3,31],[6,30],[5,28],[41,31],[44,30],[43,28]].forEach(([x,y])=>{ctx.fillStyle='#f97316';p(x,y,1,1);});
+  // Ocean gradient
+  g=ctx.createLinearGradient(0,~~(H*.85),0,H);
+  g.addColorStop(0,'#0c3248');g.addColorStop(.5,'#0a2c40');g.addColorStop(1,'#071e2e');
+  ctx.fillStyle=g;ctx.fillRect(0,~~(H*.85),W,~~(H*.15));
+  // Ocean glow / moonlight
+  ctx.fillStyle='rgba(180,220,255,.1)';ctx.fillRect(~~(W*.6),~~(H*.85),~~(W*.4),~~(H*.15));
+  // Wave lines
+  [[2,41,3],[9,42,4],[16,40,3],[23,42,5],[31,41,4],[38,42,3],[44,40,3]].forEach(([x,y,w])=>{ctx.fillStyle='rgba(255,255,255,.18)';p(x,y,w,1);});
+  [[5,43,5],[14,44,4],[24,43,6],[36,44,4]].forEach(([x,y,w])=>{ctx.fillStyle='rgba(255,255,255,.1)';p(x,y,w,1);});
+  // Moonlight column on water
+  ctx.fillStyle='rgba(220,240,255,.08)';ctx.fillRect(~~(W*.75),~~(H*.85),~~(W*.18),~~(H*.15));
 }
-function drawWorldKyoto(ctx){
-  ctx.fillStyle='#1e0610';ctx.fillRect(0,0,48,14);
-  ctx.fillStyle='#2c0a1c';ctx.fillRect(0,14,48,12);
-  ctx.fillStyle='#380e24';ctx.fillRect(0,26,48,12);
-  ctx.fillStyle='#421230';ctx.fillRect(0,38,48,10);
-  // Full moon (warm glow)
-  fillCirc(ctx,40,8,5,'#fef0e0');fillCirc(ctx,40,8,4,'#fff5ec');
-  ctx.fillStyle='rgba(255,200,220,.25)';fillCirc(ctx,40,8,6,'rgba(255,200,220,.25)');
-  // Torii gate (iconic proportions)
+function drawWorldKyoto(ctx,W=48,H=48){
+  const s=W/48,p=(x,y,w=1,h=1)=>ctx.fillRect(~~(x*s),~~(y*s),Math.max(1,~~(w*s)),Math.max(1,~~(h*s)));
+  const fc=(x,y,r,c)=>fillCirc(ctx,~~(x*s),~~(y*s),r*s,c);
+  // Cherry blossom night sky gradient
+  let g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#1a0510');g.addColorStop(.35,'#2c0a1e');g.addColorStop(.7,'#3a102a');g.addColorStop(1,'#1e0e1a');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // Soft ambient bloom from blossoms
+  g=ctx.createRadialGradient(W*.2,H*.3,0,W*.2,H*.3,W*.6);
+  g.addColorStop(0,'rgba(249,168,212,.1)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // Moon with petal-pink glow
+  fc(40,8,6,'rgba(255,220,200,.18)');fc(40,8,5,'#fef0e0');fc(40,8,4,'#fff8f0');
+  // Stars through petals
+  [[3,3],[8,1],[14,5],[20,2],[30,6],[37,3],[45,5],[2,9],[6,12],[13,10],[22,14],[32,11],[44,8]].forEach(([x,y])=>{ctx.fillStyle='rgba(255,240,248,.8)';p(x,y);});
+  // Cherry blossom trees (left side - fluffy)
+  fc(4,32,7,'#2a0c14');fc(3,30,6,'#381018');fc(2,28,5,'#3e1420');
+  fc(4,28,6,'rgba(249,168,212,.5)');fc(3,26,5,'rgba(249,168,212,.35)');fc(5,30,5,'rgba(249,168,212,.4)');
+  fc(1,30,4,'rgba(251,205,225,.3)');
+  ctx.fillStyle='#2a0c14';p(3,34,2,10);p(5,36,2,8);
+  // Torii gate (red, detailed)
   ctx.fillStyle='#cc2200';
-  ctx.fillRect(7,26,4,22);ctx.fillRect(21,26,4,22); // pillars
-  ctx.fillRect(4,21,28,4);                           // top kasagi
-  ctx.fillRect(4,20,4,2);ctx.fillRect(28,20,4,2);   // kasagi ends curve up
-  ctx.fillRect(6,26,20,3);                           // nuki (middle beam)
-  ctx.fillStyle='#991800';ctx.fillRect(4,22,28,1);   // kasagi shadow
-  // 5-tier pagoda (right side, detailed)
-  ctx.fillStyle='#180810';
-  [[31,40,14,8],[32,36,12,6],[33,32,10,5],[34,29,8,4],[35,26,6,4]].forEach(([x,y,w,h])=>ctx.fillRect(x,y,w,h));
-  ctx.fillStyle='#0e0408'; // darker roof overhangs
-  [[30,40,16,1],[31,36,14,1],[32,32,12,1],[33,29,10,1],[34,26,8,1]].forEach(([x,y,w,h])=>ctx.fillRect(x,y,w,h));
-  ctx.fillRect(37,20,2,6);ctx.fillRect(38,17,1,5); // spire
-  // Ground + path
-  ctx.fillStyle='#160810';ctx.fillRect(0,44,48,4);
-  ctx.fillStyle='#1e0c14';ctx.fillRect(0,42,48,4);
-  // Cherry blossoms (petals everywhere)
-  ctx.fillStyle='#f9a8d4';
-  [[2,15],[7,12],[11,18],[17,13],[23,10],[27,17],[32,11],[43,14],[1,24],[5,22],[10,27],[16,23],[22,19],[28,24],[37,27],[43,22],[47,25]].forEach(([x,y])=>ctx.fillRect(x,y,2,1));
-  ctx.fillStyle='#fbc8de';
-  [[4,17],[13,14],[20,20],[30,14],[39,19],[46,17],[3,25],[14,28],[26,22],[36,26],[45,29]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  // Red lanterns on pillars
-  ctx.fillStyle='#ff5010';ctx.fillRect(9,30,2,3);ctx.fillRect(23,30,2,3);
-  ctx.fillStyle='#ffaa60';ctx.fillRect(9,31,2,1);ctx.fillRect(23,31,2,1);
+  p(8,26,4,22);p(22,26,4,22); // pillars
+  p(4,20,30,4);                // kasagi top beam
+  p(3,19,4,2);p(27,19,5,2);   // ends curl up
+  p(7,26,20,3);                // nuki middle beam
+  ctx.fillStyle='#991800';p(4,23,30,1); // shadow line
+  ctx.fillStyle='#ff3a10';p(4,20,30,1); // highlight
+  // Lantern glow
+  fc(12,30,3,'rgba(255,140,40,.3)');fc(24,30,3,'rgba(255,140,40,.3)');
+  ctx.fillStyle='#ff5010';p(10,28,3,4);p(24,28,3,4);
+  ctx.fillStyle='#ff8040';p(11,30,1,2);p(25,30,1,2);
+  ctx.fillStyle='rgba(255,160,60,.45)';p(10,27,3,1);p(24,27,3,1);
+  // 5-tier pagoda (right)
+  ctx.fillStyle='#160810';
+  [[31,40,15,8],[32,36,13,6],[33,32,11,5],[34,29,9,4],[35,26,7,4]].forEach(([x,y,w,h])=>p(x,y,w,h));
+  ctx.fillStyle='#0e0408';
+  [[30,40,17,1],[31,36,15,1],[32,32,13,1],[33,29,11,1],[34,26,9,1]].forEach(([x,y,w,h])=>p(x,y,w,h));
+  ctx.fillStyle='#220e18';p(37,20,2,6);p(38,17,1,5); // spire
+  // Ground + stone path
+  ctx.fillStyle='#160a14';ctx.fillRect(0,~~(H*.88),W,~~(H*.12));
+  ctx.fillStyle='#1e1018';ctx.fillRect(0,~~(H*.84),W,~~(H*.06));
+  ctx.fillStyle='#28141e';p(18,44,12,2);p(20,42,8,2); // stone path
+  // Cherry blossom petals (scattered)
+  [[2,15,2],[7,12,2],[11,18,2],[17,13,2],[23,10,2],[27,17,2],[32,11,2],[43,14,2],[1,23,2],[5,21,2],[9,26,2],[15,22,2],[21,18,2],[27,23,2],[36,26,2],[43,21,2],[47,24,2]].forEach(([x,y,w])=>{ctx.fillStyle='#f9a8d4';p(x,y,w,1);});
+  [[4,17],[13,14],[20,20],[30,14],[39,19],[46,17],[3,24],[14,27],[25,21],[35,25],[45,28]].forEach(([x,y])=>{ctx.fillStyle='rgba(251,205,225,.7)';p(x,y);});
 }
-function drawWorldParis(ctx){
-  ctx.fillStyle='#120306';ctx.fillRect(0,0,48,12);
-  ctx.fillStyle='#22060e';ctx.fillRect(0,12,48,12);
-  ctx.fillStyle='#360c14';ctx.fillRect(0,24,48,12);
-  ctx.fillStyle='#481018';ctx.fillRect(0,36,48,12);
-  ctx.fillStyle='rgba(251,120,40,.2)';ctx.fillRect(0,34,48,14); // horizon glow
-  ctx.fillStyle='rgba(251,120,40,.1)';ctx.fillRect(0,30,48,8);
-  // Stars (few, evening)
-  ctx.fillStyle='#fff';
-  [[3,3],[9,1],[16,4],[24,2],[36,4],[44,2]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  // Eiffel Tower (recognizable silhouette, centered)
+function drawWorldParis(ctx,W=48,H=48){
+  const s=W/48,p=(x,y,w=1,h=1)=>ctx.fillRect(~~(x*s),~~(y*s),Math.max(1,~~(w*s)),Math.max(1,~~(h*s)));
+  const fc=(x,y,r,c)=>fillCirc(ctx,~~(x*s),~~(y*s),r*s,c);
+  // Sunset sky gradient
+  let g=ctx.createLinearGradient(0,0,0,H*.75);
+  g.addColorStop(0,'#100208');g.addColorStop(.25,'#20060e');g.addColorStop(.55,'#3e0e16');g.addColorStop(.8,'#5a1810');g.addColorStop(1,'#6e2008');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,~~(H*.75));ctx.fillStyle='#501808';ctx.fillRect(0,~~(H*.73),W,~~(H*.27));
+  // Sunset horizon glow
+  g=ctx.createRadialGradient(W*.5,H*.78,0,W*.5,H*.78,W*.9);
+  g.addColorStop(0,'rgba(251,146,40,.35)');g.addColorStop(.4,'rgba(251,100,20,.18)');g.addColorStop(.7,'rgba(180,40,10,.08)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,~~(H*.42),W,~~(H*.5));
+  // Few evening stars
+  [[3,3],[9,1],[17,4],[25,2],[37,4],[45,2],[7,7],[42,6]].forEach(([x,y])=>{ctx.fillStyle='rgba(255,255,255,.85)';p(x,y);});
+  // Eiffel Tower silhouette
   ctx.fillStyle='#0c0806';
-  // Legs (A-frame base)
-  for(let i=0;i<10;i++){ctx.fillRect(12+i,38+~~(i*.5),3,10-~~(i*.5));ctx.fillRect(33-i,38+~~(i*.5),3,10-~~(i*.5));}
-  ctx.fillRect(14,36,20,4); // first floor
+  // Leg diagonals (A-frame)
+  for(let i=0;i<10;i++){p(12+i,38+~~(i*.5),3+~~(i*.1),10-~~(i*.5));p(34-i,38+~~(i*.5),3+~~(i*.1),10-~~(i*.5));}
+  // First floor platform
+  p(13,36,22,4);ctx.fillStyle='#140c08';p(13,36,22,1);
   // Second section
-  ctx.fillRect(16,28,16,3);ctx.fillRect(17,28,14,8); // second floor
+  ctx.fillStyle='#0c0806';p(15,27,18,3);p(16,27,16,9);
+  ctx.fillStyle='#140c08';p(15,27,18,1);
   // Third section
-  ctx.fillRect(19,20,10,3);ctx.fillRect(20,20,8,8);
+  p(19,19,10,3);p(20,19,8,9);ctx.fillStyle='#140c08';p(19,19,10,1);
   // Needle
-  ctx.fillRect(22,12,4,8);ctx.fillRect(23,8,2,4);ctx.fillRect(23,6,2,3);
-  ctx.fillStyle='#fef08a';ctx.fillRect(23,6,2,2); // beacon
-  // Tower highlight windows
-  ctx.fillStyle='rgba(251,191,36,.5)';
-  [[14,38],[18,36],[22,30],[24,22],[23,14]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  [[34,38],[30,36],[24,30]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
-  // Paris rooftops (Haussmann style)
-  ctx.fillStyle='#0a0608';
-  ctx.fillRect(0,40,11,8);ctx.fillRect(37,40,11,8);ctx.fillRect(0,42,15,6);ctx.fillRect(33,42,15,6);
-  ctx.fillStyle='#0e0a0c';ctx.fillRect(0,40,4,2);ctx.fillRect(44,40,4,2);
-  // Seine river
-  ctx.fillStyle='#0e0408';ctx.fillRect(0,45,48,3);
-  ctx.fillStyle='rgba(251,120,40,.18)';ctx.fillRect(0,45,48,3); // sunset reflection
-  ctx.fillStyle='rgba(255,255,255,.08)';[[5,46],[15,45],[26,46],[36,45],[43,46]].forEach(([x,y])=>ctx.fillRect(x,y,4,1));
+  ctx.fillStyle='#0c0806';p(22,11,4,8);p(23,7,2,4);p(23,5,2,3);
+  ctx.fillStyle='#fef08a';p(23,5,2,2);fc(24,6,2,'rgba(255,240,100,.2)'); // beacon
+  // Tower lights
+  ctx.fillStyle='rgba(251,191,36,.55)';
+  [[14,39],[18,37],[22,29],[24,21],[23,13],[34,39],[30,37],[24,29]].forEach(([x,y])=>p(x,y));
+  // Haussmann rooftops
+  ctx.fillStyle='#0a0608';p(0,40,12,8);p(36,40,12,8);
+  ctx.fillStyle='#0e0a0c';p(0,42,16,6);p(32,42,16,6);
+  // Chimneys
+  ctx.fillStyle='#080406';p(1,39,2,2);p(5,38,2,3);p(9,39,2,2);p(39,39,2,2);p(42,38,2,3);p(45,39,2,2);
+  // Seine gradient
+  g=ctx.createLinearGradient(0,~~(H*.9),0,H);
+  g.addColorStop(0,'#1a0808');g.addColorStop(.5,'#140608');g.addColorStop(1,'#0e0406');
+  ctx.fillStyle=g;ctx.fillRect(0,~~(H*.9),W,~~(H*.1));
+  // Sunset reflection in Seine
+  ctx.fillStyle='rgba(251,146,40,.2)';ctx.fillRect(0,~~(H*.9),W,~~(H*.1));
+  [[4,45,5],[12,44,6],[22,45,8],[33,44,6],[41,45,4]].forEach(([x,y,w])=>{ctx.fillStyle='rgba(255,160,60,.18)';p(x,y,w,1);});
+  // Lamppost
+  ctx.fillStyle='#0e0a06';p(3,36,1,9);p(3,35,3,1);
+  ctx.fillStyle='rgba(255,220,100,.6)';p(3,35,2,1);fc(4,35,2,'rgba(255,220,80,.15)');
 }
-function drawWorldSpace(ctx){
-  ctx.fillStyle='#010006';ctx.fillRect(0,0,48,48);
-  // Nebula wisps
-  ctx.fillStyle='rgba(90,30,160,.14)';ctx.fillRect(0,0,28,28);
-  ctx.fillStyle='rgba(30,70,200,.09)';ctx.fillRect(18,18,30,30);
-  ctx.fillStyle='rgba(160,30,100,.07)';ctx.fillRect(0,28,22,20);
-  // Stars (many, varied brightness)
-  ctx.fillStyle='#ffffff';
+function drawWorldSpace(ctx,W=48,H=48){
+  const s=W/48,p=(x,y,w=1,h=1)=>ctx.fillRect(~~(x*s),~~(y*s),Math.max(1,~~(w*s)),Math.max(1,~~(h*s)));
+  const fc=(x,y,r,c)=>fillCirc(ctx,~~(x*s),~~(y*s),r*s,c);
+  ctx.fillStyle='#010006';ctx.fillRect(0,0,W,H);
+  // Nebula gradients
+  let g=ctx.createRadialGradient(W*.2,H*.3,0,W*.2,H*.3,W*.55);
+  g.addColorStop(0,'rgba(100,30,200,.18)');g.addColorStop(.6,'rgba(60,20,140,.08)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  g=ctx.createRadialGradient(W*.75,H*.6,0,W*.75,H*.6,W*.5);
+  g.addColorStop(0,'rgba(20,60,200,.12)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  g=ctx.createRadialGradient(W*.1,H*.7,0,W*.1,H*.7,W*.4);
+  g.addColorStop(0,'rgba(180,30,120,.1)');g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // Dense star field
   [[2,3],[6,1],[10,7],[14,2],[18,6],[22,1],[26,5],[30,2],[34,7],[38,1],[42,5],[46,3],
    [1,11],[5,15],[9,12],[13,16],[17,13],[21,10],[25,14],[29,11],[33,15],[37,12],[41,16],[45,14],
    [3,20],[7,24],[11,21],[15,25],[19,22],[23,19],[27,23],[31,20],[35,24],[39,21],[43,25],[47,22],
-   [4,30],[8,34],[12,31],[16,35],[20,32],[28,33],[36,34],[44,28]].forEach(([x,y])=>ctx.fillRect(x,y,1,1));
+   [4,30],[8,34],[12,31],[16,35],[20,32],[28,33],[36,34],[44,28],[0,18],[46,30],[2,38],[47,40]].forEach(([x,y])=>{ctx.fillStyle='rgba(255,255,255,.8)';p(x,y);});
+  // Dim stars
+  [[6,5],[14,9],[22,7],[30,4],[38,8],[4,14],[12,19],[20,15],[28,17],[36,22],[44,20],[8,27],[16,29],[24,25],[32,28],[40,26],[6,36],[24,38],[42,35]].forEach(([x,y])=>{ctx.fillStyle='rgba(255,255,255,.35)';p(x,y);});
   // Bright cross-stars
-  ctx.fillStyle='#fef9c3';
   [[8,3],[22,2],[40,5],[15,11],[33,9],[5,22],[44,18]].forEach(([x,y])=>{
-    ctx.fillRect(x,y,1,1);ctx.fillRect(x-1,y,1,1);ctx.fillRect(x+1,y,1,1);ctx.fillRect(x,y-1,1,1);ctx.fillRect(x,y+1,1,1);
+    ctx.fillStyle='#fef9c3';p(x,y);
+    ctx.fillStyle='rgba(255,249,195,.6)';p(x-1,y);p(x+1,y);p(x,y-1);p(x,y+1);
   });
-  // Milky Way smear
-  ctx.fillStyle='rgba(180,160,255,.1)';
-  for(let x=2;x<22;x++) ctx.fillRect(x,6+~~(Math.sin(x*.5)*2),1,3);
-  // Gas giant with rings
-  fillCirc(ctx,39,36,8,'#2a1a52');fillCirc(ctx,39,36,7,'#3d2880');fillCirc(ctx,39,36,6,'#4c3898');
-  ctx.fillStyle='rgba(200,180,255,.35)';fillCirc(ctx,37,33,3,'rgba(200,180,255,.3)'); // highlight
-  ctx.fillStyle='rgba(170,140,255,.5)';
-  for(let x=29;x<=49;x++){if(x>47)continue;const dy=~~(Math.abs(x-39)*.38);ctx.fillRect(x,36+dy,1,1);ctx.fillRect(x,36-dy,1,1);}
-  ctx.fillStyle='rgba(25,12,50,.75)';ctx.fillRect(34,35,11,2); // ring behind planet
-  // Rocket
-  ctx.fillStyle='#b8c4e0';ctx.fillRect(6,22,3,8);ctx.fillRect(7,20,1,2);
-  ctx.fillStyle='#d8e4ff';ctx.fillRect(6,22,3,2);
-  ctx.fillStyle='#4488ff';ctx.fillRect(7,23,1,1); // porthole
-  ctx.fillStyle='#b8c4e0';ctx.fillRect(5,27,1,3);ctx.fillRect(9,27,1,3); // fins
-  ctx.fillStyle='#ff8c20';ctx.fillRect(6,30,3,2);ctx.fillRect(7,29,1,1);
-  ctx.fillStyle='#ffcc50';ctx.fillRect(7,30,1,1);
-  ctx.fillStyle='rgba(255,180,50,.55)';ctx.fillRect(7,32,1,2);
-  ctx.fillStyle='rgba(255,140,30,.28)';ctx.fillRect(7,34,1,2);
-  // Earth glimpse (bottom)
-  fillCirc(ctx,5,46,7,'#1a4070');fillCirc(ctx,5,46,6,'#1e5080');
-  ctx.fillStyle='#2d7a40';fillCirc(ctx,4,45,2,'#2d7a40');fillCirc(ctx,7,44,1,'#2d7a40');
-  ctx.fillStyle='rgba(255,255,255,.55)';fillCirc(ctx,8,44,1,'rgba(255,255,255,.55)');
+  // Milky Way band
+  ctx.fillStyle='rgba(200,180,255,.07)';
+  for(let x=0;x<22;x++) p(x,4+~~(Math.sin(x*.45)*2.5),1,3);
+  // Gas giant
+  fc(38,35,9,'#1e1040');fc(38,35,8,'#2a1a52');fc(38,35,7,'#3d2880');fc(38,35,6,'#4c3898');fc(38,35,5,'#5842a8');
+  // Planet atmosphere highlight
+  fc(36,32,3,'rgba(200,180,255,.3)');
+  // Cloud bands
+  ctx.fillStyle='rgba(100,80,180,.3)';p(32,33,12,2);ctx.fillStyle='rgba(80,60,160,.2)';p(33,37,10,2);
+  // Ring system
+  ctx.fillStyle='rgba(180,160,255,.55)';
+  for(let x=27;x<=49;x++){if(x>47)continue;const dy=~~(Math.abs(x-38)*.42);p(x,35+dy,1,1);p(x,35-dy,1,1);}
+  ctx.fillStyle='rgba(160,140,220,.35)';
+  for(let x=29;x<=47;x++){const dy=~~(Math.abs(x-38)*.28);p(x,35+dy,1,1);p(x,35-dy,1,1);}
+  ctx.fillStyle='rgba(20,10,40,.8)';p(33,34,11,2); // ring shadow on planet
+  // Rocket (detailed)
+  ctx.fillStyle='#b8c4e0';p(6,21,3,9);p(7,19,1,3);
+  ctx.fillStyle='#d8e4ff';p(6,21,3,3);
+  ctx.fillStyle='#2266cc';p(7,22,1,2); // porthole
+  ctx.fillStyle='rgba(100,160,255,.4)';p(7,22,1,2);
+  ctx.fillStyle='#b8c4e0';p(5,27,1,3);p(9,27,1,3);p(4,28,1,2);p(10,28,1,2);
+  ctx.fillStyle='#ff8020';p(6,30,3,3);p(7,28,1,3);ctx.fillStyle='#ffcc44';p(7,30,1,2);
+  // Exhaust trail (fading)
+  ctx.fillStyle='rgba(255,160,40,.7)';p(7,33,1,2);p(6,33,1,1);p(8,33,1,1);
+  ctx.fillStyle='rgba(255,120,30,.45)';p(7,35,1,2);ctx.fillStyle='rgba(255,100,20,.2)';p(7,37,1,3);
+  // Earth from orbit (bottom left)
+  fc(5,45,8,'#0e2a50');fc(5,45,7,'#183a6a');fc(5,45,6,'#1e4a80');
+  ctx.fillStyle='#266038';fc(4,44,2,'#266038');fc(6,43,2,'#1e5030');fc(3,46,1.5,'#266038');
+  ctx.fillStyle='rgba(255,255,255,.7)';fc(7,43,1.5,'rgba(255,255,255,.6)');
+  ctx.fillStyle='rgba(100,160,255,.25)';fc(5,45,8,'rgba(100,160,255,.25)'); // atmosphere glow
 }
 
 const WORLD_FNS={seoul:drawWorldSeoul,jeju:drawWorldJeju,kyoto:drawWorldKyoto,paris:drawWorldParis,space:drawWorldSpace};
@@ -721,10 +798,7 @@ function drawWorldBg(bgId){
   const cv=document.getElementById(bgId);if(!cv)return;
   const ctx=cv.getContext('2d');ctx.clearRect(0,0,cv.width,cv.height);
   const w=curWorld();
-  if(WORLD_FNS[w.id]){
-    const s=cv.width/48;
-    ctx.save();ctx.scale(s,s);WORLD_FNS[w.id](ctx);ctx.restore();
-  }
+  if(WORLD_FNS[w.id]) WORLD_FNS[w.id](ctx,cv.width,cv.height);
 }
 
 // ── CHARACTER RENDERING ──────────────────────────────────────────────────────

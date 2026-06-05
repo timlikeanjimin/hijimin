@@ -133,6 +133,34 @@
     .floating{animation:float 2.4s ease-in-out infinite}
     @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
     .pop{animation:pop .3s ease}
+
+    /* DRAW SCREEN */
+    .draw-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .back-btn{background:var(--card);border:2px solid var(--border);border-radius:10px;
+      padding:8px 14px;color:var(--text);font-size:13px;cursor:pointer;font-weight:700;
+      font-family:'Noto Sans KR',sans-serif}
+    .pal-title{font-size:11px;color:var(--sub);margin-bottom:8px;font-weight:700}
+    .swatch-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+    .swatch{width:32px;height:32px;border-radius:6px;border:2px solid transparent;
+      cursor:pointer;transition:transform .1s;flex-shrink:0}
+    .swatch.on{border-color:#fff;transform:scale(1.2)}
+    .tool-row{display:flex;gap:8px;margin-bottom:14px}
+    .tbtn{flex:1;padding:9px 4px;background:var(--card);border:2px solid var(--border);
+      border-radius:10px;color:var(--sub);font-size:11px;cursor:pointer;font-weight:700;
+      font-family:'Noto Sans KR',sans-serif;text-align:center}
+    .tbtn.on{border-color:var(--accent);color:var(--accent)}
+    .grid-wrap{display:flex;justify-content:center;margin-bottom:12px;
+      touch-action:none;user-select:none;-webkit-user-select:none}
+    #pgrid{display:grid;grid-template-columns:repeat(16,1fr);
+      width:min(calc(100vw - 32px),320px);aspect-ratio:1;
+      border:2px solid var(--border);border-radius:8px;overflow:hidden;cursor:crosshair}
+    .pc{border-right:0.5px solid rgba(255,255,255,0.04);border-bottom:0.5px solid rgba(255,255,255,0.04)}
+    .draw-save{width:100%;padding:16px;background:var(--accent);border:none;
+      border-radius:14px;color:#0f0f1a;font-size:15px;font-weight:900;
+      font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-bottom:8px}
+    .draw-reset{width:100%;padding:12px;background:transparent;border:2px solid var(--border);
+      border-radius:14px;color:var(--sub);font-size:13px;font-weight:700;
+      font-family:'Noto Sans KR',sans-serif;cursor:pointer}
   </style>
 </head>
 <body>
@@ -208,6 +236,7 @@
     <div class="canvas-wrap floating">
       <canvas id="cc" width="64" height="64" style="width:176px;height:176px"></canvas>
     </div>
+    <button onclick="openDraw()" style="margin-bottom:14px;padding:7px 16px;background:var(--card);border:2px solid var(--border);border-radius:10px;color:var(--sub);font-size:12px;cursor:pointer;font-weight:700;font-family:'Noto Sans KR',sans-serif">✏️ 직접 그리기</button>
     <div class="char-status" id="char-status">오늘 기록을 해봐요!</div>
     <div style="width:100%">
       <div style="font-size:12px;color:var(--sub);font-weight:700;margin-bottom:8px">이번 주 기록</div>
@@ -231,6 +260,26 @@
   <div class="shop-sec"><div class="shop-sec-title">🎩 모자 / 액세서리</div><div class="items-grid" id="g-hat"></div></div>
   <div class="shop-sec"><div class="shop-sec-title">🎨 캐릭터 컬러</div><div class="items-grid" id="g-color"></div></div>
   <div class="shop-sec"><div class="shop-sec-title">🌆 배경</div><div class="items-grid" id="g-bg"></div></div>
+</div>
+
+<!-- DRAW -->
+<div id="s-draw" class="screen">
+  <div class="draw-hdr">
+    <button class="back-btn" onclick="closeDraw()">← 뒤로</button>
+    <span style="font-weight:900;font-size:16px">직접 그리기 ✏️</span>
+  </div>
+  <div style="font-size:12px;color:var(--sub);margin-bottom:14px">16×16 픽셀 캔버스 — 자유롭게 그려봐요</div>
+  <div class="pal-title">색상 팔레트</div>
+  <div class="swatch-row" id="swatch-row"></div>
+  <div class="tool-row">
+    <button class="tbtn on" id="tb-draw" onclick="setTool('draw',this)">🖌️ 그리기</button>
+    <button class="tbtn" id="tb-fill" onclick="setTool('fill',this)">🪣 채우기</button>
+    <button class="tbtn" id="tb-erase" onclick="setTool('erase',this)">⬜ 지우개</button>
+    <button class="tbtn" onclick="clearGrid()">🗑️ 초기화</button>
+  </div>
+  <div class="grid-wrap"><div id="pgrid"></div></div>
+  <button class="draw-save" onclick="saveCustomChar()">저장하기 ✓</button>
+  <button class="draw-reset" onclick="resetToDefault()">기본 캐릭터로 돌아가기</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -393,64 +442,55 @@ function drawChar(){
   const ctx=cv.getContext('2d');
   ctx.clearRect(0,0,64,64);
 
-  // Background tint from equipped bg
   const bgItem=ITEMS.find(i=>i.id===S.eq.bg);
   const scr=document.getElementById('s-char');
   if(scr) scr.style.background=bgItem?bgItem.bg:'';
 
-  const bc=bodyCol();
-  const outline=darker(bc,0.45);
-  const hi=lighter(bc,0.45);
-  const m=mood();
-  const cx=32,cy=36;
-
-  // Body
-  circ(ctx,cx,cy,17,bc,outline);
-  // Highlight
-  circ(ctx,26,28,5,hi,null);
-  // Cheeks
-  ctx.fillStyle='rgba(255,130,130,0.35)';
-  circ(ctx,23,42,4,'rgba(255,130,130,0.35)',null);
-  circ(ctx,41,42,4,'rgba(255,130,130,0.35)',null);
-
-  ctx.fillStyle='#1a1020';
-  if(m==='happy'){
-    // arc eyes ^_^
-    for(let x=23;x<=27;x++) ctx.fillRect(x,31,1,1);
-    ctx.fillRect(22,32,1,1);ctx.fillRect(28,32,1,1);
-    for(let x=36;x<=40;x++) ctx.fillRect(x,31,1,1);
-    ctx.fillRect(35,32,1,1);ctx.fillRect(41,32,1,1);
-    // big smile
-    ctx.fillRect(27,41,1,1);ctx.fillRect(28,42,8,1);ctx.fillRect(36,41,1,1);
-    ctx.fillStyle='#e05060';ctx.fillRect(28,42,8,2);
-    ctx.fillStyle='#f08090';ctx.fillRect(29,43,6,1);
-  } else if(m==='sad'){
-    // droopy dots
-    ctx.fillRect(23,31,4,4);ctx.fillRect(36,31,4,4);
-    // sad brows
-    ctx.fillRect(22,28,2,1);ctx.fillRect(24,29,2,1);
-    ctx.fillRect(37,29,2,1);ctx.fillRect(39,28,2,1);
-    // frown
-    ctx.fillRect(27,44,1,1);ctx.fillRect(28,43,8,1);ctx.fillRect(36,44,1,1);
+  if(S.customPixels&&S.customPixels.some(p=>p)){
+    // Custom pixel art: 16×16 logical pixels → 64×64 canvas (4px per cell)
+    for(let i=0;i<256;i++){
+      if(S.customPixels[i]){
+        ctx.fillStyle=S.customPixels[i];
+        ctx.fillRect((i%16)*4,Math.floor(i/16)*4,4,4);
+      }
+    }
   } else {
-    // normal dots
-    ctx.fillRect(23,30,4,5);ctx.fillRect(36,30,4,5);
-    ctx.fillStyle='#fff';ctx.fillRect(24,30,1,1);ctx.fillRect(37,30,1,1);
+    const bc=bodyCol(),outline=darker(bc,0.45),hi=lighter(bc,0.45),m=mood(),cx=32,cy=36;
+    circ(ctx,cx,cy,17,bc,outline);
+    circ(ctx,26,28,5,hi,null);
+    ctx.fillStyle='rgba(255,130,130,0.35)';
+    circ(ctx,23,42,4,'rgba(255,130,130,0.35)',null);
+    circ(ctx,41,42,4,'rgba(255,130,130,0.35)',null);
     ctx.fillStyle='#1a1020';
-    // flat mouth
-    ctx.fillRect(27,41,10,2);
+    if(m==='happy'){
+      for(let x=23;x<=27;x++) ctx.fillRect(x,31,1,1);
+      ctx.fillRect(22,32,1,1);ctx.fillRect(28,32,1,1);
+      for(let x=36;x<=40;x++) ctx.fillRect(x,31,1,1);
+      ctx.fillRect(35,32,1,1);ctx.fillRect(41,32,1,1);
+      ctx.fillRect(27,41,1,1);ctx.fillRect(28,42,8,1);ctx.fillRect(36,41,1,1);
+      ctx.fillStyle='#e05060';ctx.fillRect(28,42,8,2);
+      ctx.fillStyle='#f08090';ctx.fillRect(29,43,6,1);
+    } else if(m==='sad'){
+      ctx.fillRect(23,31,4,4);ctx.fillRect(36,31,4,4);
+      ctx.fillRect(22,28,2,1);ctx.fillRect(24,29,2,1);
+      ctx.fillRect(37,29,2,1);ctx.fillRect(39,28,2,1);
+      ctx.fillRect(27,44,1,1);ctx.fillRect(28,43,8,1);ctx.fillRect(36,44,1,1);
+    } else {
+      ctx.fillRect(23,30,4,5);ctx.fillRect(36,30,4,5);
+      ctx.fillStyle='#fff';ctx.fillRect(24,30,1,1);ctx.fillRect(37,30,1,1);
+      ctx.fillStyle='#1a1020';ctx.fillRect(27,41,10,2);
+    }
   }
 
-  // HAT
   const hat=S.eq.hat;
   if(hat==='hat_star') drawStarHat(ctx);
   else if(hat==='hat_flower') drawFlowerHat(ctx);
   else if(hat==='hat_crown') drawCrownHat(ctx);
-  else if(hat==='hat_cat') drawCatEars(ctx,bc);
+  else if(hat==='hat_cat') drawCatEars(ctx,bodyCol());
 
   const statusMap={happy:'오늘도 최고야! ✨',neu:'그럭저럭이에요 👀',sad:'좀 더 힘내봐요... 💧'};
   const el=document.getElementById('char-status');
-  if(el) el.textContent=S.today.done?statusMap[m]:'오늘 기록을 먼저 해봐요!';
+  if(el) el.textContent=S.today.done?statusMap[mood()]:'오늘 기록을 먼저 해봐요!';
 }
 
 function drawStarHat(ctx){
@@ -585,6 +625,156 @@ function toast(msg){
   const el=document.getElementById('toast');
   el.textContent=msg;el.classList.add('show');
   clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2600);
+}
+
+// ── PIXEL EDITOR ──────────────────────────────────────────────────────────
+const PALETTE=[
+  '#1a1020','#ffffff','#e8d0f0',
+  '#7ed8a4','#ff9ebc','#60a5fa',
+  '#a78bfa','#ffd700','#ff6b6b',
+  '#ff9d40','#4dd0e1','#a07858',
+  '#2d8b6a','#c5a3ff','#f4c2a1',
+];
+
+let edPx=new Array(256).fill(null);
+let curCol=PALETTE[3];
+let curTool='draw';
+let painting=false;
+
+function openDraw(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-draw').classList.add('active');
+  edPx=S.customPixels?[...S.customPixels]:new Array(256).fill(null);
+  buildEditor();
+}
+
+function closeDraw(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('s-char').classList.add('active');
+  document.querySelector('.nav-btn:nth-child(2)').classList.add('on');
+  renderCharScreen();
+}
+
+function buildEditor(){
+  // Palette swatches
+  const pr=document.getElementById('swatch-row');
+  pr.innerHTML='';
+  PALETTE.forEach(col=>{
+    const sw=document.createElement('div');
+    sw.className='swatch'+(col===curCol?' on':'');
+    sw.style.cssText=`background:${col};outline:${col==='#1a1020'?'1px solid #555':'none'}`;
+    sw.onclick=()=>{
+      curCol=col;curTool='draw';
+      pr.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));
+      sw.classList.add('on');
+      document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+      document.getElementById('tb-draw').classList.add('on');
+    };
+    pr.appendChild(sw);
+  });
+  // Eraser as last swatch
+  const er=document.createElement('div');
+  er.className='swatch';
+  er.style.cssText='background:var(--surface);border-color:var(--border);display:flex;align-items:center;justify-content:center;font-size:14px';
+  er.textContent='✕';
+  er.onclick=()=>{
+    setTool('erase',null);
+    pr.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));
+    er.classList.add('on');
+  };
+  pr.appendChild(er);
+
+  // 16×16 grid
+  const grid=document.getElementById('pgrid');
+  grid.innerHTML='';
+  for(let i=0;i<256;i++){
+    const c=document.createElement('div');
+    c.className='pc';c.dataset.i=i;
+    c.style.background=edPx[i]||'transparent';
+    grid.appendChild(c);
+  }
+
+  // Remove old listeners by cloning
+  const ng=grid.cloneNode(true);
+  grid.parentNode.replaceChild(ng,grid);
+
+  ng.addEventListener('touchstart',e=>{
+    e.preventDefault();painting=true;
+    applyTouch(e.touches[0],true);
+  },{passive:false});
+  ng.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    if(painting&&curTool!=='fill') applyTouch(e.touches[0],false);
+  },{passive:false});
+  ng.addEventListener('touchend',()=>painting=false);
+  ng.addEventListener('mousedown',e=>{painting=true;applyCell(e.target,true);});
+  ng.addEventListener('mousemove',e=>{if(painting&&curTool!=='fill')applyCell(e.target,false);});
+  document.addEventListener('mouseup',()=>painting=false);
+}
+
+function applyTouch(touch,isStart){
+  const el=document.elementFromPoint(touch.clientX,touch.clientY);
+  applyCell(el,isStart);
+}
+
+function applyCell(el,isStart){
+  if(!el||el.dataset.i===undefined) return;
+  const i=parseInt(el.dataset.i);
+  if(curTool==='fill'){
+    if(!isStart) return;
+    const target=edPx[i];
+    const rep=curCol;
+    if(target===rep) return;
+    floodFill(i%16,Math.floor(i/16),target,rep);
+    refreshGrid();
+  } else {
+    const col=curTool==='erase'?null:curCol;
+    edPx[i]=col;
+    el.style.background=col||'transparent';
+  }
+}
+
+function floodFill(x,y,target,rep){
+  const stack=[[x,y]];
+  while(stack.length){
+    const[cx,cy]=stack.pop();
+    if(cx<0||cx>15||cy<0||cy>15) continue;
+    const i=cy*16+cx;
+    if(edPx[i]!==target) continue;
+    edPx[i]=rep;
+    stack.push([cx+1,cy],[cx-1,cy],[cx,cy+1],[cx,cy-1]);
+  }
+}
+
+function refreshGrid(){
+  const cells=document.getElementById('pgrid').children;
+  for(let i=0;i<256;i++) cells[i].style.background=edPx[i]||'transparent';
+}
+
+function setTool(name,btn){
+  curTool=name;
+  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+}
+
+function clearGrid(){
+  edPx=new Array(256).fill(null);
+  refreshGrid();
+}
+
+function saveCustomChar(){
+  S.customPixels=[...edPx];
+  save();
+  toast('캐릭터 저장 완료! 👾');
+  closeDraw();
+}
+
+function resetToDefault(){
+  S.customPixels=null;
+  save();
+  toast('기본 캐릭터로 돌아왔어요');
+  closeDraw();
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────

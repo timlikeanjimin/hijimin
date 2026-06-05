@@ -90,6 +90,7 @@ button,input{font-family:inherit}
   image-rendering:pixelated;image-rendering:crisp-edges}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .floating{animation:float 2.6s ease-in-out infinite}
+@keyframes careBounce{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-14px) scale(1.12)}55%{transform:translateY(2px) scale(.94)}100%{transform:translateY(0) scale(1)}}
 .spark{position:absolute;pointer-events:none;border-radius:2px;animation:sp .65s ease forwards}
 @keyframes sp{0%{opacity:1;transform:scale(1.2) translate(0,0)}100%{opacity:0;transform:scale(0) translate(var(--tx),var(--ty))}}
 .bubble{background:var(--s2);border:1px solid var(--bd);border-radius:12px;border-bottom-left-radius:4px;
@@ -333,6 +334,22 @@ button,input{font-family:inherit}
 /* RECORDS SCREEN */
 .rec-sec{margin-bottom:24px}
 
+/* CARE PANEL */
+.care-panel{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:16px;padding:14px 16px;margin-bottom:18px}
+.care-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.care-lbl{font-size:12px;color:var(--sub)}
+.care-lbl b{color:var(--pink);font-weight:900}
+.care-pts{font-size:11px;color:var(--dim)}
+.care-bar{height:6px;background:var(--s3);border-radius:3px;overflow:hidden;margin-bottom:12px}
+.care-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--purple));border-radius:3px;transition:width .4s ease}
+.care-btns{display:flex;gap:8px}
+.care-btn{flex:1;padding:10px 4px;background:var(--s3);border:1px solid var(--bd);border-radius:12px;
+  color:var(--text);font-size:11px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .15s}
+.care-btn:active{transform:scale(.92)}
+.care-btn:disabled{opacity:.4;cursor:not-allowed}
+.care-btn .cb-ico{font-size:20px}
+.care-btn.ready{border-color:rgba(249,168,212,.5)}
+
 /* INSIGHTS */
 .insight-card{background:linear-gradient(135deg,var(--s2),var(--s3));border:1px solid rgba(110,231,183,.25);border-radius:16px;padding:6px 16px}
 .insight-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd)}
@@ -471,6 +488,18 @@ button,input{font-family:inherit}
       </div>
       <div class="char-nm" id="char-nm">친구</div>
       <div class="char-st" id="char-st">오늘 기록을 먼저 해봐요!</div>
+      <div class="care-panel">
+        <div class="care-top">
+          <span class="care-lbl">💞 친밀도 <b id="care-lv">Lv.1</b></span>
+          <span class="care-pts" id="care-pts">0 / 5</span>
+        </div>
+        <div class="care-bar"><div class="care-fill" id="care-fill" style="width:0%"></div></div>
+        <div class="care-btns">
+          <button class="care-btn" id="cb-feed" onclick="doCare('feed',this)"><span class="cb-ico">🍪</span><span>간식</span></button>
+          <button class="care-btn" id="cb-pet" onclick="doCare('pet',this)"><span class="cb-ico">🫧</span><span>쓰다듬기</span></button>
+          <button class="care-btn" id="cb-play" onclick="doCare('play',this)"><span class="cb-ico">🎵</span><span>놀아주기</span></button>
+        </div>
+      </div>
       <div class="world-progress" id="world-progress">
         <div class="wp-top">
           <span class="wp-label" id="wp-label">다음 세계까지</span>
@@ -670,7 +699,8 @@ const DEF={
   streak:0,total:0,lastDate:null,bestStreak:0,
   today:{ex:null,water:0,mood:null,sleep:null,done:false,score:0},
   eq:{hat:null,color:null,bg:null,world:null},
-  unlocked:[],history:[],customPixels:null,celebratedWorlds:[],achievements:[]
+  unlocked:[],history:[],customPixels:null,celebratedWorlds:[],achievements:[],
+  care:{affection:0,acts:{}}
 };
 let S=JSON.parse(JSON.stringify(DEF));
 function save(){localStorage.setItem('pikpik_v2',JSON.stringify(S))}
@@ -678,7 +708,9 @@ function load(){
   try{const r=localStorage.getItem('pikpik_v2');
     if(r){const p=JSON.parse(r);S={...DEF,...p};
       S.today={...DEF.today,...(p.today||{})};S.eq={...DEF.eq,...(p.eq||{})};
+      S.care={...DEF.care,...(p.care||{}),acts:{...(p.care&&p.care.acts||{})}};
       if(!Array.isArray(S.celebratedWorlds)) S.celebratedWorlds=[];
+      if(!Array.isArray(S.achievements)) S.achievements=[];
     }
   }catch(e){}
   newDayCheck();
@@ -1662,8 +1694,62 @@ function renderRecord(){
 }
 
 // ── CHAR SCREEN ───────────────────────────────────────────────────────────────
+// ── CARE (멀티세션 돌봄) ───────────────────────────────────────────────────────
+const CARE_CD=4*60*60*1000; // 4시간 쿨다운
+const CARE_INFO={
+  feed:{ico:'🍪',react:['냠냠! 너무 맛있어요 🍪','와 간식이다! 고마워요 💛','배부르다~ 행복해요 😋']},
+  pet:{ico:'🫧',react:['기분 좋아요~ 💕','헤헤 간지러워요 🥰','너랑 있으면 포근해요 ☁️']},
+  play:{ico:'🎵',react:['신난다! 또 놀자 🎵','꺄르르 즐거워요! 🎈','오늘 최고의 하루예요 ✨']},
+};
+function careLevel(){const a=S.care.affection||0;return{lv:Math.floor(a/5)+1,inLv:a%5,need:5};}
+function doCare(type,btn){
+  const now=Date.now(),last=S.care.acts[type]||0;
+  if(now-last<CARE_CD){
+    const left=Math.ceil((CARE_CD-(now-last))/60000);
+    const h=Math.floor(left/60),m=left%60;
+    showToast(`아직 충분해요! ${h>0?h+'시간 ':''}${m}분 후에 또 만나요 ⏰`);
+    return;
+  }
+  haptic(12);
+  S.care.acts[type]=now;
+  S.care.affection=(S.care.affection||0)+1;
+  save();
+  const info=CARE_INFO[type];
+  const bub=document.getElementById('char-st');
+  if(bub) bub.textContent=info.react[~~(Math.random()*info.react.length)];
+  const cv=document.getElementById('cc-char');
+  if(cv){cv.style.animation='none';void cv.offsetWidth;cv.style.animation='careBounce .6s ease, float 2.6s ease-in-out infinite .6s';}
+  careParticles();
+  updateCareUI();
+  const cl=careLevel();
+  if(S.care.affection%5===0) setTimeout(()=>showToast(`💞 친밀도 Lv.${cl.lv} 달성! 친구가 더 행복해해요`),700);
+}
+function careParticles(){
+  const scene=document.querySelector('#s-char .char-scene');if(!scene)return;
+  const emo=['💕','✨','💛','⭐','🩷'];
+  for(let i=0;i<8;i++){
+    setTimeout(()=>{
+      const sp=document.createElement('div');sp.className='spark';sp.textContent=emo[~~(Math.random()*emo.length)];
+      sp.style.cssText=`font-size:${12+Math.random()*8}px;left:${30+Math.random()*40}%;top:${10+Math.random()*40}%;--tx:${(Math.random()-.5)*70}px;--ty:${-40-Math.random()*60}px;background:none`;
+      scene.appendChild(sp);setTimeout(()=>sp.remove(),700);
+    },i*45);
+  }
+}
+function updateCareUI(){
+  const cl=careLevel(),now=Date.now();
+  const lvEl=document.getElementById('care-lv');if(lvEl)lvEl.textContent=`Lv.${cl.lv}`;
+  const pts=document.getElementById('care-pts');if(pts)pts.textContent=`${cl.inLv} / ${cl.need}`;
+  const fill=document.getElementById('care-fill');if(fill)fill.style.width=(cl.inLv/cl.need*100)+'%';
+  ['feed','pet','play'].forEach(t=>{
+    const btn=document.getElementById('cb-'+(t));if(!btn)return;
+    const ready=now-(S.care.acts[t]||0)>=CARE_CD;
+    btn.disabled=!ready;btn.classList.toggle('ready',ready);
+  });
+}
+
 function renderCharScreen(){
   drawWorldBg('bg-char');drawChar('cc-char');
+  updateCareUI();
   document.getElementById('char-nm').textContent=S.charName||'친구';
   const moodTxt={happy:'오늘도 최고야! ✨',neu:'그럭저럭이에요 👀',sad:'좀 더 힘내봐요... 💧'};
   document.getElementById('char-st').textContent=S.today.done?moodTxt[moodState()]:'오늘 기록을 먼저 해봐요!';

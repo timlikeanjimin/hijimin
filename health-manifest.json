@@ -1,0 +1,19 @@
+{
+  "name": "픽픽 — 픽셀 건강 친구",
+  "short_name": "픽픽",
+  "description": "매일 건강을 기록하고 픽셀 친구와 함께 세계를 여행해요",
+  "start_url": "./health.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d0b14",
+  "theme_color": "#0d0b14",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

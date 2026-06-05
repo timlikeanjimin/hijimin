@@ -66,9 +66,9 @@ button,input{font-family:inherit}
   border-top:1px solid var(--bd);display:flex;z-index:50;
   padding-bottom:env(safe-area-inset-bottom,0px)}
 .nb{flex:1;padding:10px 0 12px;background:none;border:none;color:var(--dim);
-  font-size:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:color .2s}
+  font-size:9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:color .2s}
 .nb.on{color:var(--mint)}
-.nb .ni{font-size:21px;line-height:1}
+.nb .ni{font-size:19px;line-height:1}
 
 /* TODAY */
 .hero{display:flex;flex-direction:column;align-items:center;padding:4px 0 20px}
@@ -333,6 +333,32 @@ button,input{font-family:inherit}
 
 /* RECORDS SCREEN */
 .rec-sec{margin-bottom:24px}
+
+/* FRIENDS */
+.friends-sub{font-size:12px;color:var(--sub);text-align:center;margin-bottom:22px}
+.lb-row{display:flex;align-items:center;gap:12px;background:var(--s2);border:1px solid var(--bd);
+  border-radius:14px;padding:11px 14px;margin-bottom:8px}
+.lb-row.me{border-color:var(--mint);background:rgba(110,231,183,.06)}
+.lb-rank{font-size:13px;font-weight:900;width:22px;text-align:center;color:var(--sub)}
+.lb-rank.top{color:var(--gold)}
+.lb-av{width:34px;height:34px;border-radius:50%;flex-shrink:0;image-rendering:pixelated;background:var(--s3)}
+.lb-name{flex:1;font-size:13px;font-weight:700}
+.lb-name .me-tag{font-size:9px;color:var(--mint);margin-left:5px}
+.lb-streak{font-size:13px;font-weight:900;color:var(--gold);white-space:nowrap}
+.fr-row{display:flex;align-items:center;gap:12px;background:var(--s2);border:1px solid var(--bd);
+  border-radius:14px;padding:11px 14px;margin-bottom:8px}
+.fr-av{width:38px;height:38px;border-radius:50%;flex-shrink:0;image-rendering:pixelated;background:var(--s3)}
+.fr-mid{flex:1;min-width:0}
+.fr-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.fr-status{font-size:11px;color:var(--sub)}
+.fr-status.done{color:var(--mint)}
+.cheer-btn{padding:8px 13px;background:var(--s3);border:1px solid var(--bd);border-radius:10px;
+  color:var(--text);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .15s}
+.cheer-btn:active{transform:scale(.9)}
+.cheer-btn.sent{border-color:var(--pink);color:var(--pink);background:rgba(249,168,212,.08)}
+.invite-btn{width:100%;padding:15px;background:var(--s2);border:2px dashed var(--bd);border-radius:14px;
+  color:var(--sub);font-size:13px;font-weight:700;cursor:pointer;margin-top:6px;margin-bottom:20px}
+.invite-btn:active{transform:scale(.98)}
 
 /* CARE PANEL */
 .care-panel{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:16px;padding:14px 16px;margin-bottom:18px}
@@ -616,9 +642,27 @@ button,input{font-family:inherit}
     </div>
   </div>
 
+  <!-- FRIENDS -->
+  <div id="s-friends" class="screen">
+    <div style="text-align:center;margin-bottom:6px">
+      <div class="px" style="font-size:12px;color:var(--mint);letter-spacing:1px">함께 걷는 친구들</div>
+    </div>
+    <div class="friends-sub">서로 응원하면 더 오래 지속돼요 🤝</div>
+    <div class="rec-sec">
+      <div class="ss-title">🏅 이번 주 연속 랭킹</div>
+      <div id="leaderboard"></div>
+    </div>
+    <div class="rec-sec">
+      <div class="ss-title">👯 내 친구들</div>
+      <div id="friend-list"></div>
+    </div>
+    <button class="invite-btn" onclick="inviteFriend()">＋ 친구 초대하기</button>
+  </div>
+
   <nav class="nav">
     <button class="nb on" onclick="go('today',this)"><span class="ni">📋</span><span>오늘</span></button>
     <button class="nb" onclick="go('char',this)"><span class="ni">👾</span><span>친구</span></button>
+    <button class="nb" onclick="go('friends',this)"><span class="ni">🫂</span><span>함께</span></button>
     <button class="nb" onclick="go('shop',this)"><span class="ni">🎁</span><span>꾸미기</span></button>
     <button class="nb" onclick="go('record',this)"><span class="ni">🏆</span><span>기록</span></button>
   </nav>
@@ -700,7 +744,7 @@ const DEF={
   today:{ex:null,water:0,mood:null,sleep:null,done:false,score:0},
   eq:{hat:null,color:null,bg:null,world:null},
   unlocked:[],history:[],customPixels:null,celebratedWorlds:[],achievements:[],
-  care:{affection:0,acts:{}}
+  care:{affection:0,acts:{}},cheers:{}
 };
 let S=JSON.parse(JSON.stringify(DEF));
 function save(){localStorage.setItem('pikpik_v2',JSON.stringify(S))}
@@ -1591,6 +1635,85 @@ function updateWeekCard(){
   const card=document.getElementById('wc-card');if(card)card.classList.toggle('wc-done',prog>=7);
 }
 
+// ── FRIENDS (커뮤니티) ─────────────────────────────────────────────────────────
+const FRIENDS=[
+  {id:'f1',name:'민지',  col:'#f9a8d4',streak:42,done:true},
+  {id:'f2',name:'준호',  col:'#93c5fd',streak:18,done:true},
+  {id:'f3',name:'서연',  col:'#fbbf24',streak:7, done:false},
+  {id:'f4',name:'도윤',  col:'#c4b5fd',streak:31,done:true},
+  {id:'f5',name:'하은',  col:'#86efac',streak:3, done:false},
+  {id:'f6',name:'지우',  col:'#fca5a5',streak:25,done:true},
+];
+function drawFriendAvatar(cv,col){
+  const ctx=cv.getContext('2d');ctx.clearRect(0,0,48,48);
+  const out=darken(col,.30),sh=darken(col,.52),hi=lighten(col,.55);
+  fillCirc(ctx,12,12,4,out);fillCirc(ctx,12,12,3,col);
+  fillCirc(ctx,36,12,4,out);fillCirc(ctx,36,12,3,col);
+  fillCirc(ctx,24,24,15,out);fillCirc(ctx,24,24,14,col);
+  fillCirc(ctx,18,17,5,hi);
+  ctx.fillStyle='#1e1030';
+  [[15,24],[16,22],[17,21],[18,21],[19,22],[20,23]].forEach(([x,y])=>ctx.fillRect(x,y,2,2));
+  [[27,24],[28,22],[29,21],[30,21],[31,22],[32,23]].forEach(([x,y])=>ctx.fillRect(x,y,2,2));
+  ctx.fillStyle='#c83050';ctx.fillRect(19,30,10,2);ctx.fillRect(20,32,8,1);
+  fillCirc(ctx,14,28,3,'rgba(255,100,130,.28)');fillCirc(ctx,34,28,3,'rgba(255,100,130,.28)');
+}
+function renderFriends(){
+  if(!S.cheers) S.cheers={};
+  // 리더보드 (친구 + 나)
+  const me={id:'me',name:S.charName||'나',col:bodyCol(),streak:S.streak,done:S.today.done,me:true};
+  const all=[...FRIENDS,me].sort((a,b)=>b.streak-a.streak);
+  const lb=document.getElementById('leaderboard');
+  if(lb){
+    lb.innerHTML='';
+    all.forEach((f,i)=>{
+      const row=document.createElement('div');row.className='lb-row'+(f.me?' me':'');
+      const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1);
+      const cv=document.createElement('canvas');cv.width=48;cv.height=48;cv.className='lb-av';
+      drawFriendAvatar(cv,f.col);
+      const rk=document.createElement('div');rk.className='lb-rank'+(i<3?' top':'');rk.textContent=medal;
+      const nm=document.createElement('div');nm.className='lb-name';nm.innerHTML=f.name+(f.me?'<span class="me-tag">나</span>':'');
+      const st=document.createElement('div');st.className='lb-streak';st.textContent='🔥 '+f.streak;
+      row.appendChild(rk);row.appendChild(cv);row.appendChild(nm);row.appendChild(st);
+      lb.appendChild(row);
+    });
+  }
+  // 친구 목록
+  const fl=document.getElementById('friend-list');
+  if(fl){
+    fl.innerHTML='';
+    FRIENDS.forEach(f=>{
+      const row=document.createElement('div');row.className='fr-row';
+      const cv=document.createElement('canvas');cv.width=48;cv.height=48;cv.className='fr-av';
+      drawFriendAvatar(cv,f.col);
+      const mid=document.createElement('div');mid.className='fr-mid';
+      mid.innerHTML=`<div class="fr-name">${f.name}</div><div class="fr-status${f.done?' done':''}">${f.done?'오늘 기록 완료 ✓':'아직 기록 전이에요'} · 🔥${f.streak}일</div>`;
+      const sent=S.cheers[f.id]===todayStr();
+      const btn=document.createElement('button');btn.className='cheer-btn'+(sent?' sent':'');
+      btn.textContent=sent?'응원함 💕':'응원하기 👏';
+      btn.onclick=()=>cheerFriend(f,btn);
+      row.appendChild(cv);row.appendChild(mid);row.appendChild(btn);
+      fl.appendChild(row);
+    });
+  }
+}
+function cheerFriend(f,btn){
+  if(!S.cheers) S.cheers={};
+  if(S.cheers[f.id]===todayStr()){showToast(`${f.name}님에게 오늘 이미 응원했어요!`);return;}
+  haptic(10);
+  S.cheers[f.id]=todayStr();save();
+  btn.className='cheer-btn sent';btn.textContent='응원함 💕';
+  showToast(`${f.name}님에게 응원을 보냈어요! 👏`);
+}
+function inviteFriend(){
+  const url=location.href;
+  const txt=`나랑 같이 픽픽에서 건강 기록해요! 🌱 ${S.charName||'친구'} 🔥${S.streak}일 연속 중`;
+  if(navigator.share){navigator.share({title:'픽픽',text:txt,url}).catch(()=>{});}
+  else{
+    try{navigator.clipboard.writeText(txt+' '+url);showToast('초대 링크 복사됨! 친구에게 보내보세요 📨');}
+    catch(e){showToast('친구를 초대해보세요! 📨');}
+  }
+}
+
 // ── HEALTH INSIGHTS ───────────────────────────────────────────────────────────
 const DOW=['일','월','화','수','목','금','토'];
 function genInsights(){
@@ -1851,6 +1974,7 @@ function go(name,btn){
   if(name==='char') renderCharScreen();
   if(name==='shop') renderShop();
   if(name==='record') renderRecord();
+  if(name==='friends') renderFriends();
   if(name==='today'){drawWorldBg('bg-today');drawChar('cc-today');updateBubble();updateWeekCard();}
 }
 

@@ -11,18 +11,20 @@
   <meta name="apple-mobile-web-app-title" content="픽픽">
   <link rel="manifest" href="health-manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/quiple/galmuri/dist/galmuri.css" rel="stylesheet">
   <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
   --bg:#0d0b14;--s1:#171428;--s2:#1e1b2f;--s3:#252140;--bd:#2e2a46;
   --mint:#6ee7b7;--pink:#f9a8d4;--gold:#fbbf24;
   --blue:#93c5fd;--purple:#c4b5fd;--red:#fca5a5;--orange:#fdba74;
-  --text:#f0ebff;--sub:#9d93c0;--dim:#554f78;
+  --text:#f0ebff;--sub:#b3a9d4;--dim:#8b82ad;
 }
 html,body{height:100%;overflow:hidden;background:var(--bg)}
 body{color:var(--text);font-family:'Noto Sans KR',sans-serif;
   max-width:480px;margin:0 auto;display:flex;flex-direction:column;height:100dvh}
-.px{font-family:'Press Start 2P',monospace}
+.px{font-family:'Galmuri11','Press Start 2P',monospace}
+.px-en{font-family:'Press Start 2P',monospace}
 button,input{font-family:inherit}
 
 /* ONBOARDING */
@@ -311,10 +313,12 @@ button,input{font-family:inherit}
 .cal-wrap{overflow-x:auto;padding:4px 0 8px}
 .cal-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;min-width:240px}
 .cal-cell{aspect-ratio:1;border-radius:4px;background:var(--s3);border:1px solid var(--bd)}
-.cal-cell.cal-today{border-color:var(--mint)}
+.cal-cell.cal-today{border-color:var(--mint);box-shadow:0 0 0 1px var(--mint)}
+.cal-legend{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:8px;font-size:10px;color:var(--sub)}
+.cl-box{width:12px;height:12px;border-radius:3px;border:1px solid var(--bd)}
 
 /* COLLECTION COUNT */
-.coll-count{font-size:9px;color:var(--gold);margin-top:6px;font-family:'Press Start 2P',monospace}
+.coll-count{font-size:10px;color:var(--gold);margin-top:6px;font-family:'Galmuri11',monospace}
 
 /* PREMIUM SECTION */
 .premium-tag{background:linear-gradient(90deg,var(--gold),var(--orange));color:#0d0b14;
@@ -480,7 +484,7 @@ button,input{font-family:inherit}
       <div style="width:100%">
         <div class="wk-title" style="display:flex;justify-content:space-between">
           <span>이번 주 기록</span>
-          <span id="char-level" style="font-family:'Press Start 2P',monospace;font-size:9px;color:var(--gold)"></span>
+          <span id="char-level" style="font-family:'Galmuri11',monospace;font-size:11px;color:var(--gold)"></span>
         </div>
         <div class="wk-bars" id="wk-bars"></div>
         <div style="display:flex;gap:6px;margin-bottom:22px" id="wk-labels"></div>
@@ -551,6 +555,14 @@ button,input{font-family:inherit}
     <div class="rec-sec">
       <div class="ss-title">📅 최근 30일 활동</div>
       <div class="cal-wrap"><div class="cal-grid" id="cal-grid"></div></div>
+      <div class="cal-legend">
+        <span>적음</span>
+        <span class="cl-box" style="background:rgba(110,231,183,.22)"></span>
+        <span class="cl-box" style="background:rgba(110,231,183,.45)"></span>
+        <span class="cl-box" style="background:rgba(110,231,183,.72)"></span>
+        <span class="cl-box" style="background:rgba(110,231,183,1)"></span>
+        <span>많음</span>
+      </div>
     </div>
     <div class="rec-sec">
       <div class="ss-title">📊 나의 기록</div>
@@ -1560,7 +1572,12 @@ function renderRecord(){
       const h=S.history.find(x=>x.date===ds);
       const el=document.createElement('div');
       el.className='cal-cell'+(ds===td?' cal-today':'');
-      if(h){const pct=Math.min(100,~~(h.score/8*100));el.style.background=pct>=75?'var(--mint)':pct>=40?'var(--blue)':'var(--dim)';}
+      if(h){
+        // 색약 안전: 단일 색상(민트)의 명도 단계로 강도 표현
+        const op=h.score>=6?1:h.score>=4?.7:h.score>=2?.42:.22;
+        el.style.background=`rgba(110,231,183,${op})`;
+        el.title=`${ds} · ${h.score}/8점`;
+      }
       cal.appendChild(el);
     }
   }
@@ -1607,7 +1624,9 @@ function renderCharScreen(){
         const fill=document.createElement('div');fill.className='wk-bar-fill';
         const pct=~~(h.score/8*100);
         fill.style.height=Math.max(8,pct)+'%';
-        fill.style.background=pct>=75?'var(--mint)':pct>=40?'var(--blue)':'var(--dim)';
+        // 색약 안전: 막대 높이 + 단일 색상 명도로 강도 표현
+        const op=h.score>=6?1:h.score>=4?.72:h.score>=2?.45:.26;
+        fill.style.background=`rgba(110,231,183,${op})`;
         bg.appendChild(fill);
       }
       col.appendChild(bg);

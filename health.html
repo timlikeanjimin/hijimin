@@ -619,6 +619,7 @@ button,input{font-family:inherit}
       <div class="igrid" id="g-worlds"></div>
     </div>
     <div class="shop-sec"><div class="ss-title">👘 의상 <span class="sec-note" id="outfit-note"></span></div><div class="igrid" id="g-outfit"></div></div>
+    <div class="shop-sec"><div class="ss-title">🛋️ 내 공간 꾸미기 <span class="sec-note">코인으로 구매 후 배치</span></div><div class="igrid" id="g-props"></div></div>
     <div class="shop-sec"><div class="ss-title">🎩 모자 / 액세서리</div><div class="igrid" id="g-hat"></div></div>
     <div class="shop-sec"><div class="ss-title">🎨 캐릭터 컬러</div><div class="igrid" id="g-color"></div></div>
     <div class="shop-sec">
@@ -804,9 +805,9 @@ const DEF={
   onboarded:false,charName:'친구',
   streak:0,total:0,lastDate:null,bestStreak:0,
   today:{ex:null,water:0,mood:null,sleep:null,done:false,score:0},
-  eq:{hat:null,color:null,bg:null,world:null,outfit:null},
+  eq:{hat:null,color:null,bg:null,world:null,outfit:null,props:[]},
   unlocked:[],history:[],customPixels:null,celebratedWorlds:[],achievements:[],
-  care:{affection:0,acts:{}},cheers:{},coins:120
+  care:{affection:0,acts:{}},cheers:{},coins:120,ownedProps:[]
 };
 let S=JSON.parse(JSON.stringify(DEF));
 function save(){localStorage.setItem('pikpik_v2',JSON.stringify(S))}
@@ -815,6 +816,8 @@ function load(){
     if(r){const p=JSON.parse(r);S={...DEF,...p};
       S.today={...DEF.today,...(p.today||{})};S.eq={...DEF.eq,...(p.eq||{})};
       S.care={...DEF.care,...(p.care||{}),acts:{...(p.care&&p.care.acts||{})}};
+      if(!Array.isArray(S.eq.props)) S.eq.props=[];
+      if(!Array.isArray(S.ownedProps)) S.ownedProps=[];
       if(!Array.isArray(S.celebratedWorlds)) S.celebratedWorlds=[];
       if(!Array.isArray(S.achievements)) S.achievements=[];
     }
@@ -1263,6 +1266,54 @@ function drawWorldBg(bgId){
   const ctx=cv.getContext('2d');ctx.clearRect(0,0,cv.width,cv.height);
   const w=curWorld();
   if(WORLD_FNS[w.id]) WORLD_FNS[w.id](ctx,cv.width,cv.height);
+  drawProps(ctx,cv.width,cv.height);
+}
+
+// ── ROOM PROPS (공간 꾸미기 소품) ──────────────────────────────────────────────
+function _ph(ctx,W){const s=W/48;return(x,y,w=1,h=1)=>ctx.fillRect(~~(x*s),~~(y*s),Math.max(1,~~(w*s)),Math.max(1,~~(h*s)));}
+function propPlant(ctx,W){const p=_ph(ctx,W);
+  ctx.fillStyle='rgba(0,0,0,.25)';p(3,47,7,1);
+  ctx.fillStyle='#9a4e1c';p(3,42,6,5);ctx.fillStyle='#b86530';p(3,42,6,1);ctx.fillStyle='#7a3c14';p(3,46,6,1);
+  ctx.fillStyle='#2d8b4a';p(5,37,2,5);
+  ctx.fillStyle='#3aa85e';p(3,38,2,2);p(7,37,2,2);p(4,35,3,2);p(6,39,2,1);
+  ctx.fillStyle='#5cc878';p(4,36,1,1);p(7,38,1,1);p(5,34,1,1);
+}
+function propLamp(ctx,W){const p=_ph(ctx,W);
+  ctx.fillStyle='rgba(0,0,0,.25)';p(40,47,5,1);
+  ctx.fillStyle='#5a5470';p(42,38,1,9);ctx.fillStyle='#46415c';p(41,46,3,1);
+  ctx.fillStyle='rgba(255,220,120,.35)';fillCirc(ctx,~~(42.5*W/48),~~(35*W/48),5*W/48,'rgba(255,220,120,.35)');
+  ctx.fillStyle='#f5d98a';p(40,33,5,3);ctx.fillStyle='#fdeec0';p(41,33,3,1);ctx.fillStyle='#e0b860';p(40,35,5,1);
+}
+function propRug(ctx,W){const p=_ph(ctx,W);
+  ctx.fillStyle='#9a3b5e';p(13,46,22,2);ctx.fillStyle='#c24e78';p(14,46,20,1);
+  ctx.fillStyle='#f9c6da';p(16,46,2,1);p(22,46,2,1);p(28,46,2,1);p(32,46,1,1);
+}
+function propFrame(ctx,W){const p=_ph(ctx,W);
+  ctx.fillStyle='#caa84e';p(7,19,8,8);ctx.fillStyle='#1e3a5a';p(8,20,6,6);
+  ctx.fillStyle='#3a6a9a';p(9,23,4,3);ctx.fillStyle='#f5d98a';fillCirc(ctx,~~(12.5*W/48),~~(21.5*W/48),1.3*W/48,'#f5d98a');
+}
+function propBalloon(ctx,W){const p=_ph(ctx,W);
+  ctx.fillStyle='rgba(255,255,255,.25)';p(40,24,1,16);
+  fillCirc(ctx,~~(40.5*W/48),~~(18*W/48),5*W/48,'#f06b8a');fillCirc(ctx,~~(39*W/48),~~(16*W/48),2*W/48,'rgba(255,255,255,.4)');
+  ctx.fillStyle='#f06b8a';p(40,22,1,1);
+}
+function propLights(ctx,W){const p=_ph(ctx,W);
+  const cols=['#fca5a5','#fef08a','#86efac','#93c5fd','#f9a8d4'];
+  ctx.fillStyle='rgba(120,110,90,.5)';for(let x=1;x<47;x++)p(x,2+~~(Math.sin(x*.5)*1.2),1,1);
+  for(let x=3;x<46;x+=5){ctx.fillStyle=cols[(x/5|0)%cols.length];p(x,3+~~(Math.sin(x*.5)*1.2),1,2);}
+}
+const PROP_FNS={p_plant:propPlant,p_lamp:propLamp,p_rug:propRug,p_frame:propFrame,p_balloon:propBalloon,p_lights:propLights};
+const PROPS=[
+  {id:'p_rug',    name:'러그',     ico:'🟥', cost:30},
+  {id:'p_plant',  name:'화분',     ico:'🪴', cost:40},
+  {id:'p_lamp',   name:'무드등',   ico:'💡', cost:50},
+  {id:'p_frame',  name:'액자',     ico:'🖼️', cost:45},
+  {id:'p_balloon',name:'풍선',     ico:'🎈', cost:35},
+  {id:'p_lights', name:'꼬마전구', ico:'✨', cost:60},
+];
+function drawProps(ctx,W,H){
+  const placed=(S.eq&&S.eq.props)||[];
+  placed.forEach(id=>{if(PROP_FNS[id])PROP_FNS[id](ctx,W,H);});
 }
 
 // ── CHARACTER RENDERING ──────────────────────────────────────────────────────
@@ -1696,6 +1747,32 @@ function renderShop(){
       g.appendChild(c);
     });
   });
+  // 공간 꾸미기 소품
+  const gp=document.getElementById('g-props');
+  if(gp){
+    gp.innerHTML='';
+    PROPS.forEach(prop=>{
+      const owned=S.ownedProps.includes(prop.id);
+      const placed=(S.eq.props||[]).includes(prop.id);
+      const c=document.createElement('div');
+      c.className=`icard ${owned?'ul':''} ${placed?'eq':''} ${!owned?'lk':''}`;
+      c.onclick=()=>toggleProp(prop);
+      c.innerHTML=`${placed?'<div class="eq-tag">배치</div>':''}<span class="iico">${prop.ico}</span><div class="inm">${prop.name}</div>${owned?'':`<div class="iday">🪙 ${prop.cost}</div>`}`;
+      gp.appendChild(c);
+    });
+  }
+}
+function toggleProp(prop){
+  if(!S.ownedProps.includes(prop.id)){
+    if((S.coins||0)<prop.cost){showToast(`🪙 코인이 부족해요! (${prop.cost} 필요)`);return;}
+    S.coins-=prop.cost;S.ownedProps.push(prop.id);S.eq.props.push(prop.id);
+    haptic();save();renderShop();drawWorldBg('bg-today');drawWorldBg('bg-char');
+    showToast(`${prop.name} 구매 & 배치 완료! 🛋️`);return;
+  }
+  const i=S.eq.props.indexOf(prop.id);
+  if(i>=0) S.eq.props.splice(i,1); else S.eq.props.push(prop.id);
+  haptic();save();renderShop();drawWorldBg('bg-today');drawWorldBg('bg-char');
+  showToast(i>=0?`${prop.name} 치웠어요`:`${prop.name} 배치!`);
 }
 
 // ── GACHA (뽑기) ──────────────────────────────────────────────────────────────

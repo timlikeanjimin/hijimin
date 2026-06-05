@@ -3,292 +3,409 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>픽셀 친구</title>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  <title>픽픽</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-    :root{
-      --bg:#13111c;--surface:#1e1b2e;--card:#252236;
-      --accent:#7ed8a4;--accent2:#ff9ebc;--gold:#ffd700;
-      --text:#e8e0f0;--sub:#8b80a8;--border:#332d4a;
-      --blue:#60a5fa;--purple:#a78bfa;
-    }
-    html,body{height:100%;overflow:hidden}
-    body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;
-      max-width:480px;margin:0 auto;display:flex;flex-direction:column;height:100dvh}
-    .px{font-family:'Press Start 2P',monospace}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0d0b14;--s1:#171428;--s2:#1e1b2f;--s3:#252140;
+  --bd:#2e2a46;--bd2:#3d3860;
+  --mint:#6ee7b7;--pink:#f9a8d4;--gold:#fbbf24;
+  --blue:#93c5fd;--purple:#c4b5fd;--red:#fca5a5;--orange:#fdba74;
+  --text:#f0ebff;--sub:#9d93c0;--dim:#554f78;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{color:var(--text);font-family:'Noto Sans KR',sans-serif;
+  max-width:480px;margin:0 auto;display:flex;flex-direction:column;height:100dvh}
+.px{font-family:'Press Start 2P',monospace}
+button,input{font-family:'Noto Sans KR',sans-serif}
 
-    /* SCREENS */
-    .screen{flex:1;overflow-y:auto;padding:20px 16px 88px;display:none;overscroll-behavior:contain}
-    .screen.active{display:block}
+/* ONBOARDING */
+#ob{position:fixed;inset:0;max-width:480px;margin:0 auto;background:var(--bg);
+  z-index:100;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:32px 24px 40px}
+.ob-step{width:100%;display:none;flex-direction:column;align-items:center;
+  animation:fadeUp .35s ease}
+.ob-step.on{display:flex}
+.ob-dots{display:flex;gap:7px;margin-bottom:28px}
+.od{width:8px;height:8px;border-radius:50%;background:var(--bd);transition:background .3s}
+.od.on{background:var(--mint)}
+.ob-canvas{margin:20px 0;filter:drop-shadow(0 0 20px rgba(110,231,183,.3))}
+.ob-canvas canvas{display:block;image-rendering:pixelated}
+.ob-title{font-size:22px;font-weight:900;text-align:center;line-height:1.4;margin-bottom:10px}
+.ob-sub{font-size:14px;color:var(--sub);line-height:1.8;text-align:center;margin-bottom:28px}
+.ob-input{width:100%;padding:16px 18px;background:var(--s2);border:2px solid var(--bd);
+  border-radius:16px;color:var(--text);font-size:20px;font-weight:900;text-align:center;
+  margin-bottom:20px;outline:none;transition:border-color .2s}
+.ob-input:focus{border-color:var(--mint)}
+.ob-input::placeholder{color:var(--dim)}
+.how-row{display:flex;align-items:center;gap:14px;width:100%;
+  background:var(--s2);border:1px solid var(--bd);border-radius:14px;
+  padding:14px 16px;margin-bottom:10px}
+.how-ico{font-size:26px;flex-shrink:0}
+.how-txt b{display:block;font-size:14px;margin-bottom:3px}
+.how-txt span{font-size:12px;color:var(--sub);line-height:1.5}
+.ob-btn{width:100%;padding:18px;background:var(--mint);border:none;
+  border-radius:16px;color:#0d0b14;font-size:16px;font-weight:900;cursor:pointer;
+  transition:transform .15s;margin-top:4px}
+.ob-btn:active{transform:scale(.97)}
 
-    /* BOTTOM NAV */
-    .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-      width:100%;max-width:480px;background:var(--surface);
-      border-top:2px solid var(--border);display:flex;z-index:50}
-    .nav-btn{flex:1;padding:10px 0 14px;background:none;border:none;
-      color:var(--sub);font-size:10px;font-family:'Noto Sans KR',sans-serif;
-      cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
-    .nav-btn.on{color:var(--accent)}
-    .nav-btn .ni{font-size:22px;line-height:1}
+/* APP */
+#app{flex:1;display:none;flex-direction:column;height:100dvh;overflow:hidden}
+#app.on{display:flex}
+.screen{flex:1;overflow-y:auto;padding:20px 16px 90px;
+  display:none;overscroll-behavior:contain}
+.screen.on{display:block;animation:fadeUp .22s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-    /* TODAY SCREEN */
-    .today-top{text-align:center;margin-bottom:20px}
-    .today-date{font-size:9px;color:var(--accent);letter-spacing:1px;margin-bottom:6px}
-    .today-h{font-size:20px;font-weight:900;margin-bottom:8px}
-    .streak-pill{display:inline-flex;align-items:center;gap:6px;
-      background:var(--surface);border:1px solid var(--border);
-      border-radius:20px;padding:6px 14px;font-size:8px;color:var(--gold)}
-    .streak-pill b{font-size:13px}
+/* NAV */
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;background:var(--s1);
+  border-top:1px solid var(--bd);display:flex;z-index:50;
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+.nb{flex:1;padding:10px 0 12px;background:none;border:none;
+  color:var(--dim);font-size:10px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;transition:color .2s}
+.nb.on{color:var(--mint)}
+.nb .ni{font-size:21px;line-height:1}
 
-    .ccard{background:var(--card);border:2px solid var(--border);
-      border-radius:14px;padding:16px;margin-bottom:12px}
-    .clabel{font-size:12px;font-weight:700;color:var(--sub);
-      margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .clabel em{font-size:18px;font-style:normal}
+/* TODAY */
+.hero{display:flex;flex-direction:column;align-items:center;padding:4px 0 20px}
+.streak-chip{display:inline-flex;align-items:center;gap:8px;
+  background:var(--s2);border:1px solid var(--bd);
+  border-radius:99px;padding:7px 16px;margin-bottom:16px}
+.sc-fire{font-size:18px}
+.sc-n{font-size:14px;font-weight:900;color:var(--gold)}
+.sc-l{font-size:12px;color:var(--sub)}
 
-    .opt-row{display:flex;gap:8px}
-    .opt{flex:1;padding:10px 6px;background:var(--surface);border:2px solid var(--border);
-      border-radius:10px;color:var(--sub);font-size:12px;
-      font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:center;
-      transition:all .15s;font-weight:700}
-    .opt.on{border-color:var(--accent);color:var(--accent);background:rgba(126,216,164,.1)}
+.char-frame{position:relative;margin-bottom:6px}
+.char-frame canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;
+  filter:drop-shadow(0 4px 16px rgba(110,231,183,.25))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.floating{animation:float 2.6s ease-in-out infinite}
 
-    .water-row{display:flex;align-items:center;gap:12px}
-    .cnt-btn{width:38px;height:38px;background:var(--surface);border:2px solid var(--border);
-      border-radius:10px;color:var(--text);font-size:22px;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;font-weight:900}
-    .cnt-mid{flex:1;text-align:center}
-    .cnt-val{font-size:22px;color:var(--accent)}
-    .cnt-unit{font-size:11px;color:var(--sub);margin-top:2px}
-    .wdots{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
-    .wdot{width:13px;height:13px;border-radius:3px;background:var(--border);transition:background .2s}
-    .wdot.on{background:var(--blue)}
+/* Particles */
+.spark{position:absolute;pointer-events:none;border-radius:2px;
+  animation:sp .65s ease forwards}
+@keyframes sp{0%{opacity:1;transform:scale(1.2) translate(0,0)}
+  100%{opacity:0;transform:scale(0) translate(var(--tx),var(--ty))}}
 
-    .sleep-row{display:flex;flex-wrap:wrap;gap:7px}
-    .sl-btn{padding:9px 13px;background:var(--surface);border:2px solid var(--border);
-      border-radius:10px;color:var(--sub);font-size:12px;
-      font-family:'Noto Sans KR',sans-serif;cursor:pointer;font-weight:700}
-    .sl-btn.on{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.1)}
+.bubble{background:var(--s2);border:1px solid var(--bd);border-radius:12px;
+  border-bottom-left-radius:4px;padding:10px 16px;font-size:13px;
+  color:var(--sub);text-align:center;max-width:260px;margin-top:2px;margin-bottom:22px;
+  position:relative}
+.bubble::before{content:'';position:absolute;bottom:100%;left:50%;
+  transform:translateX(-50%);border:7px solid transparent;border-bottom-color:var(--bd)}
+.bubble::after{content:'';position:absolute;bottom:calc(100% - 1px);left:50%;
+  transform:translateX(-50%);border:6px solid transparent;border-bottom-color:var(--s2)}
 
-    .submit{width:100%;padding:17px;background:var(--accent);border:none;
-      border-radius:14px;color:#0f0f1a;font-size:15px;font-weight:900;
-      font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-top:16px}
-    .submit:disabled{opacity:.35;cursor:not-allowed}
+.sec-lbl{font-size:11px;color:var(--sub);font-weight:700;
+  letter-spacing:.5px;margin-bottom:12px}
+.ccard{background:var(--s2);border:1px solid var(--bd);
+  border-radius:16px;padding:16px;margin-bottom:10px;transition:border-color .25s}
+.ccard.done{border-color:rgba(110,231,183,.5)}
+.clabel{font-size:13px;font-weight:700;color:var(--sub);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.clabel em{font-size:20px;font-style:normal}
 
-    .done-box{background:var(--card);border:2px solid var(--accent);
-      border-radius:14px;padding:28px;text-align:center}
-    .done-lbl{font-size:12px;color:var(--sub);margin-bottom:8px}
-    .done-pts{font-size:38px;color:var(--accent)}
-    .done-sub{font-size:9px;color:var(--sub);margin-top:2px}
-    .done-msg{font-size:13px;color:var(--text);margin-top:16px;line-height:1.6}
+.orow{display:flex;gap:8px}
+.obtn{flex:1;padding:12px 6px;background:var(--s3);border:2px solid var(--bd);
+  border-radius:12px;color:var(--sub);font-size:12px;cursor:pointer;
+  text-align:center;font-weight:700;transition:all .13s}
+.obtn:active{transform:scale(.93)}
+.obtn.on{border-color:var(--mint);color:var(--mint);background:rgba(110,231,183,.08)}
 
-    /* CHAR SCREEN */
-    .char-wrap{display:flex;flex-direction:column;align-items:center;padding-top:10px}
-    .char-label{font-size:10px;color:var(--accent);margin-bottom:12px}
-    .canvas-wrap{margin-bottom:8px}
-    #cc{display:block;image-rendering:pixelated;image-rendering:crisp-edges}
-    .char-status{font-size:13px;color:var(--sub);margin-bottom:24px;text-align:center}
+.wrow{display:flex;align-items:center;gap:14px}
+.wcnt{width:42px;height:42px;background:var(--s3);border:2px solid var(--bd);
+  border-radius:12px;color:var(--text);font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-weight:900;transition:all .13s}
+.wcnt:active{transform:scale(.88)}
+.wmid{flex:1;text-align:center}
+.wval{font-size:26px;color:var(--mint);font-weight:900}
+.wunit{font-size:11px;color:var(--sub);margin-top:1px}
+.wbar{height:6px;background:var(--s3);border-radius:3px;overflow:hidden;margin-top:12px}
+.wfill{height:100%;background:linear-gradient(90deg,var(--blue),var(--mint));
+  border-radius:3px;transition:width .35s ease}
 
-    .week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;width:100%;margin-bottom:20px}
-    .wday{aspect-ratio:1;border-radius:6px;background:var(--border);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      font-size:7px;color:var(--sub);gap:2px}
-    .wday.done{background:var(--accent);color:#0f0f1a}
-    .wday.today{outline:2px solid var(--accent);outline-offset:1px}
-    .wday .wday-n{font-family:'Press Start 2P',monospace}
+.srow{display:flex;flex-wrap:wrap;gap:7px}
+.sbtn{padding:10px 14px;background:var(--s3);border:2px solid var(--bd);
+  border-radius:12px;color:var(--sub);font-size:12px;cursor:pointer;
+  font-weight:700;transition:all .13s}
+.sbtn:active{transform:scale(.9)}
+.sbtn.on{border-color:var(--purple);color:var(--purple);background:rgba(196,181,253,.08)}
 
-    .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
-    .stat{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px;text-align:center}
-    .stat-n{font-size:20px;color:var(--accent)}
-    .stat-l{font-size:11px;color:var(--sub);margin-top:4px}
+.sub-btn{width:100%;padding:18px;background:var(--mint);border:none;
+  border-radius:16px;color:#0d0b14;font-size:15px;font-weight:900;
+  cursor:pointer;margin-top:16px;transition:all .2s}
+.sub-btn:disabled{opacity:.3;cursor:not-allowed}
+.sub-btn:not(:disabled):active{transform:scale(.97)}
 
-    /* SHOP SCREEN */
-    .shop-sec{margin-bottom:22px}
-    .shop-sec-title{font-size:12px;color:var(--sub);font-weight:700;margin-bottom:10px}
-    .items-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .item{background:var(--card);border:2px solid var(--border);
-      border-radius:12px;padding:14px 8px;text-align:center;
-      cursor:pointer;position:relative;transition:all .15s}
-    .item.unlocked{border-color:var(--accent)}
-    .item.equipped{border-color:var(--gold);background:rgba(255,215,0,.05)}
-    .item.locked{opacity:.45}
-    .item-ico{font-size:26px;margin-bottom:6px}
-    .item-name{font-size:10px;color:var(--sub)}
-    .item-day{font-size:7px;color:var(--sub);margin-top:4px}
-    .eq-badge{position:absolute;top:-7px;right:-7px;background:var(--gold);
-      color:#0f0f1a;font-size:7px;padding:3px 5px;border-radius:4px;font-weight:900}
-    .new-badge{position:absolute;top:-7px;left:-7px;background:var(--accent2);
-      color:white;font-size:7px;padding:3px 5px;border-radius:4px;font-weight:900}
+/* Done */
+.done-wrap{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+.done-card{background:var(--s2);border:1px solid var(--bd);
+  border-radius:20px;padding:28px 24px;text-align:center;width:100%;margin-top:20px}
+.stars-row{display:flex;justify-content:center;gap:5px;margin-bottom:16px}
+.star{font-size:20px;opacity:.18;transition:all .25s;transform:scale(.8)}
+.star.on{opacity:1;transform:scale(1)}
+.done-pts{font-size:44px;font-weight:900;color:var(--mint);line-height:1}
+.done-sub{font-size:9px;color:var(--sub);margin-top:3px}
+.done-msg{font-size:14px;color:var(--text);margin-top:16px;line-height:1.7;font-weight:600}
 
-    /* TOAST */
-    .toast{position:fixed;top:20px;left:50%;
-      transform:translateX(-50%) translateY(-90px);
-      background:var(--surface);border:2px solid var(--accent);
-      border-radius:12px;padding:12px 22px;font-size:13px;font-weight:700;
-      z-index:200;white-space:nowrap;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
-    .toast.show{transform:translateX(-50%) translateY(0)}
+/* CHAR SCREEN */
+.char-pg{display:flex;flex-direction:column;align-items:center;padding-top:6px}
+.lv-badge{font-size:9px;color:var(--gold);margin-bottom:4px}
+.char-nm{font-size:24px;font-weight:900;margin-top:6px;margin-bottom:2px}
+.char-st{font-size:13px;color:var(--sub);margin-bottom:24px}
+.draw-btn{padding:10px 20px;background:var(--s2);border:1px solid var(--bd);
+  border-radius:12px;color:var(--sub);font-size:12px;cursor:pointer;
+  font-weight:700;margin-bottom:20px;transition:all .2s}
+.draw-btn:hover{border-color:var(--mint);color:var(--mint)}
 
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-    .floating{animation:float 2.4s ease-in-out infinite}
-    @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
-    .pop{animation:pop .3s ease}
+.wk-title{font-size:11px;color:var(--sub);font-weight:700;margin-bottom:10px;width:100%}
+.wk-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;width:100%;margin-bottom:22px}
+.wd{aspect-ratio:1;border-radius:7px;background:var(--s2);border:1px solid var(--bd);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:8px;color:var(--dim);gap:2px}
+.wd.done{background:var(--mint);border-color:var(--mint);color:#0d0b14}
+.wd.today:not(.done){border-color:var(--mint);color:var(--mint)}
 
-    /* DRAW SCREEN */
-    .draw-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-    .back-btn{background:var(--card);border:2px solid var(--border);border-radius:10px;
-      padding:8px 14px;color:var(--text);font-size:13px;cursor:pointer;font-weight:700;
-      font-family:'Noto Sans KR',sans-serif}
-    .pal-title{font-size:11px;color:var(--sub);margin-bottom:8px;font-weight:700}
-    .swatch-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-    .swatch{width:32px;height:32px;border-radius:6px;border:2px solid transparent;
-      cursor:pointer;transition:transform .1s;flex-shrink:0}
-    .swatch.on{border-color:#fff;transform:scale(1.2)}
-    .tool-row{display:flex;gap:8px;margin-bottom:14px}
-    .tbtn{flex:1;padding:9px 4px;background:var(--card);border:2px solid var(--border);
-      border-radius:10px;color:var(--sub);font-size:11px;cursor:pointer;font-weight:700;
-      font-family:'Noto Sans KR',sans-serif;text-align:center}
-    .tbtn.on{border-color:var(--accent);color:var(--accent)}
-    .grid-wrap{display:flex;justify-content:center;margin-bottom:12px;
-      touch-action:none;user-select:none;-webkit-user-select:none}
-    #pgrid{display:grid;grid-template-columns:repeat(16,1fr);
-      width:min(calc(100vw - 32px),320px);aspect-ratio:1;
-      border:2px solid var(--border);border-radius:8px;overflow:hidden;cursor:crosshair}
-    .pc{border-right:0.5px solid rgba(255,255,255,0.04);border-bottom:0.5px solid rgba(255,255,255,0.04)}
-    .draw-save{width:100%;padding:16px;background:var(--accent);border:none;
-      border-radius:14px;color:#0f0f1a;font-size:15px;font-weight:900;
-      font-family:'Noto Sans KR',sans-serif;cursor:pointer;margin-bottom:8px}
-    .draw-reset{width:100%;padding:12px;background:transparent;border:2px solid var(--border);
-      border-radius:14px;color:var(--sub);font-size:13px;font-weight:700;
-      font-family:'Noto Sans KR',sans-serif;cursor:pointer}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.sc2{background:var(--s2);border:1px solid var(--bd);border-radius:16px;padding:16px;text-align:center}
+.sn2{font-size:18px;color:var(--mint);font-weight:900;font-family:'Press Start 2P',monospace}
+.sl2{font-size:11px;color:var(--sub);margin-top:6px}
+
+/* SHOP */
+.shop-hdr{text-align:center;margin-bottom:22px}
+.shop-sec{margin-bottom:24px}
+.ss-title{font-size:12px;color:var(--sub);font-weight:700;margin-bottom:12px}
+.igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.icard{background:var(--s2);border:2px solid var(--bd);border-radius:16px;
+  padding:16px 8px 12px;text-align:center;cursor:pointer;position:relative;
+  transition:all .18s}
+.icard:active{transform:scale(.93)}
+.icard.ul{border-color:rgba(110,231,183,.4)}
+.icard.eq{border-color:var(--mint);background:rgba(110,231,183,.06)}
+.icard.lk{opacity:.38}
+.iico{font-size:28px;margin-bottom:8px;display:block}
+.inm{font-size:10px;color:var(--sub);line-height:1.3}
+.iday{font-size:7px;color:var(--dim);margin-top:5px;font-family:'Press Start 2P',monospace}
+.eq-tag{position:absolute;top:-8px;right:-8px;background:var(--mint);
+  color:#0d0b14;font-size:7px;padding:3px 6px;border-radius:6px;font-weight:900}
+
+/* DRAW */
+.dh{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.bk{background:var(--s2);border:1px solid var(--bd);border-radius:12px;
+  padding:9px 14px;color:var(--text);font-size:13px;cursor:pointer;font-weight:700}
+.pt{font-size:11px;color:var(--sub);font-weight:700;margin-bottom:8px}
+.swrow{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.sw{width:32px;height:32px;border-radius:7px;border:2px solid transparent;
+  cursor:pointer;transition:transform .1s;flex-shrink:0}
+.sw.on{border-color:#fff;transform:scale(1.2)}
+.trow{display:flex;gap:8px;margin-bottom:14px}
+.tbtn{flex:1;padding:10px 4px;background:var(--s2);border:2px solid var(--bd);
+  border-radius:12px;color:var(--sub);font-size:11px;cursor:pointer;
+  font-weight:700;text-align:center;transition:all .15s}
+.tbtn.on{border-color:var(--mint);color:var(--mint)}
+.gwrap{display:flex;justify-content:center;margin-bottom:14px;
+  touch-action:none;user-select:none;-webkit-user-select:none}
+#pgrid{display:grid;grid-template-columns:repeat(16,1fr);
+  width:min(calc(100vw - 32px),320px);aspect-ratio:1;
+  border:2px solid var(--bd);border-radius:12px;overflow:hidden;cursor:crosshair}
+.pc{border-right:.5px solid rgba(255,255,255,.04);border-bottom:.5px solid rgba(255,255,255,.04)}
+.dsave{width:100%;padding:17px;background:var(--mint);border:none;
+  border-radius:16px;color:#0d0b14;font-size:15px;font-weight:900;cursor:pointer;margin-bottom:8px}
+.dreset{width:100%;padding:12px;background:transparent;border:2px solid var(--bd);
+  border-radius:16px;color:var(--sub);font-size:13px;font-weight:700;cursor:pointer}
+
+/* TOAST */
+.toast{position:fixed;top:20px;left:50%;
+  transform:translateX(-50%) translateY(-80px);
+  background:var(--s2);border:1px solid var(--mint);
+  border-radius:14px;padding:12px 22px;font-size:13px;font-weight:700;
+  z-index:300;white-space:nowrap;
+  transition:transform .32s cubic-bezier(.34,1.56,.64,1)}
+.toast.show{transform:translateX(-50%) translateY(0)}
   </style>
 </head>
 <body>
 
-<!-- TODAY -->
-<div id="s-today" class="screen active">
-  <div class="today-top">
-    <div class="today-date px" id="today-date"></div>
-    <div class="today-h">오늘 어땠어요? 👾</div>
-    <div class="streak-pill">🔥 <b id="streak-num">0</b> DAY STREAK</div>
+<!-- ONBOARDING -->
+<div id="ob">
+  <div class="ob-dots">
+    <div class="od on" id="od0"></div>
+    <div class="od" id="od1"></div>
+    <div class="od" id="od2"></div>
   </div>
 
-  <div id="form-wrap">
-    <div class="ccard">
-      <div class="clabel"><em>🏃</em> 오늘 운동했나요?</div>
-      <div class="opt-row">
-        <button class="opt" onclick="pick('ex',0,this)">안 했어요</button>
-        <button class="opt" onclick="pick('ex',1,this)">조금요</button>
-        <button class="opt" onclick="pick('ex',2,this)">열심히!</button>
-      </div>
+  <div class="ob-step on" id="ob0">
+    <div class="ob-canvas floating">
+      <canvas id="ob-cc" width="48" height="48" style="width:160px;height:160px"></canvas>
     </div>
-    <div class="ccard">
-      <div class="clabel"><em>💧</em> 물 몇 잔 마셨나요?</div>
-      <div class="water-row">
-        <button class="cnt-btn" onclick="water(-1)">−</button>
-        <div class="cnt-mid">
-          <div class="cnt-val px" id="w-val">0</div>
-          <div class="cnt-unit">잔</div>
+    <div class="ob-title">안녕하세요! 👾<br>픽픽에 오신 걸<br>환영해요</div>
+    <div class="ob-sub">매일 건강을 기록하면<br>픽셀 친구가 함께 성장해요</div>
+    <button class="ob-btn" onclick="obNext(1)">시작하기 →</button>
+  </div>
+
+  <div class="ob-step" id="ob1">
+    <div class="ob-canvas floating">
+      <canvas id="ob-cc2" width="48" height="48" style="width:160px;height:160px"></canvas>
+    </div>
+    <div class="ob-title">친구 이름을<br>지어줘요 ✨</div>
+    <input class="ob-input" id="name-input" maxlength="8" placeholder="이름 입력..." />
+    <button class="ob-btn" onclick="obNext(2)">다음 →</button>
+  </div>
+
+  <div class="ob-step" id="ob2">
+    <div class="ob-title" style="margin-bottom:20px">이렇게 작동해요</div>
+    <div class="how-row"><div class="how-ico">📋</div><div class="how-txt"><b>매일 기록하기</b><span>운동·물·기분·수면을<br>30초 안에 기록해요</span></div></div>
+    <div class="how-row"><div class="how-ico">👾</div><div class="how-txt"><b>친구가 반응해요</b><span>건강 점수에 따라<br>표정이 바뀌어요</span></div></div>
+    <div class="how-row"><div class="how-ico">🎁</div><div class="how-txt"><b>꾸미기 아이템 해금</b><span>연속 기록으로<br>아이템을 모아요</span></div></div>
+    <button class="ob-btn" onclick="obFinish()" style="margin-top:10px">픽픽 시작! 🚀</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- TODAY -->
+  <div id="s-today" class="screen on">
+    <div class="hero">
+      <div class="streak-chip">
+        <span class="sc-fire">🔥</span>
+        <span class="sc-n" id="streak-n">0</span>
+        <span class="sc-l" id="streak-l">일 연속</span>
+      </div>
+      <div class="char-frame floating">
+        <canvas id="cc-today" width="48" height="48" style="width:192px;height:192px"></canvas>
+      </div>
+      <div class="bubble" id="bubble-today">오늘 기록을 해봐요!</div>
+    </div>
+
+    <div id="form-area">
+      <div class="sec-lbl">오늘 기록하기</div>
+      <div class="ccard" id="c-ex">
+        <div class="clabel"><em>🏃</em> <span>오늘 운동했나요?</span></div>
+        <div class="orow">
+          <button class="obtn" onclick="pick('ex',0,this)">안 했어요</button>
+          <button class="obtn" onclick="pick('ex',1,this)">조금요</button>
+          <button class="obtn" onclick="pick('ex',2,this)">열심히!</button>
         </div>
-        <button class="cnt-btn" onclick="water(1)">+</button>
       </div>
-      <div class="wdots" id="wdots"></div>
+      <div class="ccard" id="c-water">
+        <div class="clabel"><em>💧</em> <span>물 몇 잔 마셨나요?</span></div>
+        <div class="wrow">
+          <button class="wcnt" onclick="adjWater(-1)">−</button>
+          <div class="wmid">
+            <div class="wval px" id="w-val">0</div>
+            <div class="wunit">잔</div>
+          </div>
+          <button class="wcnt" onclick="adjWater(1)">+</button>
+        </div>
+        <div class="wbar"><div class="wfill" id="w-fill" style="width:0%"></div></div>
+      </div>
+      <div class="ccard" id="c-mood">
+        <div class="clabel"><em>😊</em> <span>오늘 기분은요?</span></div>
+        <div class="orow">
+          <button class="obtn" onclick="pick('mood',1,this)">별로예요</button>
+          <button class="obtn" onclick="pick('mood',2,this)">보통이요</button>
+          <button class="obtn" onclick="pick('mood',3,this)">좋았어요!</button>
+        </div>
+      </div>
+      <div class="ccard" id="c-sleep">
+        <div class="clabel"><em>🌙</em> <span>어젯밤 수면 시간은요?</span></div>
+        <div class="srow">
+          <button class="sbtn" onclick="setSleep(4,this)">4시간</button>
+          <button class="sbtn" onclick="setSleep(5,this)">5시간</button>
+          <button class="sbtn" onclick="setSleep(6,this)">6시간</button>
+          <button class="sbtn" onclick="setSleep(7,this)">7시간</button>
+          <button class="sbtn" onclick="setSleep(8,this)">8시간</button>
+          <button class="sbtn" onclick="setSleep(9,this)">9시간+</button>
+        </div>
+      </div>
+      <button class="sub-btn" id="sub-btn" onclick="doSubmit()" disabled>오늘 기록 완료! ✓</button>
     </div>
-    <div class="ccard">
-      <div class="clabel"><em>😊</em> 오늘 기분은요?</div>
-      <div class="opt-row">
-        <button class="opt" onclick="pick('mood',1,this)">별로예요</button>
-        <button class="opt" onclick="pick('mood',2,this)">보통이요</button>
-        <button class="opt" onclick="pick('mood',3,this)">좋았어요!</button>
+
+    <div id="done-area" style="display:none">
+      <div class="done-wrap">
+        <div class="done-card">
+          <div class="stars-row" id="stars-row">
+            <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+            <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+            <span class="star">⭐</span><span class="star">⭐</span>
+          </div>
+          <div class="done-pts px" id="done-pts">00</div>
+          <div class="done-sub px">/ 08 PTS</div>
+          <div class="done-msg" id="done-msg"></div>
+        </div>
+        <div style="font-size:12px;color:var(--dim);margin-top:18px;text-align:center">
+          👾 탭에서 친구 상태를 확인해보세요
+        </div>
       </div>
     </div>
-    <div class="ccard">
-      <div class="clabel"><em>🌙</em> 어젯밤 수면 시간은요?</div>
-      <div class="sleep-row">
-        <button class="sl-btn" onclick="sleep_(4,this)">4시간</button>
-        <button class="sl-btn" onclick="sleep_(5,this)">5시간</button>
-        <button class="sl-btn" onclick="sleep_(6,this)">6시간</button>
-        <button class="sl-btn" onclick="sleep_(7,this)">7시간</button>
-        <button class="sl-btn" onclick="sleep_(8,this)">8시간</button>
-        <button class="sl-btn" onclick="sleep_(9,this)">9시간+</button>
+  </div>
+
+  <!-- CHAR -->
+  <div id="s-char" class="screen">
+    <div class="char-pg">
+      <div class="lv-badge px" id="lv-badge">LV.1 SEEDLING 🌱</div>
+      <div class="char-frame floating" style="margin:8px 0">
+        <canvas id="cc-char" width="48" height="48" style="width:192px;height:192px"></canvas>
+      </div>
+      <div class="char-nm" id="char-nm">친구</div>
+      <div class="char-st" id="char-st">오늘 기록을 먼저 해봐요!</div>
+      <button class="draw-btn" onclick="openDraw()">✏️ 직접 그리기</button>
+
+      <div style="width:100%">
+        <div class="wk-title">이번 주 기록</div>
+        <div class="wk-grid" id="wk-grid"></div>
+      </div>
+      <div class="sg">
+        <div class="sc2"><div class="sn2" id="sg-streak">0</div><div class="sl2">🔥 연속 기록</div></div>
+        <div class="sc2"><div class="sn2" id="sg-total">0</div><div class="sl2">📅 총 기록일</div></div>
+        <div class="sc2"><div class="sn2" id="sg-items">0</div><div class="sl2">🎁 보유 아이템</div></div>
+        <div class="sc2"><div class="sn2" id="sg-score">-</div><div class="sl2">⭐ 오늘 점수</div></div>
       </div>
     </div>
-    <button class="submit" id="sub-btn" onclick="submit()" disabled>오늘 기록 완료! ✓</button>
   </div>
 
-  <div id="done-wrap" style="display:none">
-    <div class="done-box">
-      <div class="done-lbl">오늘의 건강 점수</div>
-      <div class="done-pts px" id="done-pts">00</div>
-      <div class="done-sub px">/ 08 PTS</div>
-      <div class="done-msg" id="done-msg"></div>
+  <!-- SHOP -->
+  <div id="s-shop" class="screen">
+    <div class="shop-hdr">
+      <div class="px" style="font-size:11px;color:var(--mint)">꾸미기 상점</div>
+      <div style="font-size:12px;color:var(--sub);margin-top:6px">연속 기록으로 아이템 해금 🗝️</div>
     </div>
-    <div style="text-align:center;color:var(--sub);font-size:12px;margin-top:20px">
-      👾 탭에서 친구 상태를 확인해보세요
-    </div>
+    <div class="shop-sec"><div class="ss-title">🎩 모자 / 액세서리</div><div class="igrid" id="g-hat"></div></div>
+    <div class="shop-sec"><div class="ss-title">🎨 캐릭터 컬러</div><div class="igrid" id="g-color"></div></div>
+    <div class="shop-sec"><div class="ss-title">🌆 배경</div><div class="igrid" id="g-bg"></div></div>
   </div>
-</div>
 
-<!-- CHARACTER -->
-<div id="s-char" class="screen">
-  <div class="char-wrap">
-    <div class="char-label px">MY BUDDY</div>
-    <div class="canvas-wrap floating">
-      <canvas id="cc" width="64" height="64" style="width:176px;height:176px"></canvas>
+  <!-- DRAW -->
+  <div id="s-draw" class="screen">
+    <div class="dh">
+      <button class="bk" onclick="closeDraw()">← 뒤로</button>
+      <span style="font-weight:900;font-size:16px">직접 그리기 ✏️</span>
     </div>
-    <button onclick="openDraw()" style="margin-bottom:14px;padding:7px 16px;background:var(--card);border:2px solid var(--border);border-radius:10px;color:var(--sub);font-size:12px;cursor:pointer;font-weight:700;font-family:'Noto Sans KR',sans-serif">✏️ 직접 그리기</button>
-    <div class="char-status" id="char-status">오늘 기록을 해봐요!</div>
-    <div style="width:100%">
-      <div style="font-size:12px;color:var(--sub);font-weight:700;margin-bottom:8px">이번 주 기록</div>
-      <div class="week-row" id="week-row"></div>
+    <div style="font-size:12px;color:var(--sub);margin-bottom:14px">16×16 픽셀 캔버스</div>
+    <div class="pt">색상 팔레트</div>
+    <div class="swrow" id="swrow"></div>
+    <div class="trow">
+      <button class="tbtn on" id="tb-draw" onclick="setTool('draw',this)">🖌️ 그리기</button>
+      <button class="tbtn" id="tb-fill" onclick="setTool('fill',this)">🪣 채우기</button>
+      <button class="tbtn" id="tb-erase" onclick="setTool('erase',this)">⬜ 지우개</button>
+      <button class="tbtn" onclick="clearGrid()">🗑️ 초기화</button>
     </div>
-    <div class="stats">
-      <div class="stat"><div class="stat-n px" id="s-streak">0</div><div class="stat-l">🔥 연속 기록</div></div>
-      <div class="stat"><div class="stat-n px" id="s-total">0</div><div class="stat-l">📅 총 기록일</div></div>
-      <div class="stat"><div class="stat-n px" id="s-items">0</div><div class="stat-l">🎁 보유 아이템</div></div>
-      <div class="stat"><div class="stat-n px" id="s-score">-</div><div class="stat-l">⭐ 오늘 점수</div></div>
-    </div>
+    <div class="gwrap"><div id="pgrid"></div></div>
+    <button class="dsave" onclick="saveCustom()">저장하기 ✓</button>
+    <button class="dreset" onclick="resetDefault()">기본 캐릭터로 돌아가기</button>
   </div>
-</div>
 
-<!-- SHOP -->
-<div id="s-shop" class="screen">
-  <div style="text-align:center;margin-bottom:20px">
-    <div class="px" style="font-size:11px;color:var(--accent)">꾸미기 상점</div>
-    <div style="font-size:12px;color:var(--sub);margin-top:6px">연속 기록으로 아이템을 해금하세요 🗝️</div>
-  </div>
-  <div class="shop-sec"><div class="shop-sec-title">🎩 모자 / 액세서리</div><div class="items-grid" id="g-hat"></div></div>
-  <div class="shop-sec"><div class="shop-sec-title">🎨 캐릭터 컬러</div><div class="items-grid" id="g-color"></div></div>
-  <div class="shop-sec"><div class="shop-sec-title">🌆 배경</div><div class="items-grid" id="g-bg"></div></div>
-</div>
-
-<!-- DRAW -->
-<div id="s-draw" class="screen">
-  <div class="draw-hdr">
-    <button class="back-btn" onclick="closeDraw()">← 뒤로</button>
-    <span style="font-weight:900;font-size:16px">직접 그리기 ✏️</span>
-  </div>
-  <div style="font-size:12px;color:var(--sub);margin-bottom:14px">16×16 픽셀 캔버스 — 자유롭게 그려봐요</div>
-  <div class="pal-title">색상 팔레트</div>
-  <div class="swatch-row" id="swatch-row"></div>
-  <div class="tool-row">
-    <button class="tbtn on" id="tb-draw" onclick="setTool('draw',this)">🖌️ 그리기</button>
-    <button class="tbtn" id="tb-fill" onclick="setTool('fill',this)">🪣 채우기</button>
-    <button class="tbtn" id="tb-erase" onclick="setTool('erase',this)">⬜ 지우개</button>
-    <button class="tbtn" onclick="clearGrid()">🗑️ 초기화</button>
-  </div>
-  <div class="grid-wrap"><div id="pgrid"></div></div>
-  <button class="draw-save" onclick="saveCustomChar()">저장하기 ✓</button>
-  <button class="draw-reset" onclick="resetToDefault()">기본 캐릭터로 돌아가기</button>
+  <nav class="nav">
+    <button class="nb on" onclick="go('today',this)"><span class="ni">📋</span><span>오늘</span></button>
+    <button class="nb" onclick="go('char',this)"><span class="ni">👾</span><span>친구</span></button>
+    <button class="nb" onclick="go('shop',this)"><span class="ni">🎁</span><span>꾸미기</span></button>
+  </nav>
 </div>
 
 <div class="toast" id="toast"></div>
-
-<nav class="nav">
-  <button class="nav-btn on" onclick="go('today',this)"><span class="ni">📋</span><span>오늘</span></button>
-  <button class="nav-btn" onclick="go('char',this)"><span class="ni">👾</span><span>친구</span></button>
-  <button class="nav-btn" onclick="go('shop',this)"><span class="ni">🎁</span><span>꾸미기</span></button>
-</nav>
 
 <script>
 // ── ITEMS ──────────────────────────────────────────────────────────────────
@@ -297,78 +414,187 @@ const ITEMS = [
   {id:'hat_flower',name:'꽃 머리띠', type:'hat',   unlock:0,  ico:'🌸'},
   {id:'hat_crown', name:'왕관',      type:'hat',   unlock:0,  ico:'👑'},
   {id:'hat_cat',   name:'고양이 귀', type:'hat',   unlock:0,  ico:'🐱'},
-  {id:'col_pink',  name:'핑크',      type:'color', unlock:0,  ico:'🩷', col:'#ff9ebc'},
-  {id:'col_blue',  name:'블루',      type:'color', unlock:0,  ico:'💙', col:'#60a5fa'},
-  {id:'col_purple',name:'퍼플',      type:'color', unlock:0,  ico:'💜', col:'#a78bfa'},
-  {id:'col_gold',  name:'골드',      type:'color', unlock:0,  ico:'✨', col:'#ffd700'},
+  {id:'col_pink',  name:'핑크',      type:'color', unlock:0,  ico:'🩷', col:'#f9a8d4'},
+  {id:'col_blue',  name:'블루',      type:'color', unlock:0,  ico:'💙', col:'#93c5fd'},
+  {id:'col_purple',name:'퍼플',      type:'color', unlock:0,  ico:'💜', col:'#c4b5fd'},
+  {id:'col_gold',  name:'골드',      type:'color', unlock:0,  ico:'✨', col:'#fbbf24'},
   {id:'bg_night',  name:'밤하늘',    type:'bg',    unlock:0,  ico:'🌙', bg:'#05050f'},
   {id:'bg_forest', name:'숲속',      type:'bg',    unlock:0,  ico:'🌿', bg:'#071a07'},
   {id:'bg_sunset', name:'노을',      type:'bg',    unlock:0,  ico:'🌅', bg:'#1a0a05'},
-  {id:'bg_ocean',  name:'바다',      type:'bg',    unlock:0,  ico:'🌊', bg:'#050f1a'},
+  {id:'bg_ocean',  name:'바다',      type:'bg',    unlock:0,  ico:'🌊', bg:'#040d1a'},
+];
+
+const PALETTE = [
+  '#0d0b14','#ffffff','#f0ebff',
+  '#6ee7b7','#f9a8d4','#93c5fd',
+  '#c4b5fd','#fbbf24','#fca5a5',
+  '#fdba74','#4dd0e1','#a07858',
+  '#2d8b6a','#d8b4fe','#86efac',
 ];
 
 // ── STATE ──────────────────────────────────────────────────────────────────
-const DEF_STATE = {
+const DEF = {
+  onboarded:false, charName:'친구',
   streak:0, total:0, lastDate:null,
   today:{ex:null,water:0,mood:null,sleep:null,done:false,score:0},
   eq:{hat:null,color:null,bg:null},
-  unlocked:[],
-  history:[]
+  unlocked:[], history:[], customPixels:null
 };
+let S = JSON.parse(JSON.stringify(DEF));
 
-let S = JSON.parse(JSON.stringify(DEF_STATE));
-
-function save(){localStorage.setItem('px_buddy_v1',JSON.stringify(S))}
+function save(){localStorage.setItem('pikpik_v1',JSON.stringify(S))}
 function load(){
   try{
-    const raw=localStorage.getItem('px_buddy_v1');
-    if(raw){
-      const parsed=JSON.parse(raw);
-      S={...DEF_STATE,...parsed};
-      S.today={...DEF_STATE.today,...(parsed.today||{})};
-      S.eq={...DEF_STATE.eq,...(parsed.eq||{})};
-    }
+    const r=localStorage.getItem('pikpik_v1');
+    if(r){const p=JSON.parse(r);S={...DEF,...p};
+      S.today={...DEF.today,...(p.today||{})};
+      S.eq={...DEF.eq,...(p.eq||{})};}
   }catch(e){}
   newDayCheck();
 }
-
-function today(){return new Date().toISOString().split('T')[0]}
-function yesterday(){const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().split('T')[0]}
-
+function todayStr(){return new Date().toISOString().split('T')[0]}
+function yesterStr(){const d=new Date();d.setDate(d.getDate()-1);return d.toISOString().split('T')[0]}
 function newDayCheck(){
-  const td=today();
-  if(S.lastDate===td) return;
-  if(S.lastDate && S.lastDate!==yesterday()) S.streak=0;
+  const t=todayStr();
+  if(S.lastDate===t) return;
+  if(S.lastDate&&S.lastDate!==yesterStr()) S.streak=0;
   S.today={ex:null,water:0,mood:null,sleep:null,done:false,score:0};
 }
 
-// ── CHECK-IN ───────────────────────────────────────────────────────────────
+// ── COLOR UTILS ────────────────────────────────────────────────────────────
+function hrgb(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function darken(h,f){const[r,g,b]=hrgb(h);return`rgb(${~~(r*f)},${~~(g*f)},${~~(b*f)})`}
+function lighten(h,f){const[r,g,b]=hrgb(h);return`rgb(${~~Math.min(255,r+(255-r)*f)},${~~Math.min(255,g+(255-g)*f)},${~~Math.min(255,b+(255-b)*f)})`}
+function bodyCol(){const c=ITEMS.find(i=>i.id===S.eq.color);return c?c.col:'#6ee7b7'}
+function moodState(){if(!S.today.done)return'neu';const s=S.today.score;return s>=6?'happy':s>=3?'neu':'sad'}
+
+// ── CHARACTER RENDERING ────────────────────────────────────────────────────
+function fillCirc(ctx,cx,cy,r,col){
+  for(let y=cy-r-1;y<=cy+r+1;y++)
+    for(let x=cx-r-1;x<=cx+r+1;x++)
+      if(Math.sqrt((x-cx)**2+(y-cy)**2)<r){ctx.fillStyle=col;ctx.fillRect(x,y,1,1);}
+}
+
+function drawChar(id){
+  const cv=document.getElementById(id);
+  if(!cv) return;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,48,48);
+
+  if(S.customPixels&&S.customPixels.some(p=>p)){
+    for(let i=0;i<256;i++){
+      if(S.customPixels[i]){
+        ctx.fillStyle=S.customPixels[i];
+        ctx.fillRect((i%16)*3,Math.floor(i/16)*3,3,3);
+      }
+    }
+  } else {
+    const bc=bodyCol(),out=darken(bc,.42),hi=lighten(bc,.42),m=moodState();
+    // Body
+    fillCirc(ctx,24,28,15,out);
+    fillCirc(ctx,24,28,13,bc);
+    // Shine
+    fillCirc(ctx,18,20,5,hi);
+    // Cheeks
+    ctx.fillStyle='rgba(255,100,130,0.28)';
+    fillCirc(ctx,14,34,4,'rgba(255,100,130,0.28)');
+    fillCirc(ctx,34,34,4,'rgba(255,100,130,0.28)');
+    // Eyes
+    ctx.fillStyle='#160d24';
+    if(m==='happy'){
+      // arc ^_^
+      for(let x=16;x<=20;x++) ctx.fillRect(x,22,1,1);
+      ctx.fillRect(15,23,1,1);ctx.fillRect(21,23,1,1);
+      for(let x=27;x<=31;x++) ctx.fillRect(x,22,1,1);
+      ctx.fillRect(26,23,1,1);ctx.fillRect(32,23,1,1);
+      // big smile
+      ctx.fillRect(17,33,1,1);ctx.fillRect(18,34,11,1);ctx.fillRect(29,33,1,1);
+      ctx.fillStyle='#d95070';ctx.fillRect(18,34,11,2);
+      ctx.fillStyle='#f08090';ctx.fillRect(19,35,9,1);
+    } else if(m==='sad'){
+      // droopy eyes
+      ctx.fillRect(15,24,4,4);ctx.fillRect(29,24,4,4);
+      // sad brows
+      ctx.fillRect(14,20,2,1);ctx.fillRect(16,21,2,1);
+      ctx.fillRect(30,21,2,1);ctx.fillRect(32,20,2,1);
+      // frown
+      ctx.fillRect(17,35,1,1);ctx.fillRect(18,34,11,1);ctx.fillRect(29,35,1,1);
+    } else {
+      // normal dots
+      ctx.fillRect(15,22,4,5);ctx.fillRect(29,22,4,5);
+      ctx.fillStyle='#fff';ctx.fillRect(15,22,1,1);ctx.fillRect(29,22,1,1);
+      ctx.fillStyle='#160d24';ctx.fillRect(17,32,13,2);
+    }
+  }
+
+  // Hat overlay
+  const hat=S.eq.hat;
+  if(hat==='hat_star') drawStarHat(ctx);
+  else if(hat==='hat_flower') drawFlowerHat(ctx);
+  else if(hat==='hat_crown') drawCrownHat(ctx);
+  else if(hat==='hat_cat') drawCatEars(ctx);
+
+  // Golden sparkles for 30+ streak
+  if(S.streak>=30&&!S.customPixels){
+    ctx.fillStyle='#fbbf24';
+    [[5,5],[43,5],[5,43],[43,43]].forEach(([x,y])=>{
+      ctx.fillRect(x,y,2,2);ctx.fillRect(x-1,y+1,1,1);ctx.fillRect(x+1,y+1,1,1);
+    });
+  }
+}
+
+function drawStarHat(ctx){
+  ctx.fillStyle='#fbbf24';
+  [[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0]].forEach((row,y)=>{
+    row.forEach((p,x)=>{if(p)ctx.fillRect(20+x*2,5+y*2,2,2);});
+  });
+  ctx.fillStyle='#fef08a';ctx.fillRect(21,5,2,2);
+}
+function drawFlowerHat(ctx){
+  ctx.fillStyle='#f9a8d4';
+  ctx.fillRect(17,11,14,3);ctx.fillRect(20,8,8,3);
+  ctx.fillStyle='#fbbf24';ctx.fillRect(22,9,4,3);
+}
+function drawCrownHat(ctx){
+  ctx.fillStyle='#fbbf24';
+  ctx.fillRect(14,12,20,4);
+  ctx.fillRect(14,7,3,5);ctx.fillRect(22,5,4,7);ctx.fillRect(31,7,3,5);
+  ctx.fillStyle='#fca5a5';ctx.fillRect(23,6,2,2);
+  ctx.fillStyle='#93c5fd';ctx.fillRect(15,8,2,2);ctx.fillRect(31,8,2,2);
+}
+function drawCatEars(ctx){
+  const bc=bodyCol(),out=darken(bc,.42);
+  ctx.fillStyle=out;ctx.fillRect(10,9,7,8);ctx.fillRect(31,9,7,8);
+  ctx.fillStyle=bc;ctx.fillRect(11,10,5,6);ctx.fillRect(32,10,5,6);
+  ctx.fillStyle='#f9a8d4';ctx.fillRect(12,11,3,4);ctx.fillRect(33,11,3,4);
+}
+
+// ── CHECKIN ────────────────────────────────────────────────────────────────
 function pick(field,val,btn){
   S.today[field]=val;
-  btn.closest('.opt-row').querySelectorAll('.opt').forEach(b=>b.classList.remove('on'));
+  btn.closest('.orow').querySelectorAll('.obtn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
+  btn.closest('.ccard').classList.add('done');
   checkReady();
 }
-
-function water(d){
+function adjWater(d){
   S.today.water=Math.max(0,Math.min(10,S.today.water+d));
   document.getElementById('w-val').textContent=S.today.water;
-  renderWdots();
+  document.getElementById('w-fill').style.width=(S.today.water/10*100)+'%';
+  if(S.today.water>0) document.getElementById('c-water').classList.add('done');
   checkReady();
 }
-
-function sleep_(h,btn){
+function setSleep(h,btn){
   S.today.sleep=h;
-  document.querySelectorAll('.sl-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
+  document.getElementById('c-sleep').classList.add('done');
   checkReady();
 }
-
 function checkReady(){
   document.getElementById('sub-btn').disabled=
-    !(S.today.ex!==null && S.today.mood!==null && S.today.sleep!==null);
+    !(S.today.ex!==null&&S.today.mood!==null&&S.today.sleep!==null);
 }
-
 function calcScore(){
   let s=0;
   s+=(S.today.ex||0);
@@ -378,314 +604,211 @@ function calcScore(){
   return s;
 }
 
-function submit(){
+function doSubmit(){
   if(S.today.done) return;
   const score=calcScore();
-  S.today.score=score;
-  S.today.done=true;
-  const td=today();
-  S.streak = S.lastDate===yesterday() ? S.streak+1 : 1;
-  S.lastDate=td;
-  S.total=(S.total||0)+1;
+  S.today.score=score;S.today.done=true;
+  const td=todayStr();
+  S.streak=S.lastDate===yesterStr()?S.streak+1:1;
+  S.lastDate=td;S.total=(S.total||0)+1;
   S.history=[...S.history,{date:td,score}].slice(-60);
   const prev=S.unlocked.length;
-  ITEMS.forEach(item=>{
-    if(!S.unlocked.includes(item.id)&&S.streak>=item.unlock) S.unlocked.push(item.id);
-  });
+  ITEMS.forEach(item=>{if(!S.unlocked.includes(item.id)&&S.streak>=item.unlock)S.unlocked.push(item.id);});
   save();
-  document.getElementById('form-wrap').style.display='none';
-  document.getElementById('done-wrap').style.display='block';
-  document.getElementById('done-pts').textContent=String(score).padStart(2,'0');
-  const msgs=['오늘은 좀 힘들었군요. 그래도 기록했잖아요 💪','그럭저럭 괜찮은 하루예요. 내일 더 잘 할 수 있어요!','완벽한 하루였어요! 친구가 너무 행복해해요 ✨'];
-  document.getElementById('done-msg').textContent=msgs[score>=6?2:score>=3?1:0];
-  document.getElementById('streak-num').textContent=S.streak;
+  showDone(score);
   if(S.unlocked.length>prev){
-    const newItem=ITEMS.find(i=>S.unlocked[S.unlocked.length-1]===i.id);
-    if(newItem) setTimeout(()=>toast(`🎁 "${newItem.name}" 해금!`),1200);
+    const ni=ITEMS.find(i=>i.id===S.unlocked[S.unlocked.length-1]);
+    if(ni) setTimeout(()=>showToast(`🎁 "${ni.name}" 해금!`),1400);
   }
-  toast(`오늘 완료! ${score}/8점 🎉`);
 }
 
-// ── CHARACTER RENDERING ────────────────────────────────────────────────────
-function bodyCol(){
-  const c=ITEMS.find(i=>i.id===S.eq.color);
-  return c?c.col:'#7ed8a4';
+function showDone(score){
+  document.getElementById('form-area').style.display='none';
+  document.getElementById('done-area').style.display='block';
+  document.getElementById('done-pts').textContent=String(score).padStart(2,'0');
+  const msgs=['그래도 기록했잖아요. 정말 대단해요 💪',
+    '나쁘지 않아요! 내일은 더 잘 할 수 있어요 ✨',
+    '완벽한 하루였어요! 친구가 너무 행복해해요 🌟'];
+  document.getElementById('done-msg').textContent=msgs[score>=6?2:score>=3?1:0];
+  // Stars pop in
+  const stars=document.querySelectorAll('.star');
+  stars.forEach((s,i)=>setTimeout(()=>{if(i<score)s.classList.add('on');},i*100+200));
+  // Redraw character happy
+  setTimeout(()=>{drawChar('cc-today');spawnParticles();},300);
+  // Update streak
+  document.getElementById('streak-n').textContent=S.streak;
+  updateBubble();
+  showToast(`오늘 완료! ${score}/8점 🎉`);
 }
 
-function mood(){
-  if(!S.today.done) return 'neu';
+function spawnParticles(){
+  const hero=document.querySelector('.hero');
+  const cols=['#6ee7b7','#f9a8d4','#fbbf24','#93c5fd','#c4b5fd'];
+  for(let i=0;i<14;i++){
+    setTimeout(()=>{
+      const sp=document.createElement('div');
+      sp.className='spark';
+      sp.style.cssText=`width:${3+Math.random()*4}px;height:${3+Math.random()*4}px;
+        left:${25+Math.random()*50}%;top:${20+Math.random()*40}%;
+        background:${cols[~~(Math.random()*cols.length)]};
+        --tx:${(Math.random()-.5)*90}px;--ty:${-30-Math.random()*70}px`;
+      hero.appendChild(sp);
+      setTimeout(()=>sp.remove(),700);
+    },i*40);
+  }
+}
+
+// ── SPEECH BUBBLE ──────────────────────────────────────────────────────────
+function getSpeech(){
+  const h=new Date().getHours(),nm=S.charName||'친구';
+  if(!S.today.done){
+    if(h<10) return`좋은 아침이에요! 오늘도 잘 부탁해요 ☀️`;
+    if(h<14) return`안녕하세요! 오늘 기록 기다리고 있어요 🌞`;
+    if(h<19) return`오후에도 화이팅! 기록 잊지 마세요 ✨`;
+    return`오늘 하루 수고했어요! 기록하고 마무리해요 🌙`;
+  }
   const sc=S.today.score;
-  return sc>=6?'happy':sc>=3?'neu':'sad';
+  if(sc>=7) return`오늘 완전 최고예요! 자랑스러워요 🌟`;
+  if(sc>=5) return`오늘도 잘 했어요! 내일도 화이팅 ✨`;
+  if(sc>=3) return`괜찮아요, 내일은 더 잘 할 수 있어요 💪`;
+  return`오늘 힘들었죠? 그래도 기록했잖아요 🤗`;
 }
 
-function hexToRgb(h){
-  const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);
-  return[r,g,b];
-}
-function darker(h,f){const[r,g,b]=hexToRgb(h);return`rgb(${~~(r*f)},${~~(g*f)},${~~(b*f)})`}
-function lighter(h,f){const[r,g,b]=hexToRgb(h);return`rgb(${~~Math.min(255,r+(255-r)*f)},${~~Math.min(255,g+(255-g)*f)},${~~Math.min(255,b+(255-b)*f)})`}
-
-function circ(ctx,cx,cy,r,col,border){
-  for(let y=cy-r-2;y<=cy+r+2;y++){
-    for(let x=cx-r-2;x<=cx+r+2;x++){
-      const d=Math.sqrt((x-cx)**2+(y-cy)**2);
-      if(border&&d>=r-1&&d<r+1){ctx.fillStyle=border;ctx.fillRect(x,y,1,1);}
-      else if(!border&&d<r){ctx.fillStyle=col;ctx.fillRect(x,y,1,1);}
-      else if(border&&d<r-1){ctx.fillStyle=col;ctx.fillRect(x,y,1,1);}
-    }
-  }
+function updateBubble(){
+  const el=document.getElementById('bubble-today');
+  if(el) el.textContent=getSpeech();
 }
 
-function drawChar(){
-  const cv=document.getElementById('cc');
-  if(!cv) return;
-  const ctx=cv.getContext('2d');
-  ctx.clearRect(0,0,64,64);
-
-  const bgItem=ITEMS.find(i=>i.id===S.eq.bg);
-  const scr=document.getElementById('s-char');
-  if(scr) scr.style.background=bgItem?bgItem.bg:'';
-
-  if(S.customPixels&&S.customPixels.some(p=>p)){
-    // Custom pixel art: 16×16 logical pixels → 64×64 canvas (4px per cell)
-    for(let i=0;i<256;i++){
-      if(S.customPixels[i]){
-        ctx.fillStyle=S.customPixels[i];
-        ctx.fillRect((i%16)*4,Math.floor(i/16)*4,4,4);
-      }
-    }
-  } else {
-    const bc=bodyCol(),outline=darker(bc,0.45),hi=lighter(bc,0.45),m=mood(),cx=32,cy=36;
-    circ(ctx,cx,cy,17,bc,outline);
-    circ(ctx,26,28,5,hi,null);
-    ctx.fillStyle='rgba(255,130,130,0.35)';
-    circ(ctx,23,42,4,'rgba(255,130,130,0.35)',null);
-    circ(ctx,41,42,4,'rgba(255,130,130,0.35)',null);
-    ctx.fillStyle='#1a1020';
-    if(m==='happy'){
-      for(let x=23;x<=27;x++) ctx.fillRect(x,31,1,1);
-      ctx.fillRect(22,32,1,1);ctx.fillRect(28,32,1,1);
-      for(let x=36;x<=40;x++) ctx.fillRect(x,31,1,1);
-      ctx.fillRect(35,32,1,1);ctx.fillRect(41,32,1,1);
-      ctx.fillRect(27,41,1,1);ctx.fillRect(28,42,8,1);ctx.fillRect(36,41,1,1);
-      ctx.fillStyle='#e05060';ctx.fillRect(28,42,8,2);
-      ctx.fillStyle='#f08090';ctx.fillRect(29,43,6,1);
-    } else if(m==='sad'){
-      ctx.fillRect(23,31,4,4);ctx.fillRect(36,31,4,4);
-      ctx.fillRect(22,28,2,1);ctx.fillRect(24,29,2,1);
-      ctx.fillRect(37,29,2,1);ctx.fillRect(39,28,2,1);
-      ctx.fillRect(27,44,1,1);ctx.fillRect(28,43,8,1);ctx.fillRect(36,44,1,1);
-    } else {
-      ctx.fillRect(23,30,4,5);ctx.fillRect(36,30,4,5);
-      ctx.fillStyle='#fff';ctx.fillRect(24,30,1,1);ctx.fillRect(37,30,1,1);
-      ctx.fillStyle='#1a1020';ctx.fillRect(27,41,10,2);
-    }
-  }
-
-  const hat=S.eq.hat;
-  if(hat==='hat_star') drawStarHat(ctx);
-  else if(hat==='hat_flower') drawFlowerHat(ctx);
-  else if(hat==='hat_crown') drawCrownHat(ctx);
-  else if(hat==='hat_cat') drawCatEars(ctx,bodyCol());
-
-  const statusMap={happy:'오늘도 최고야! ✨',neu:'그럭저럭이에요 👀',sad:'좀 더 힘내봐요... 💧'};
-  const el=document.getElementById('char-status');
-  if(el) el.textContent=S.today.done?statusMap[mood()]:'오늘 기록을 먼저 해봐요!';
-}
-
-function drawStarHat(ctx){
-  ctx.fillStyle='#ffd700';
-  [[0,0,1,0,0],[1,1,1,1,1],[0,1,1,1,0],[0,0,1,0,0]].forEach((row,y)=>{
-    row.forEach((p,x)=>{if(p){ctx.fillRect(27+x*3,10+y*2,3,2);}});
-  });
-  ctx.fillStyle='#ffec60';ctx.fillRect(28,10,2,2);
-}
-
-function drawFlowerHat(ctx){
-  ctx.fillStyle='#ff9ebc';
-  ctx.fillRect(25,15,14,4);
-  ctx.fillStyle='#ffb8d0';
-  ctx.fillRect(28,12,8,3);
-  ctx.fillStyle='#ffd700';
-  ctx.fillRect(30,13,4,3);
-  ctx.fillStyle='#ff9ebc';
-  ctx.fillRect(29,14,6,2);
-}
-
-function drawCrownHat(ctx){
-  ctx.fillStyle='#ffd700';
-  ctx.fillRect(22,17,20,4);
-  ctx.fillRect(22,11,3,6);ctx.fillRect(29,9,6,8);ctx.fillRect(39,11,3,6);
-  ctx.fillStyle='#ff6b6b';ctx.fillRect(30,10,4,3);
-  ctx.fillStyle='#60a5fa';ctx.fillRect(23,12,2,2);ctx.fillRect(40,12,2,2);
-  ctx.fillStyle='#ffe066';ctx.fillRect(25,17,2,2);ctx.fillRect(37,17,2,2);ctx.fillRect(31,17,2,2);
-}
-
-function drawCatEars(ctx,bc){
-  const outline=darker(bc,0.45);
-  ctx.fillStyle=outline;
-  ctx.fillRect(18,14,7,8);ctx.fillRect(39,14,7,8);
-  ctx.fillStyle=bc;
-  ctx.fillRect(19,15,5,6);ctx.fillRect(40,15,5,6);
-  ctx.fillStyle='#ff9ebc';
-  ctx.fillRect(20,16,3,4);ctx.fillRect(41,16,3,4);
+function levelInfo(){
+  if(S.streak>=30) return'LV.3 LEGEND ✨';
+  if(S.streak>=7) return'LV.2 GROWING 🌿';
+  return'LV.1 SEEDLING 🌱';
 }
 
 // ── SHOP ───────────────────────────────────────────────────────────────────
 function isUnlocked(item){return S.unlocked.includes(item.id)||S.streak>=item.unlock}
-
 function equipItem(item){
-  if(!isUnlocked(item)){toast(`${item.unlock}일 연속 달성 시 해금!`);return;}
+  if(!isUnlocked(item)){showToast(`${item.unlock}일 연속 달성 시 해금!`);return;}
   S.eq[item.type]=S.eq[item.type]===item.id?null:item.id;
-  save();renderShop();drawChar();
-  toast(S.eq[item.type]?`${item.name} 장착!`:`${item.name} 해제`);
+  save();renderShop();drawChar('cc-today');drawChar('cc-char');
+  showToast(S.eq[item.type]?`${item.name} 장착!`:`${item.name} 해제`);
 }
-
 function renderShop(){
+  const bgItem=ITEMS.find(i=>i.id===S.eq.bg);
+  document.getElementById('s-shop').style.background=bgItem?bgItem.bg:'';
   ['hat','color','bg'].forEach(type=>{
-    const grid=document.getElementById(`g-${type}`);
-    if(!grid) return;
-    grid.innerHTML='';
+    const g=document.getElementById(`g-${type}`);
+    if(!g) return;
+    g.innerHTML='';
     ITEMS.filter(i=>i.type===type).forEach(item=>{
       const ul=isUnlocked(item),eq=S.eq[item.type]===item.id;
-      const card=document.createElement('div');
-      card.className=`item ${ul?'unlocked':''} ${eq?'equipped':''} ${!ul?'locked':''}`;
-      card.onclick=()=>equipItem(item);
-      let ico=`<div class="item-ico">${item.ico}</div>`;
-      if(type==='color'&&ul) ico=`<div style="width:34px;height:34px;border-radius:50%;background:${item.col};border:2px solid var(--border);margin:0 auto 6px"></div>`;
-      card.innerHTML=`${eq?'<div class="eq-badge">ON</div>':''}${ico}<div class="item-name">${item.name}</div>${!ul?`<div class="item-day px">${item.unlock}DAY</div>`:''}`;
-      grid.appendChild(card);
+      const c=document.createElement('div');
+      c.className=`icard ${ul?'ul':''} ${eq?'eq':''} ${!ul?'lk':''}`;
+      c.onclick=()=>equipItem(item);
+      let ico=`<span class="iico">${item.ico}</span>`;
+      if(type==='color'&&ul) ico=`<div style="width:36px;height:36px;border-radius:50%;background:${item.col};margin:0 auto 8px;border:2px solid var(--bd)"></div>`;
+      c.innerHTML=`${eq?'<div class="eq-tag">ON</div>':''}${ico}<div class="inm">${item.name}</div>${!ul?`<div class="iday">${item.unlock}DAY</div>`:''}`;
+      g.appendChild(c);
     });
   });
 }
 
 // ── CHAR SCREEN ────────────────────────────────────────────────────────────
 function renderCharScreen(){
-  drawChar();
-  document.getElementById('s-streak').textContent=S.streak;
-  document.getElementById('s-total').textContent=S.total||0;
-  document.getElementById('s-items').textContent=S.unlocked.length;
-  document.getElementById('s-score').textContent=S.today.done?S.today.score:'-';
+  const bgItem=ITEMS.find(i=>i.id===S.eq.bg);
+  document.getElementById('s-char').style.background=bgItem?bgItem.bg:'';
+  drawChar('cc-char');
+  document.getElementById('char-nm').textContent=S.charName||'친구';
+  document.getElementById('lv-badge').textContent=levelInfo();
+  const moodTxt={happy:'오늘도 최고야! ✨',neu:'그럭저럭이에요 👀',sad:'좀 더 힘내봐요... 💧'};
+  document.getElementById('char-st').textContent=S.today.done?moodTxt[moodState()]:'오늘 기록을 먼저 해봐요!';
+  document.getElementById('sg-streak').textContent=S.streak;
+  document.getElementById('sg-total').textContent=S.total||0;
+  document.getElementById('sg-items').textContent=S.unlocked.length;
+  document.getElementById('sg-score').textContent=S.today.done?S.today.score:'-';
 
-  const grid=document.getElementById('week-row');
+  const grid=document.getElementById('wk-grid');
   grid.innerHTML='';
-  const days=['일','월','화','수','목','금','토'];
-  const td=today();
+  const days=['일','월','화','수','목','금','토'],td=todayStr();
   for(let i=6;i>=0;i--){
     const d=new Date();d.setDate(d.getDate()-i);
     const ds=d.toISOString().split('T')[0];
     const h=S.history.find(x=>x.date===ds);
     const el=document.createElement('div');
-    el.className=`wday${h?' done':''}${ds===td?' today':''}`;
-    el.innerHTML=`<span>${days[d.getDay()]}</span>${h?`<span class="wday-n" style="font-size:6px">${h.score}</span>`:''}`;
+    el.className=`wd${h?' done':''}${ds===td?' today':''}`;
+    el.innerHTML=`<span>${days[d.getDay()]}</span>${h?`<span style="font-family:'Press Start 2P',monospace;font-size:5px">${h.score}</span>`:''}`;
     grid.appendChild(el);
   }
 }
 
 // ── TODAY SCREEN ───────────────────────────────────────────────────────────
 function renderToday(){
-  const now=new Date();
-  document.getElementById('today-date').textContent=
-    now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
-  document.getElementById('streak-num').textContent=S.streak;
-  renderWdots();
+  drawChar('cc-today');
+  updateBubble();
+  document.getElementById('streak-n').textContent=S.streak;
+  document.getElementById('streak-l').textContent=S.streak===1?'일 연속':'일 연속';
   if(S.today.done){
-    document.getElementById('form-wrap').style.display='none';
-    document.getElementById('done-wrap').style.display='block';
+    document.getElementById('form-area').style.display='none';
+    document.getElementById('done-area').style.display='block';
     document.getElementById('done-pts').textContent=String(S.today.score).padStart(2,'0');
-    const msgs=['오늘은 좀 힘들었군요. 그래도 기록했잖아요 💪','그럭저럭 괜찮은 하루예요. 내일 더 잘 할 수 있어요!','완벽한 하루였어요! 친구가 너무 행복해해요 ✨'];
+    const msgs=['그래도 기록했잖아요. 정말 대단해요 💪',
+      '나쁘지 않아요! 내일은 더 잘 할 수 있어요 ✨',
+      '완벽한 하루였어요! 친구가 너무 행복해해요 🌟'];
     document.getElementById('done-msg').textContent=msgs[S.today.score>=6?2:S.today.score>=3?1:0];
+    document.querySelectorAll('.star').forEach((s,i)=>{if(i<S.today.score)s.classList.add('on');});
   }
 }
 
-function renderWdots(){
-  const c=document.getElementById('wdots');
-  if(!c) return;
-  c.innerHTML='';
-  for(let i=0;i<8;i++){
-    const d=document.createElement('div');
-    d.className='wdot'+(i<S.today.water?' on':'');
-    c.appendChild(d);
-  }
-}
-
-// ── NAV ────────────────────────────────────────────────────────────────────
+// ── NAVIGATION ─────────────────────────────────────────────────────────────
 function go(name,btn){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
-  document.getElementById(`s-${name}`).classList.add('active');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(`s-${name}`).classList.add('on');
   btn.classList.add('on');
   if(name==='char') renderCharScreen();
   if(name==='shop') renderShop();
+  if(name==='today'){drawChar('cc-today');updateBubble();}
 }
 
-// ── TOAST ──────────────────────────────────────────────────────────────────
-let _tt;
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2600);
-}
-
-// ── PIXEL EDITOR ──────────────────────────────────────────────────────────
-const PALETTE=[
-  '#1a1020','#ffffff','#e8d0f0',
-  '#7ed8a4','#ff9ebc','#60a5fa',
-  '#a78bfa','#ffd700','#ff6b6b',
-  '#ff9d40','#4dd0e1','#a07858',
-  '#2d8b6a','#c5a3ff','#f4c2a1',
-];
-
-let edPx=new Array(256).fill(null);
-let curCol=PALETTE[3];
-let curTool='draw';
-let painting=false;
+// ── DRAW EDITOR ────────────────────────────────────────────────────────────
+let edPx=new Array(256).fill(null),curCol=PALETTE[3],curTool='draw',painting=false;
 
 function openDraw(){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('s-draw').classList.add('active');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s-draw').classList.add('on');
   edPx=S.customPixels?[...S.customPixels]:new Array(256).fill(null);
   buildEditor();
 }
-
 function closeDraw(){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('s-char').classList.add('active');
-  document.querySelector('.nav-btn:nth-child(2)').classList.add('on');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('s-char').classList.add('on');
+  document.querySelector('.nb:nth-child(2)').classList.add('on');
   renderCharScreen();
 }
-
 function buildEditor(){
-  // Palette swatches
-  const pr=document.getElementById('swatch-row');
+  const pr=document.getElementById('swrow');
   pr.innerHTML='';
   PALETTE.forEach(col=>{
     const sw=document.createElement('div');
-    sw.className='swatch'+(col===curCol?' on':'');
-    sw.style.cssText=`background:${col};outline:${col==='#1a1020'?'1px solid #555':'none'}`;
+    sw.className='sw'+(col===curCol?' on':'');
+    sw.style.cssText=`background:${col};${col==='#0d0b14'?'outline:1px solid #444':''}`;
     sw.onclick=()=>{
       curCol=col;curTool='draw';
-      pr.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));
+      pr.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));
       sw.classList.add('on');
       document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
       document.getElementById('tb-draw').classList.add('on');
     };
     pr.appendChild(sw);
   });
-  // Eraser as last swatch
   const er=document.createElement('div');
-  er.className='swatch';
-  er.style.cssText='background:var(--surface);border-color:var(--border);display:flex;align-items:center;justify-content:center;font-size:14px';
+  er.className='sw';
+  er.style.cssText='background:var(--s2);border-color:var(--bd);display:flex;align-items:center;justify-content:center;font-size:13px';
   er.textContent='✕';
-  er.onclick=()=>{
-    setTool('erase',null);
-    pr.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));
-    er.classList.add('on');
-  };
+  er.onclick=()=>{setTool('erase',null);pr.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));er.classList.add('on');};
   pr.appendChild(er);
 
-  // 16×16 grid
   const grid=document.getElementById('pgrid');
   grid.innerHTML='';
   for(let i=0;i<256;i++){
@@ -694,92 +817,121 @@ function buildEditor(){
     c.style.background=edPx[i]||'transparent';
     grid.appendChild(c);
   }
-
-  // Remove old listeners by cloning
   const ng=grid.cloneNode(true);
   grid.parentNode.replaceChild(ng,grid);
-
-  ng.addEventListener('touchstart',e=>{
-    e.preventDefault();painting=true;
-    applyTouch(e.touches[0],true);
-  },{passive:false});
-  ng.addEventListener('touchmove',e=>{
-    e.preventDefault();
-    if(painting&&curTool!=='fill') applyTouch(e.touches[0],false);
-  },{passive:false});
+  ng.addEventListener('touchstart',e=>{e.preventDefault();painting=true;touchCell(e.touches[0],true);},{passive:false});
+  ng.addEventListener('touchmove',e=>{e.preventDefault();if(painting&&curTool!=='fill')touchCell(e.touches[0],false);},{passive:false});
   ng.addEventListener('touchend',()=>painting=false);
   ng.addEventListener('mousedown',e=>{painting=true;applyCell(e.target,true);});
   ng.addEventListener('mousemove',e=>{if(painting&&curTool!=='fill')applyCell(e.target,false);});
   document.addEventListener('mouseup',()=>painting=false);
 }
-
-function applyTouch(touch,isStart){
-  const el=document.elementFromPoint(touch.clientX,touch.clientY);
-  applyCell(el,isStart);
-}
-
+function touchCell(t,isStart){applyCell(document.elementFromPoint(t.clientX,t.clientY),isStart);}
 function applyCell(el,isStart){
   if(!el||el.dataset.i===undefined) return;
   const i=parseInt(el.dataset.i);
   if(curTool==='fill'){
     if(!isStart) return;
-    const target=edPx[i];
-    const rep=curCol;
-    if(target===rep) return;
-    floodFill(i%16,Math.floor(i/16),target,rep);
+    const tg=edPx[i],rep=curCol;
+    if(tg===rep) return;
+    floodFill(i%16,Math.floor(i/16),tg,rep);
     refreshGrid();
   } else {
     const col=curTool==='erase'?null:curCol;
-    edPx[i]=col;
-    el.style.background=col||'transparent';
+    edPx[i]=col;el.style.background=col||'transparent';
   }
 }
-
-function floodFill(x,y,target,rep){
+function floodFill(x,y,tg,rep){
   const stack=[[x,y]];
   while(stack.length){
     const[cx,cy]=stack.pop();
     if(cx<0||cx>15||cy<0||cy>15) continue;
     const i=cy*16+cx;
-    if(edPx[i]!==target) continue;
+    if(edPx[i]!==tg) continue;
     edPx[i]=rep;
     stack.push([cx+1,cy],[cx-1,cy],[cx,cy+1],[cx,cy-1]);
   }
 }
-
 function refreshGrid(){
   const cells=document.getElementById('pgrid').children;
   for(let i=0;i<256;i++) cells[i].style.background=edPx[i]||'transparent';
 }
-
 function setTool(name,btn){
   curTool=name;
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('on'));
   if(btn) btn.classList.add('on');
 }
+function clearGrid(){edPx=new Array(256).fill(null);refreshGrid();}
+function saveCustom(){S.customPixels=[...edPx];save();showToast('캐릭터 저장 완료! 👾');closeDraw();}
+function resetDefault(){S.customPixels=null;save();showToast('기본 캐릭터로 돌아왔어요');closeDraw();}
 
-function clearGrid(){
-  edPx=new Array(256).fill(null);
-  refreshGrid();
+// ── ONBOARDING ─────────────────────────────────────────────────────────────
+function obNext(step){
+  if(step===2){
+    const nm=document.getElementById('name-input').value.trim();
+    if(!nm){document.getElementById('name-input').focus();return;}
+    S.charName=nm;
+  }
+  [0,1,2].forEach(i=>{
+    document.getElementById(`ob${i}`).classList.remove('on');
+    document.getElementById(`od${i}`).classList.remove('on');
+  });
+  document.getElementById(`ob${step}`).classList.add('on');
+  document.getElementById(`od${step}`).classList.add('on');
+  // Draw char on onboarding canvases
+  if(step===1) setTimeout(()=>drawObChar(),50);
+  if(step===2) setTimeout(()=>drawObChar(),50);
+}
+function drawObChar(){
+  ['ob-cc','ob-cc2'].forEach(id=>{
+    const cv=document.getElementById(id);
+    if(!cv) return;
+    const ctx=cv.getContext('2d');
+    ctx.clearRect(0,0,48,48);
+    // Happy default char for onboarding
+    const bc='#6ee7b7',out=darken(bc,.42),hi=lighten(bc,.42);
+    fillCirc(ctx,24,28,15,out);fillCirc(ctx,24,28,13,bc);
+    fillCirc(ctx,18,20,5,hi);
+    ctx.fillStyle='rgba(255,100,130,0.28)';
+    fillCirc(ctx,14,34,4,'rgba(255,100,130,0.28)');
+    fillCirc(ctx,34,34,4,'rgba(255,100,130,0.28)');
+    ctx.fillStyle='#160d24';
+    for(let x=16;x<=20;x++) ctx.fillRect(x,22,1,1);
+    ctx.fillRect(15,23,1,1);ctx.fillRect(21,23,1,1);
+    for(let x=27;x<=31;x++) ctx.fillRect(x,22,1,1);
+    ctx.fillRect(26,23,1,1);ctx.fillRect(32,23,1,1);
+    ctx.fillRect(17,33,1,1);ctx.fillRect(18,34,11,1);ctx.fillRect(29,33,1,1);
+    ctx.fillStyle='#d95070';ctx.fillRect(18,34,11,2);
+    ctx.fillStyle='#f08090';ctx.fillRect(19,35,9,1);
+  });
+}
+function obFinish(){
+  const nm=document.getElementById('name-input').value.trim();
+  if(nm) S.charName=nm;
+  S.onboarded=true;
+  save();
+  document.getElementById('ob').style.display='none';
+  document.getElementById('app').classList.add('on');
+  renderToday();
 }
 
-function saveCustomChar(){
-  S.customPixels=[...edPx];
-  save();
-  toast('캐릭터 저장 완료! 👾');
-  closeDraw();
-}
-
-function resetToDefault(){
-  S.customPixels=null;
-  save();
-  toast('기본 캐릭터로 돌아왔어요');
-  closeDraw();
+// ── TOAST ──────────────────────────────────────────────────────────────────
+let _tt;
+function showToast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2600);
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────
 load();
-renderToday();
+if(S.onboarded){
+  document.getElementById('ob').style.display='none';
+  document.getElementById('app').classList.add('on');
+  renderToday();
+} else {
+  drawObChar();
+}
 </script>
 </body>
 </html>

@@ -82,7 +82,7 @@ button,input{font-family:inherit}
 .char-scene{position:relative;display:flex;align-items:flex-end;justify-content:center;
   width:100%;margin-bottom:6px}
 .scene-bg{display:block;width:min(calc(100vw - 48px),300px);height:auto;
-  image-rendering:pixelated;image-rendering:crisp-edges;border-radius:20px;
+  image-rendering:auto;border-radius:20px;
   filter:drop-shadow(0 8px 28px rgba(0,0,0,.6))}
 .scene-char{position:absolute;bottom:6px;width:120px;height:120px;
   image-rendering:pixelated;image-rendering:crisp-edges}
@@ -304,7 +304,7 @@ button,input{font-family:inherit}
         <span class="sc-l">일 연속</span>
       </div>
       <div class="char-scene">
-        <canvas class="scene-bg" id="bg-today" width="64" height="64"></canvas>
+        <canvas class="scene-bg" id="bg-today" width="192" height="192"></canvas>
         <canvas class="scene-char floating" id="cc-today" width="48" height="48"></canvas>
       </div>
       <div class="bubble" id="bubble-today">오늘 기록을 해봐요!</div>
@@ -375,7 +375,7 @@ button,input{font-family:inherit}
     <div class="char-pg">
       <div class="world-badge px" id="world-badge">🌆 서울</div>
       <div class="char-scene" style="margin:8px 0">
-        <canvas class="scene-bg" id="bg-char" width="64" height="64"></canvas>
+        <canvas class="scene-bg" id="bg-char" width="192" height="192"></canvas>
         <canvas class="scene-char floating" id="cc-char" width="48" height="48"></canvas>
       </div>
       <div class="char-nm" id="char-nm">친구</div>
@@ -722,7 +722,8 @@ function drawWorldBg(bgId){
   const ctx=cv.getContext('2d');ctx.clearRect(0,0,cv.width,cv.height);
   const w=curWorld();
   if(WORLD_FNS[w.id]){
-    ctx.save();ctx.scale(cv.width/48,cv.height/48);WORLD_FNS[w.id](ctx);ctx.restore();
+    const s=cv.width/48;
+    ctx.save();ctx.scale(s,s);WORLD_FNS[w.id](ctx);ctx.restore();
   }
 }
 

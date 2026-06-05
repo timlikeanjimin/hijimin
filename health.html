@@ -332,6 +332,14 @@ button,input{font-family:inherit}
 
 /* RECORDS SCREEN */
 .rec-sec{margin-bottom:24px}
+
+/* INSIGHTS */
+.insight-card{background:linear-gradient(135deg,var(--s2),var(--s3));border:1px solid rgba(110,231,183,.25);border-radius:16px;padding:6px 16px}
+.insight-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd)}
+.insight-row:last-child{border:none}
+.ins-ico{font-size:20px;flex-shrink:0;line-height:1.4}
+.ins-txt{font-size:13px;line-height:1.6;color:var(--sub)}
+.ins-txt b{color:var(--mint);font-weight:700}
 </style>
 </head>
 <body>
@@ -546,7 +554,11 @@ button,input{font-family:inherit}
   <!-- RECORD -->
   <div id="s-record" class="screen">
     <div style="text-align:center;margin-bottom:20px">
-      <div class="px" style="font-size:11px;color:var(--gold);letter-spacing:1px">업적 &amp; 기록</div>
+      <div class="px" style="font-size:12px;color:var(--gold);letter-spacing:1px">업적 &amp; 기록</div>
+    </div>
+    <div class="rec-sec">
+      <div class="ss-title">🔍 나의 건강 인사이트</div>
+      <div class="insight-card"><div id="insight-list"></div></div>
     </div>
     <div class="rec-sec">
       <div class="ss-title">🏆 업적 뱃지</div>
@@ -1335,7 +1347,7 @@ function doSubmit(){
   S.streak=S.lastDate===yesterStr()?S.streak+1:1;
   S.lastDate=td;S.total=(S.total||0)+1;
   S.bestStreak=Math.max(S.bestStreak||0,S.streak);
-  S.history=[...S.history,{date:td,score}].slice(-90);
+  S.history=[...S.history,{date:td,score,ex:S.today.ex,water:S.today.water,mood:S.today.mood,sleep:S.today.sleep}].slice(-90);
   const prev=S.unlocked.length;
   ITEMS.forEach(item=>{if(!S.unlocked.includes(item.id)&&S.streak>=item.unlock)S.unlocked.push(item.id);});
   save();
@@ -1547,8 +1559,70 @@ function updateWeekCard(){
   const card=document.getElementById('wc-card');if(card)card.classList.toggle('wc-done',prog>=7);
 }
 
+// ── HEALTH INSIGHTS ───────────────────────────────────────────────────────────
+const DOW=['일','월','화','수','목','금','토'];
+function genInsights(){
+  const H=S.history.filter(h=>h&&h.score!=null);
+  const det=H.filter(h=>h.sleep!=null); // 세부 항목까지 기록된 날
+  const out=[];
+  if(H.length<2){
+    out.push({ico:'🌱',text:'며칠 더 기록하면 <b>너만을 위한 건강 분석</b>이 나타나요!'});
+    return out;
+  }
+  const avg=a=>a.reduce((s,v)=>s+v,0)/a.length;
+  // 수면 평균
+  if(det.length>=3){
+    const as=avg(det.map(h=>h.sleep));
+    out.push({ico:'🌙',text:`최근 평균 수면은 <b>${as.toFixed(1)}시간</b>이에요.`+(as<6?' 조금 부족해요 — 30분만 더!':as>=7.5?' 아주 건강한 패턴이에요!':' 나쁘지 않아요.')});
+  }
+  // 수면 → 컨디션 상관
+  if(det.length>=4){
+    const g=det.filter(h=>h.sleep>=7),b=det.filter(h=>h.sleep<7);
+    if(g.length&&b.length){
+      const d=avg(g.map(h=>h.score))-avg(b.map(h=>h.score));
+      if(d>=1) out.push({ico:'💡',text:`<b>7시간 이상</b> 잔 날, 컨디션 점수가 평균 <b>${d.toFixed(1)}점</b> 더 높았어요.`});
+    }
+  }
+  // 물 → 기분 상관
+  const wm=det.filter(h=>h.mood!=null&&h.water!=null);
+  if(wm.length>=4){
+    const g=wm.filter(h=>h.water>=6),b=wm.filter(h=>h.water<6);
+    if(g.length&&b.length){
+      const d=avg(g.map(h=>h.mood))-avg(b.map(h=>h.mood));
+      if(d>=.5) out.push({ico:'💧',text:`물을 <b>6잔 이상</b> 마신 날 기분이 더 좋았어요. 수분 챙기기 효과 만점!`});
+    }
+  }
+  // 운동 빈도
+  const exd=det.filter(h=>h.ex!=null);
+  if(exd.length>=5){
+    const rate=exd.filter(h=>h.ex>=1).length/exd.length;
+    out.push({ico:'🏃',text:`최근 <b>${Math.round(rate*100)}%</b>의 날에 운동했어요.`+(rate>=.7?' 운동 습관이 잡혔네요!':rate<.3?' 가볍게 산책부터 시작해볼까요?':' 꾸준히 늘려가요!')});
+  }
+  // 최고의 요일
+  if(det.length>=5){
+    const byDow={};
+    det.forEach(h=>{const d=new Date(h.date+'T12:00:00').getDay();(byDow[d]=byDow[d]||[]).push(h.score);});
+    let best=-1,bestV=-1;
+    Object.keys(byDow).forEach(d=>{if(byDow[d].length>=2){const m=avg(byDow[d]);if(m>bestV){bestV=m;best=+d;}}});
+    if(best>=0) out.push({ico:'⭐',text:`<b>${DOW[best]}요일</b>에 가장 컨디션이 좋아요. 너의 황금 요일이에요!`});
+  }
+  // 추세 (최근 7 vs 그 이전 7)
+  if(H.length>=8){
+    const recent=H.slice(-7),prev=H.slice(-14,-7);
+    if(prev.length>=3){
+      const d=avg(recent.map(h=>h.score))-avg(prev.map(h=>h.score));
+      if(d>=.8) out.push({ico:'📈',text:`지난주보다 컨디션이 <b>오르는 중</b>이에요! 이 흐름 그대로 가요.`});
+      else if(d<=-.8) out.push({ico:'🤍',text:`요즘 조금 지쳤나봐요. 무리하지 말고 천천히 회복해요.`});
+    }
+  }
+  if(!out.length) out.push({ico:'✨',text:'꾸준히 기록 중이에요! 조금만 더 모이면 깊은 분석이 나와요.'});
+  return out.slice(0,4);
+}
+
 // ── RECORDS SCREEN ────────────────────────────────────────────────────────────
 function renderRecord(){
+  const il=document.getElementById('insight-list');
+  if(il){il.innerHTML='';genInsights().forEach(i=>{const el=document.createElement('div');el.className='insight-row';el.innerHTML=`<span class="ins-ico">${i.ico}</span><span class="ins-txt">${i.text}</span>`;il.appendChild(el);});}
   checkAchievements();
   if(!Array.isArray(S.achievements)) S.achievements=[];
   const grid=document.getElementById('ach-grid');

@@ -536,6 +536,134 @@ button,input{font-family:inherit}
   border-radius:14px;padding:11px 16px;margin-bottom:16px;
   font-size:12px;font-weight:700;color:#0d0b14;cursor:pointer;flex-shrink:0;
   box-shadow:0 4px 20px rgba(234,88,12,.25),0 1px 0 rgba(255,255,255,.2) inset}
+
+/* ══════════════════════════════════════════════
+   PIXEL ART UI SYSTEM
+   모든 둥근 모서리 → 직각, 흐린 그림자 → 픽셀 드롭섀도,
+   버튼 hover/active → 8비트 press 효과
+   ══════════════════════════════════════════════ */
+
+/* 4px 픽셀 그리드 배경 오버레이 */
+#app::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:4px 4px}
+
+/* ── 카드 계열 : 직각 + 픽셀 드롭섀도 ── */
+.ccard,.sc2,.icard,.wcard,.ach-badge,.gacha-card,.care-panel,
+.xp-row,.wc-card,.lb-row,.fr-row,.world-progress,.insight-card,
+.premium-card,.done-card,.how-row,.ob-step{
+  border-radius:0!important;
+  box-shadow:4px 4px 0 0 rgba(0,0,0,.55),
+             inset 1px 1px 0 0 rgba(255,255,255,.07),
+             inset -1px -1px 0 0 rgba(0,0,0,.25)!important}
+
+/* done-card 민트 테두리 강조 */
+.done-card{box-shadow:4px 4px 0 0 rgba(0,0,0,.55),
+           inset 1px 1px 0 0 rgba(110,231,183,.12),
+           inset -1px -1px 0 0 rgba(0,0,0,.25)!important}
+
+/* 모달 박스 */
+.wm-box,.gm-box{border-radius:0!important;
+  box-shadow:6px 6px 0 0 rgba(0,0,0,.65),
+             inset 1px 1px 0 0 rgba(255,255,255,.06)!important}
+
+/* ── 일반 버튼 : 8비트 press ── */
+.obtn,.sbtn,.care-btn,.draw-btn,.share-btn,
+.tbtn,.cheer-btn,.bk,.wcnt,.gacha-btn{
+  border-radius:0!important;
+  border-bottom:3px solid rgba(0,0,0,.5)!important;
+  box-shadow:2px 2px 0 0 rgba(0,0,0,.45)!important;
+  transition:transform .08s,border-bottom-width .08s,box-shadow .08s!important}
+.obtn:active,.sbtn:active,.care-btn:active,.draw-btn:active,.share-btn:active,
+.tbtn:active,.cheer-btn:active,.bk:active,.wcnt:active,.gacha-btn:active{
+  transform:translateY(3px)!important;
+  border-bottom-width:0!important;
+  box-shadow:none!important}
+
+/* ── CTA 버튼 : 두꺼운 8비트 press ── */
+.sub-btn,.ob-btn,.wm-btn,.gm-btn,.dsave,.pr-btn{
+  border-radius:0!important;
+  border-bottom:5px solid rgba(0,0,0,.35)!important;
+  box-shadow:3px 3px 0 0 rgba(0,0,0,.4),
+             inset 0 1px 0 rgba(255,255,255,.25)!important;
+  transition:transform .08s,border-bottom-width .08s,box-shadow .08s!important}
+.sub-btn:not(:disabled):active,.ob-btn:active,.wm-btn:active,.gm-btn:active,.dsave:active{
+  transform:translateY(4px)!important;
+  border-bottom-width:1px!important;
+  box-shadow:0 0 0 0 rgba(0,0,0,.4)!important}
+.sub-btn:disabled{box-shadow:none!important;border-bottom:none!important}
+
+/* ── 입력창 ── */
+.ob-input{border-radius:0!important}
+
+/* ── 배지 & 칩 ── */
+.eq-tag,.rar-tag,.wcard-cur,.world-badge,.streak-chip,
+.coin-bal,.premium-tag,.season-banner,.sb-badge,
+.wm-label,.gm-label,.wc-reward,.invite-btn,.toast,
+.ob-dots .od,.fp-dot{border-radius:0!important}
+
+/* 스트릭 칩 박스섀도 */
+.streak-chip{box-shadow:3px 3px 0 0 rgba(0,0,0,.45)!important}
+
+/* ── 코인 잔액 ── */
+.coin-bal{border-radius:0!important;box-shadow:2px 2px 0 0 rgba(0,0,0,.4)!important}
+
+/* ── 시즌 배너 ── */
+.season-banner{border-radius:0!important;
+  box-shadow:4px 4px 0 0 rgba(0,0,0,.45),
+             inset 0 1px 0 rgba(255,255,255,.18)!important}
+
+/* ── 진행바 : RPG HP바 스타일 (세그먼트) ── */
+.wbar,.wp-bar,.xp-bar,.care-bar,.wc-bar{border-radius:0!important;height:8px!important;border:1px solid rgba(0,0,0,.4)}
+.wfill,.wp-fill,.xp-fill,.care-fill,.wc-fill{
+  border-radius:0!important;
+  background-image:repeating-linear-gradient(
+    90deg,
+    transparent 0px,transparent 9px,
+    rgba(0,0,0,.18) 9px,rgba(0,0,0,.18) 10px)!important;
+  animation:none!important}
+
+/* ── 섹션 레이블 픽셀 액센트 바 ── */
+.sec-lbl::before,.ss-title::before{border-radius:0!important;width:4px!important}
+
+/* ── 캐릭터 씬 배경 ── */
+.scene-bg{border-radius:4px!important}
+
+/* ── 내비게이션 픽셀 인디케이터 ── */
+.nb.on::after{border-radius:0!important;width:24px!important;height:3px!important}
+
+/* ── 말풍선 ── */
+.bubble{border-radius:0!important;border-bottom-left-radius:0!important;
+  box-shadow:3px 3px 0 0 rgba(0,0,0,.45)!important}
+
+/* ── 드로우 캔버스 ── */
+#pgrid{border-radius:0!important}
+
+/* ── 토스트 ── */
+.toast{border-radius:0!important;
+  box-shadow:4px 4px 0 0 rgba(0,0,0,.5)!important}
+
+/* ── 가챠 아이템 ── */
+.gm-item{border-radius:0!important}
+.gm-item.r-SR{box-shadow:3px 3px 0 0 rgba(196,181,253,.4)!important}
+
+/* ── 픽셀 폰트 클래스 적극 적용 ── */
+.wc-title,.wc-sub,.wc-reward,.care-lbl,.care-pts,
+.wp-label,.wp-next,.xp-lv,.xp-next,.wm-title,
+.done-pts,.done-sub,.sc-n,.sc-l,
+.shop-hdr .px,.world-badge{font-family:'Galmuri11',monospace}
+
+/* ── 픽셀 장식 도트 (섹션 구분선) ── */
+.rec-sec + .rec-sec::before,.shop-sec + .shop-sec::before{
+  content:'· · · · · · · · · ·';
+  display:block;text-align:center;color:var(--bd);
+  font-size:10px;letter-spacing:4px;margin-bottom:20px;margin-top:-4px}
+
+/* ── 주간 기록 바 직각 ── */
+.wk-bar-bg,.wk-bar-fill{border-radius:0!important}
 </style>
 </head>
 <body>

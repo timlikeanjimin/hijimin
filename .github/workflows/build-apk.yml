@@ -10,16 +10,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: unsub-app/package.json
+
+      - name: Ensure node available system-wide (for Gradle)
+        run: sudo ln -sf "$(which node)" /usr/bin/node && sudo ln -sf "$(which npm)" /usr/bin/npm
 
       - name: Install dependencies
         working-directory: unsub-app
@@ -44,7 +49,7 @@ jobs:
 
       - name: Build debug APK
         working-directory: unsub-app/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tail -80
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4

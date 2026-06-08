@@ -623,8 +623,8 @@
     <div class="gmail-banner" onclick="openGmailModal()">
       <span class="gmail-banner-icon">📧</span>
       <div class="gmail-banner-text">
-        <strong>Gmail 스캔</strong>
-        <small>구독 이메일에서 자동으로 찾아드려요</small>
+        <strong>Google로 구독 자동 발견</strong>
+        <small>Gmail 로그인 한 번으로 구독을 찾아드려요</small>
       </div>
       <span class="gmail-banner-arrow">›</span>
     </div>
@@ -1292,6 +1292,8 @@ function closeAddModal() { document.getElementById('add-overlay').classList.remo
 function closeAddOnBg(e) { if (e.target === document.getElementById('add-overlay')) closeAddModal(); }
 
 // ═══ GMAIL MODAL ═══
+const GMAIL_CLIENT_ID = '779215723693-q7f30fhoqjmau1qeamam60uen5qr7gvp.apps.googleusercontent.com';
+
 function openGmailModal() {
   renderGmailModal();
   document.getElementById('gmail-overlay').classList.add('show');
@@ -1306,82 +1308,22 @@ function closeGmailOnBg(e) {
 }
 
 function renderGmailModal() {
-  const clientId = localStorage.getItem('unsub_gclient');
   const content = document.getElementById('gmail-modal-content');
-
-  if (!clientId) {
-    // State A: Setup
-    content.innerHTML = `
-      <div class="modal-title">Gmail 구독 자동 발견</div>
-      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">
-        Google Cloud Console에서 OAuth 클라이언트 ID를 발급받아 Gmail에서 구독 이메일을 자동으로 찾아드려요.
-      </p>
-      <div class="gmail-setup-steps">
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">1</div>
-          <p><a href="https://console.cloud.google.com" target="_blank" style="color:var(--primary);font-weight:600;">console.cloud.google.com</a> → 새 프로젝트 만들기</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">2</div>
-          <p>API 및 서비스 → Gmail API 활성화</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">3</div>
-          <p>OAuth 동의 화면 → 외부 → 본인 이메일 테스트 사용자 추가</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">4</div>
-          <p>사용자 인증 정보 → OAuth 2.0 클라이언트 ID → 웹 애플리케이션 → 승인된 JS 원본에 <code>https://timlikeanjimin.github.io</code> 추가</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">5</div>
-          <p>클라이언트 ID 복사 후 아래에 붙여넣기</p>
-        </div>
-      </div>
-      <div class="gmail-client-row">
-        <input class="form-input" type="text" id="gmail-client-input" placeholder="123456789-xxxx.apps.googleusercontent.com" />
-        <button class="btn-connect" onclick="saveGmailClient()">연결하기</button>
-      </div>
-    `;
-  } else {
-    // State B: Scan
-    const truncated = clientId.length > 30 ? clientId.substring(0, 30) + '…' : clientId;
-    content.innerHTML = `
-      <div class="modal-title">Gmail 스캔</div>
-      <div class="gmail-stored-row">
-        <span style="font-size:18px;">🔑</span>
-        <span class="gmail-stored-id">${truncated}</span>
-        <button class="btn-change" onclick="clearGmailClient()">변경</button>
-      </div>
-      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;line-height:1.6;">
-        Gmail에서 구독 관련 이메일을 검색해 구독 서비스를 자동으로 찾아드려요. Google 계정 로그인이 필요해요.
-      </p>
-      <button class="btn-gmail-scan" onclick="startGmailScan()">
-        📧 Gmail 스캔 시작
-      </button>
-      <div id="gmail-scan-result" style="margin-top:20px;"></div>
-    `;
-  }
-}
-
-function saveGmailClient() {
-  const val = document.getElementById('gmail-client-input').value.trim();
-  if (!val) {
-    alert('클라이언트 ID를 입력해주세요.');
-    return;
-  }
-  localStorage.setItem('unsub_gclient', val);
-  renderGmailModal();
-}
-
-function clearGmailClient() {
-  localStorage.removeItem('unsub_gclient');
-  renderGmailModal();
+  content.innerHTML = `
+    <div class="modal-title">Gmail 구독 자동 발견</div>
+    <p style="font-size:14px;color:var(--gray-500);margin-bottom:24px;line-height:1.65;">
+      Google 계정으로 로그인하면 Gmail에서 구독 관련 이메일을 자동으로 찾아드려요. 이메일을 읽기만 하며 다른 어떤 작업도 하지 않아요.
+    </p>
+    <button class="btn-gmail-scan" onclick="startGmailScan()" style="display:flex;align-items:center;justify-content:center;gap:10px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Google로 계속하기
+    </button>
+    <div id="gmail-scan-result" style="margin-top:20px;"></div>
+  `;
 }
 
 function startGmailScan() {
-  const clientId = localStorage.getItem('unsub_gclient');
-  if (!clientId) return;
+  const clientId = GMAIL_CLIENT_ID;
 
   const resultEl = document.getElementById('gmail-scan-result');
   resultEl.innerHTML = `

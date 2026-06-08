@@ -902,20 +902,42 @@ const SERVICES = [
 
 // Known sender domains for Gmail scan matching
 const GMAIL_DOMAINS = [
+  // 한국 동영상
   { domain: 'netflix.com', name: '넷플릭스', emoji: '🎬', price: 17000, currency: 'KRW' },
-  { domain: 'spotify.com', name: '스포티파이', emoji: '🎵', price: 10900, currency: 'KRW' },
-  { domain: 'youtube.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
-  { domain: 'google.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
-  { domain: 'amazon.com', name: 'Amazon Prime', emoji: '📦', price: 14.99, currency: 'USD' },
-  { domain: 'disneyplus.com', name: 'Disney+', emoji: '🏰', price: 13.99, currency: 'USD' },
-  { domain: 'openai.com', name: 'ChatGPT Plus', emoji: '🤖', price: 20, currency: 'USD' },
-  { domain: 'adobe.com', name: 'Adobe Creative Cloud', emoji: '🎨', price: 54.99, currency: 'USD' },
-  { domain: 'notion.so', name: 'Notion', emoji: '📝', price: 10, currency: 'USD' },
   { domain: 'watcha.com', name: '왓챠', emoji: '🎭', price: 9900, currency: 'KRW' },
   { domain: 'wavve.com', name: '웨이브', emoji: '🌊', price: 7900, currency: 'KRW' },
   { domain: 'tving.co.kr', name: '티빙', emoji: '📺', price: 9900, currency: 'KRW' },
+  // 한국 음악
   { domain: 'melon.com', name: '멜론', emoji: '🍈', price: 10900, currency: 'KRW' },
+  { domain: 'genie.co.kr', name: '지니뮤직', emoji: '🎵', price: 8900, currency: 'KRW' },
+  { domain: 'bugs.co.kr', name: '벅스', emoji: '🎶', price: 7900, currency: 'KRW' },
+  { domain: 'spotify.com', name: '스포티파이', emoji: '🎵', price: 10900, currency: 'KRW' },
+  // 한국 독서
   { domain: 'ridibooks.com', name: '리디셀렉트', emoji: '📕', price: 6500, currency: 'KRW' },
+  { domain: 'millie.co.kr', name: '밀리의서재', emoji: '📖', price: 9900, currency: 'KRW' },
+  // 한국 플랫폼
+  { domain: 'naver.com', name: '네이버 플러스', emoji: '🟢', price: 4900, currency: 'KRW' },
+  { domain: 'kakao.com', name: '카카오', emoji: '💛', price: 3300, currency: 'KRW' },
+  { domain: 'kakaocorp.com', name: '카카오', emoji: '💛', price: 3300, currency: 'KRW' },
+  { domain: 'coupang.com', name: '쿠팡 로켓와우', emoji: '🛒', price: 7890, currency: 'KRW' },
+  // 글로벌
+  { domain: 'youtube.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
+  { domain: 'google.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
+  { domain: 'apple.com', name: 'Apple 서비스', emoji: '🍎', price: 9900, currency: 'KRW' },
+  { domain: 'amazon.com', name: 'Amazon Prime', emoji: '📦', price: 14.99, currency: 'USD' },
+  { domain: 'disneyplus.com', name: 'Disney+', emoji: '🏰', price: 13.99, currency: 'USD' },
+  { domain: 'disney.com', name: 'Disney+', emoji: '🏰', price: 13.99, currency: 'USD' },
+  { domain: 'openai.com', name: 'ChatGPT Plus', emoji: '🤖', price: 20, currency: 'USD' },
+  { domain: 'adobe.com', name: 'Adobe Creative Cloud', emoji: '🎨', price: 54.99, currency: 'USD' },
+  { domain: 'notion.so', name: 'Notion', emoji: '📝', price: 10, currency: 'USD' },
+  { domain: 'figma.com', name: 'Figma', emoji: '✏️', price: 15, currency: 'USD' },
+  { domain: 'canva.com', name: 'Canva Pro', emoji: '🎨', price: 12.99, currency: 'USD' },
+  { domain: 'dropbox.com', name: 'Dropbox', emoji: '📁', price: 11.99, currency: 'USD' },
+  { domain: 'microsoft.com', name: 'Microsoft 365', emoji: '💼', price: 6.99, currency: 'USD' },
+  { domain: 'discord.com', name: 'Discord Nitro', emoji: '🎮', price: 9.99, currency: 'USD' },
+  { domain: 'github.com', name: 'GitHub', emoji: '💻', price: 4, currency: 'USD' },
+  { domain: 'twitch.tv', name: 'Twitch', emoji: '🟣', price: 4.99, currency: 'USD' },
+  { domain: 'hbo.com', name: 'Max', emoji: '📺', price: 15.99, currency: 'USD' },
 ];
 
 let mySubscriptions = JSON.parse(localStorage.getItem('unsub_subs') || '[]');
@@ -1382,7 +1404,7 @@ async function doGmailScan(token, resultEl) {
   `;
 
   try {
-    const query = encodeURIComponent('구독 OR 정기결제 OR subscription OR receipt OR invoice OR 넷플릭스 OR 왓챠 OR spotify OR netflix');
+    const query = encodeURIComponent('정기결제 OR 구독결제 OR 구독 결제 OR 멤버십 결제 OR 이용료 결제 OR subscription receipt OR invoice OR payment confirmation OR label:receipts');
     const listResp = await fetch(
       `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${query}&maxResults=100`,
       { headers: { Authorization: 'Bearer ' + token } }
@@ -1397,11 +1419,11 @@ async function doGmailScan(token, resultEl) {
     resultEl.innerHTML = `
       <div class="spinner-wrap">
         <div class="spinner"></div>
-        <div class="spinner-text">이메일 분석 중 (최대 30개)...</div>
+        <div class="spinner-text">이메일 분석 중 (최대 100개)...</div>
       </div>
     `;
 
-    const messages = listData.messages.slice(0, 30);
+    const messages = listData.messages.slice(0, 100);
     const foundServices = new Map(); // name -> service object
 
     await Promise.all(messages.map(async (msg) => {
@@ -1417,10 +1439,21 @@ async function doGmailScan(token, resultEl) {
         const fromLower = from.toLowerCase();
         const subjectLower = subject.toLowerCase();
 
+        // Google Play 구독 영수증 특별 처리
+        if (fromLower.includes('google') && (subjectLower.includes('google play') || subjectLower.includes('구글 플레이'))) {
+          if (!foundServices.has('Google Play 구독')) {
+            const appMatch = subject.match(/["「『](.+?)["」』]/);
+            const appName = appMatch ? appMatch[1] : 'Google Play 구독';
+            foundServices.set(appName, { name: appName, emoji: '▶️', price: 0, currency: 'KRW', cycle: 'monthly' });
+          }
+        }
+
         // Match against known domains
         GMAIL_DOMAINS.forEach(d => {
           if (foundServices.has(d.name)) return;
           if (fromLower.includes(d.domain)) {
+            // 유튜브 프리미엄은 제목에 "YouTube" 또는 "유튜브"가 있어야 매칭
+            if (d.name === '유튜브 프리미엄' && !subjectLower.includes('youtube') && !subjectLower.includes('유튜브') && !subjectLower.includes('premium')) return;
             foundServices.set(d.name, { name: d.name, emoji: d.emoji, price: d.price, currency: d.currency, cycle: 'monthly' });
             return;
           }
@@ -1434,6 +1467,22 @@ async function doGmailScan(token, resultEl) {
             foundServices.set(s.name, { name: s.name, emoji: s.emoji, price: s.price, currency: s.currency, cycle: s.cycle });
           }
         });
+
+        // 목록에 없는 서비스: 구독/결제 키워드 + 발신자 이름 추출
+        const billingKw = ['정기결제', '구독결제', '이용료', '멤버십', '구독료', 'subscription', 'invoice', 'payment receipt'];
+        const hasBillingKw = billingKw.some(kw => subjectLower.includes(kw));
+        if (hasBillingKw) {
+          const nameMatch = from.match(/^"?([^"<]+?)"?\s*</);
+          const senderName = nameMatch ? nameMatch[1].trim() : null;
+          if (senderName && senderName.length > 1 && senderName.length < 40) {
+            const alreadyMatched = [...foundServices.values()].some(s =>
+              fromLower.includes(s.name.toLowerCase()) || senderName.toLowerCase().includes(s.name.toLowerCase())
+            );
+            if (!alreadyMatched && !foundServices.has(senderName)) {
+              foundServices.set(senderName, { name: senderName, emoji: '💳', price: 0, currency: 'KRW', cycle: 'monthly' });
+            }
+          }
+        }
       } catch (e) {
         // skip individual message errors
       }
@@ -1453,7 +1502,7 @@ async function doGmailScan(token, resultEl) {
           <span class="gmail-result-emoji">${s.emoji}</span>
           <div class="gmail-result-info">
             <div class="gmail-result-name">${s.name}</div>
-            <div class="gmail-result-price">${formatPrice(s.price, s.currency)}/월</div>
+            <div class="gmail-result-price">${s.price > 0 ? formatPrice(s.price, s.currency) + '/월' : '금액 직접 입력 필요'}</div>
           </div>
           ${alreadyAdded ? '<span class="already-badge">이미 추가됨</span>' : ''}
         </div>

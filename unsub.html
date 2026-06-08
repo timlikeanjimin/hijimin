@@ -117,12 +117,44 @@
     }
     .app-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .app-logo { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .app-header-actions { display: flex; align-items: center; gap: 10px; }
     .btn-add-top {
       background: rgba(255,255,255,0.2); color: #fff;
       border-radius: 20px; padding: 8px 16px;
       font-size: 14px; font-weight: 600;
       display: flex; align-items: center; gap: 6px;
     }
+
+    /* Bell button */
+    .btn-bell {
+      position: relative;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .btn-bell:active { transform: scale(0.92); }
+    .btn-bell.granted { background: rgba(255,255,255,0.35); }
+    .bell-badge {
+      position: absolute; top: 4px; right: 4px;
+      width: 8px; height: 8px;
+      background: #EF4444;
+      border-radius: 50%;
+      border: 1.5px solid var(--primary);
+      display: none;
+    }
+    .btn-bell.needs-permission .bell-badge {
+      display: block;
+      animation: pulse-badge 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-badge {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.7; }
+    }
+
     .stats-cards { display: flex; gap: 12px; }
     .stat-card {
       flex: 1; background: rgba(255,255,255,0.15);
@@ -132,6 +164,7 @@
     .stat-card .value { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
     .stat-card .sub { font-size: 11px; opacity: 0.7; margin-top: 2px; }
 
+    /* Tabs */
     .tabs {
       display: flex; background: #fff;
       border-bottom: 1px solid var(--gray-200);
@@ -144,10 +177,14 @@
     }
     .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
 
+    /* Panel */
     .panel { display: none; padding: 20px 16px; }
     .panel.active { display: block; }
 
-    .empty-state { text-align: center; padding: 60px 24px; }
+    /* ── 내 구독 패널 ── */
+    .empty-state {
+      text-align: center; padding: 60px 24px;
+    }
     .empty-icon { font-size: 56px; margin-bottom: 16px; }
     .empty-state h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
     .empty-state p { font-size: 14px; color: var(--gray-500); line-height: 1.6; margin-bottom: 24px; }
@@ -157,6 +194,22 @@
       font-size: 15px; font-weight: 700;
       display: inline-flex; align-items: center; gap: 8px;
     }
+
+    /* Gmail scan banner */
+    .gmail-banner {
+      background: linear-gradient(135deg, #EA4335 0%, #FBBC05 100%);
+      border-radius: var(--radius); padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(234,67,53,0.25);
+    }
+    .gmail-banner-icon { font-size: 26px; flex-shrink: 0; }
+    .gmail-banner-text { flex: 1; }
+    .gmail-banner-text strong { display: block; font-size: 14px; font-weight: 700; }
+    .gmail-banner-text small { font-size: 12px; opacity: 0.9; }
+    .gmail-banner-arrow { font-size: 18px; opacity: 0.8; }
 
     .sub-list { display: flex; flex-direction: column; gap: 10px; }
     .sub-card {
@@ -168,6 +221,13 @@
     .sub-info { flex: 1; min-width: 0; }
     .sub-name { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
     .sub-meta { font-size: 12px; color: var(--gray-500); }
+    .billing-day-badge {
+      display: inline-block;
+      background: var(--primary-light); color: var(--primary);
+      border-radius: 6px; padding: 2px 7px;
+      font-size: 11px; font-weight: 600;
+      margin-top: 4px;
+    }
     .sub-right { text-align: right; flex-shrink: 0; }
     .sub-price { font-size: 16px; font-weight: 800; color: var(--primary); }
     .sub-cycle { font-size: 11px; color: var(--gray-400); margin-bottom: 6px; }
@@ -184,6 +244,7 @@
       display: block; text-align: center; margin-top: 4px;
     }
 
+    /* ── 취소 가이드 패널 ── */
     .guide-search {
       display: flex; align-items: center; gap: 10px;
       background: #fff; border-radius: 12px;
@@ -215,6 +276,7 @@
       margin: 16px 0 8px;
     }
 
+    /* ── 절약 현황 패널 ── */
     .saving-hero {
       background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
       color: #fff; border-radius: 20px; padding: 24px;
@@ -233,6 +295,7 @@
     .tip-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
     .tip-card p { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
 
+    /* ── BOTTOM NAV ── */
     .bottom-nav {
       position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
       width: 100%; max-width: 480px;
@@ -249,6 +312,7 @@
     .nav-item.active { color: var(--primary); }
     .nav-icon { font-size: 22px; }
 
+    /* ── MODALS ── */
     .overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.5);
       z-index: 100; display: none; align-items: flex-end;
@@ -270,6 +334,7 @@
       font-size: 20px; color: var(--gray-400); padding: 4px;
     }
 
+    /* Add form */
     .form-group { margin-bottom: 16px; }
     .form-label { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 6px; display: block; }
     .form-input {
@@ -305,6 +370,7 @@
     }
     .btn-submit:active { transform: scale(0.98); }
 
+    /* Guide modal */
     .guide-modal-emoji { font-size: 48px; text-align: center; margin-bottom: 8px; }
     .guide-modal-name { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 4px; }
     .guide-modal-price { font-size: 14px; color: var(--gray-500); text-align: center; margin-bottom: 24px; }
@@ -334,32 +400,177 @@
       font-size: 15px; font-weight: 700; margin-top: 20px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
+
+    /* ── GMAIL MODAL ── */
+    .gmail-setup-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .gmail-setup-step {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: var(--gray-50); border-radius: 12px; padding: 12px 14px;
+    }
+    .gmail-setup-step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #EA4335; color: #fff;
+      font-size: 12px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .gmail-setup-step p { font-size: 13px; line-height: 1.6; color: var(--gray-700); }
+    .gmail-setup-step p code {
+      background: var(--gray-200); border-radius: 4px;
+      padding: 1px 5px; font-size: 12px; font-family: monospace;
+    }
+    .gmail-client-row {
+      display: flex; gap: 10px; align-items: stretch;
+    }
+    .gmail-client-row .form-input { flex: 1; }
+    .btn-connect {
+      background: #EA4335; color: #fff;
+      border-radius: 10px; padding: 0 18px;
+      font-size: 14px; font-weight: 700;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .gmail-stored-row {
+      background: var(--gray-50); border-radius: 12px;
+      padding: 14px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .gmail-stored-id {
+      flex: 1; font-size: 13px; color: var(--gray-600);
+      font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .btn-change {
+      background: var(--gray-200); color: var(--gray-700);
+      border-radius: 8px; padding: 6px 12px;
+      font-size: 12px; font-weight: 600; flex-shrink: 0;
+    }
+    .btn-gmail-scan {
+      width: 100%; background: #EA4335; color: #fff;
+      border-radius: var(--radius); padding: 16px;
+      font-size: 16px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-gmail-scan:active { transform: scale(0.98); }
+
+    /* Spinner */
+    .spinner-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 14px; padding: 40px 0;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 4px solid var(--gray-200);
+      border-top-color: #EA4335;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-text { font-size: 14px; color: var(--gray-500); }
+
+    /* Gmail result cards */
+    .gmail-results-header {
+      font-size: 15px; font-weight: 700; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .gmail-result-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .gmail-result-card {
+      background: var(--gray-50); border-radius: 12px;
+      padding: 12px 14px;
+      display: flex; align-items: center; gap: 12px;
+      border: 1.5px solid var(--gray-200);
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .gmail-result-card.checked {
+      background: var(--primary-light); border-color: var(--primary);
+    }
+    .gmail-result-card input[type="checkbox"] {
+      width: 18px; height: 18px; flex-shrink: 0;
+      accent-color: var(--primary); cursor: pointer;
+    }
+    .gmail-result-emoji { font-size: 24px; flex-shrink: 0; }
+    .gmail-result-info { flex: 1; min-width: 0; }
+    .gmail-result-name { font-size: 14px; font-weight: 700; }
+    .gmail-result-price { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+    .already-badge {
+      background: var(--green-light); color: var(--green);
+      border-radius: 6px; padding: 3px 8px;
+      font-size: 11px; font-weight: 600; flex-shrink: 0;
+    }
+    .btn-add-checked {
+      width: 100%; background: var(--primary); color: #fff;
+      border-radius: var(--radius); padding: 16px;
+      font-size: 15px; font-weight: 700;
+    }
+    .gmail-empty { text-align: center; padding: 30px 0; color: var(--gray-400); font-size: 14px; }
   </style>
 </head>
 <body>
 
+<!-- ═══ LANDING ═══ -->
 <div id="landing">
   <header class="land-header">
     <div class="logo">UN<span>SUB</span></div>
     <button class="btn-start-sm" onclick="openApp()">무료 시작</button>
   </header>
+
   <section class="hero">
     <div class="hero-badge">💸 구독 정리 도우미</div>
     <h1>매달 새는 돈<br><em>이제 끊으세요</em></h1>
     <p>안 쓰는 구독이 몇 개인지 알고 계신가요?<br>평균 4개 이상 방치하고 있어요.</p>
     <button class="btn-start-lg" onclick="openApp()">지금 무료로 시작하기 →</button>
+
     <div class="hero-visual">
-      <div class="visual-row"><span class="visual-emoji">🎬</span><div class="visual-info"><strong>왓챠 (₩9,900/월)</strong><small>마지막 시청: 3개월 전</small></div><span class="verdict-tag cut">끊으세요</span></div>
-      <div class="visual-row"><span class="visual-emoji">🎵</span><div class="visual-info"><strong>스포티파이 (₩10,900/월)</strong><small>매일 사용 중</small></div><span class="verdict-tag keep">유지해요</span></div>
-      <div class="visual-row"><span class="visual-emoji">📚</span><div class="visual-info"><strong>밀리의서재 (₩9,900/월)</strong><small>이번 달 읽은 책: 0권</small></div><span class="verdict-tag cut">끊으세요</span></div>
+      <div class="visual-row">
+        <span class="visual-emoji">🎬</span>
+        <div class="visual-info">
+          <strong>왓챠 (₩9,900/월)</strong>
+          <small>마지막 시청: 3개월 전</small>
+        </div>
+        <span class="verdict-tag cut">끊으세요</span>
+      </div>
+      <div class="visual-row">
+        <span class="visual-emoji">🎵</span>
+        <div class="visual-info">
+          <strong>스포티파이 (₩10,900/월)</strong>
+          <small>매일 사용 중</small>
+        </div>
+        <span class="verdict-tag keep">유지해요</span>
+      </div>
+      <div class="visual-row">
+        <span class="visual-emoji">📚</span>
+        <div class="visual-info">
+          <strong>밀리의서재 (₩9,900/월)</strong>
+          <small>이번 달 읽은 책: 0권</small>
+        </div>
+        <span class="verdict-tag cut">끊으세요</span>
+      </div>
     </div>
   </section>
+
   <section class="features">
     <p class="feat-title">왜 UNSUB인가요?</p>
     <div class="feat-list">
-      <div class="feat-item"><span class="feat-icon">📊</span><div><h3>한눈에 보는 구독 현황</h3><p>내 모든 구독을 한 곳에 모아서 월 지출을 정확히 파악하세요.</p></div></div>
-      <div class="feat-item"><span class="feat-icon">🔪</span><div><h3>서비스별 취소 가이드</h3><p>넷플릭스, 유튜브, 쿠팡플레이 등 단계별 취소 방법을 알려드려요.</p></div></div>
-      <div class="feat-item"><span class="feat-icon">💰</span><div><h3>절약 금액 실시간 계산</h3><p>구독을 끊을 때마다 연간 절약 금액을 바로 확인하세요.</p></div></div>
+      <div class="feat-item">
+        <span class="feat-icon">📊</span>
+        <div>
+          <h3>한눈에 보는 구독 현황</h3>
+          <p>내 모든 구독을 한 곳에 모아서 월 지출을 정확히 파악하세요.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <span class="feat-icon">🔪</span>
+        <div>
+          <h3>서비스별 취소 가이드</h3>
+          <p>넷플릭스, 유튜브, 쿠팡플레이 등 단계별 취소 방법을 알려드려요.</p>
+        </div>
+      </div>
+      <div class="feat-item">
+        <span class="feat-icon">💰</span>
+        <div>
+          <h3>절약 금액 실시간 계산</h3>
+          <p>구독을 끊을 때마다 연간 절약 금액을 바로 확인하세요.</p>
+        </div>
+      </div>
     </div>
     <div class="land-cta">
       <button class="btn-start-lg" onclick="openApp()">구독 정리 시작하기 →</button>
@@ -368,67 +579,186 @@
   </section>
 </div>
 
+<!-- ═══ APP ═══ -->
 <div id="app">
   <div class="app-header">
     <div class="app-header-row">
       <div class="app-logo">UN<span style="color:rgba(255,255,255,0.6)">SUB</span></div>
-      <button class="btn-add-top" onclick="openAddModal()">+ 구독 추가</button>
+      <div class="app-header-actions">
+        <button class="btn-bell" id="btn-bell" onclick="handleBellClick()" title="알림 설정">
+          🔔
+          <span class="bell-badge" id="bell-badge"></span>
+        </button>
+        <button class="btn-add-top" onclick="openAddModal()">+ 구독 추가</button>
+      </div>
     </div>
     <div class="stats-cards">
-      <div class="stat-card"><div class="label">월 지출</div><div class="value" id="stat-monthly">₩0</div><div class="sub">구독 <span id="stat-count">0</span>개</div></div>
-      <div class="stat-card"><div class="label">연간 지출</div><div class="value" id="stat-yearly">₩0</div><div class="sub">이대로면</div></div>
-      <div class="stat-card"><div class="label">절약 가능</div><div class="value" id="stat-save">₩0</div><div class="sub">끊으면 연간</div></div>
+      <div class="stat-card">
+        <div class="label">월 지출</div>
+        <div class="value" id="stat-monthly">₩0</div>
+        <div class="sub">구독 <span id="stat-count">0</span>개</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">연간 지출</div>
+        <div class="value" id="stat-yearly">₩0</div>
+        <div class="sub">이대로면</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">절약 가능</div>
+        <div class="value" id="stat-save">₩0</div>
+        <div class="sub">끊으면 연간</div>
+      </div>
     </div>
   </div>
+
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('my')">내 구독</button>
     <button class="tab-btn" onclick="switchTab('guide')">취소 가이드</button>
     <button class="tab-btn" onclick="switchTab('saving')">절약 현황</button>
   </div>
+
+  <!-- 내 구독 -->
   <div class="panel active" id="panel-my">
-    <div id="empty-state" class="empty-state"><div class="empty-icon">📋</div><h3>아직 구독이 없어요</h3><p>내가 구독 중인 서비스를<br>추가해 보세요.</p><button class="btn-add-empty" onclick="openAddModal()">+ 구독 추가하기</button></div>
+    <!-- Gmail banner (always shown above list/empty) -->
+    <div class="gmail-banner" onclick="openGmailModal()">
+      <span class="gmail-banner-icon">📧</span>
+      <div class="gmail-banner-text">
+        <strong>Gmail 스캔</strong>
+        <small>구독 이메일에서 자동으로 찾아드려요</small>
+      </div>
+      <span class="gmail-banner-arrow">›</span>
+    </div>
+
+    <div id="empty-state" class="empty-state">
+      <div class="empty-icon">📋</div>
+      <h3>아직 구독이 없어요</h3>
+      <p>내가 구독 중인 서비스를<br>추가해 보세요.</p>
+      <button class="btn-add-empty" onclick="openAddModal()">+ 구독 추가하기</button>
+    </div>
     <div id="sub-list" class="sub-list" style="display:none;"></div>
   </div>
+
+  <!-- 취소 가이드 -->
   <div class="panel" id="panel-guide">
-    <div class="guide-search"><span>🔍</span><input type="text" placeholder="서비스 검색..." id="guide-search-input" oninput="filterGuides()" /></div>
+    <div class="guide-search">
+      <span>🔍</span>
+      <input type="text" placeholder="서비스 검색..." id="guide-search-input" oninput="filterGuides()" />
+    </div>
     <div id="guide-list" class="guide-grid"></div>
   </div>
+
+  <!-- 절약 현황 -->
   <div class="panel" id="panel-saving">
-    <div class="saving-hero"><div class="label">지금까지 절약한 금액 (연간)</div><div class="amount" id="saved-amount">₩0</div><div class="sub" id="saved-sub">아직 취소한 구독이 없어요</div></div>
+    <div class="saving-hero">
+      <div class="label">지금까지 절약한 금액 (연간)</div>
+      <div class="amount" id="saved-amount">₩0</div>
+      <div class="sub" id="saved-sub">아직 취소한 구독이 없어요</div>
+    </div>
     <p class="section-label">💡 절약 팁</p>
     <div class="tips-list">
-      <div class="tip-card"><span class="tip-icon">🔄</span><div><h4>가족 플랜으로 바꾸기</h4><p>넷플릭스, 유튜브 프리미엄은 가족 또는 친구와 나눠 쓰면 비용이 절반 이하로 줄어요.</p></div></div>
-      <div class="tip-card"><span class="tip-icon">📅</span><div><h4>연간 결제로 전환하기</h4><p>대부분의 서비스는 연간 결제 시 약 20-30% 할인해줘요. 계속 쓸 거라면 연간으로!</p></div></div>
-      <div class="tip-card"><span class="tip-icon">🎓</span><div><h4>학생 할인 확인하기</h4><p>스포티파이, 애플뮤직, Adobe 등은 학생 인증 시 최대 50% 할인. 재학증명서 준비하세요.</p></div></div>
-      <div class="tip-card"><span class="tip-icon">⏸️</span><div><h4>일시정지 활용하기</h4><p>당장 취소하기 아깝다면? 넷플릭스·웨이브·왓챠는 구독 일시정지 기능이 있어요.</p></div></div>
-      <div class="tip-card"><span class="tip-icon">🎁</span><div><h4>카드사 혜택 확인하기</h4><p>일부 신용카드는 OTT 또는 음악 스트리밍 서비스 월정액을 캐시백 또는 할인해줘요.</p></div></div>
+      <div class="tip-card">
+        <span class="tip-icon">🔄</span>
+        <div>
+          <h4>가족 플랜으로 바꾸기</h4>
+          <p>넷플릭스, 유튜브 프리미엄은 가족 또는 친구와 나눠 쓰면 비용이 절반 이하로 줄어요.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">📅</span>
+        <div>
+          <h4>연간 결제로 전환하기</h4>
+          <p>대부분의 서비스는 연간 결제 시 약 20-30% 할인해줘요. 계속 쓸 거라면 연간으로!</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🎓</span>
+        <div>
+          <h4>학생 할인 확인하기</h4>
+          <p>스포티파이, 애플뮤직, Adobe 등은 학생 인증 시 최대 50% 할인. 재학증명서 준비하세요.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">⏸️</span>
+        <div>
+          <h4>일시정지 활용하기</h4>
+          <p>당장 취소하기 아깝다면? 넷플릭스·웨이브·왓챠는 구독 일시정지 기능이 있어요.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <span class="tip-icon">🎁</span>
+        <div>
+          <h4>카드사 혜택 확인하기</h4>
+          <p>일부 신용카드는 OTT 또는 음악 스트리밍 서비스 월정액을 캐시백 또는 할인해줘요.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- Bottom Nav -->
 <nav class="bottom-nav" id="bottom-nav">
-  <button class="nav-item active" onclick="switchTab('my')" id="nav-my"><span class="nav-icon">📋</span>내 구독</button>
-  <button class="nav-item" onclick="switchTab('guide')" id="nav-guide"><span class="nav-icon">🔪</span>취소 가이드</button>
-  <button class="nav-item" onclick="switchTab('saving')" id="nav-saving"><span class="nav-icon">💰</span>절약 현황</button>
+  <button class="nav-item active" onclick="switchTab('my')" id="nav-my">
+    <span class="nav-icon">📋</span>내 구독
+  </button>
+  <button class="nav-item" onclick="switchTab('guide')" id="nav-guide">
+    <span class="nav-icon">🔪</span>취소 가이드
+  </button>
+  <button class="nav-item" onclick="switchTab('saving')" id="nav-saving">
+    <span class="nav-icon">💰</span>절약 현황
+  </button>
 </nav>
 
+<!-- ═══ MODAL: 구독 추가 ═══ -->
 <div class="overlay" id="add-overlay" onclick="closeAddOnBg(event)">
   <div class="modal" style="position:relative;">
     <div class="modal-handle"></div>
     <button class="modal-close" onclick="closeAddModal()">✕</button>
     <div class="modal-title">구독 추가</div>
-    <div class="form-group"><label class="form-label">빠른 선택</label><div class="preset-scroll" id="preset-scroll"></div></div>
-    <div class="form-group"><label class="form-label">서비스 이름</label><input class="form-input" type="text" id="input-name" placeholder="예: 넷플릭스" /></div>
-    <div class="form-group"><label class="form-label">아이콘 (이모지)</label><input class="form-input" type="text" id="input-emoji" placeholder="예: 🎬" maxlength="2" /></div>
-    <div style="display:flex; gap:12px;">
-      <div class="form-group" style="flex:1;"><label class="form-label">금액</label><input class="form-input" type="number" id="input-price" placeholder="9900" /></div>
-      <div class="form-group" style="flex:1;"><label class="form-label">통화</label><select class="form-select" id="input-currency"><option value="KRW">₩ 원</option><option value="USD">$ 달러</option><option value="EUR">€ 유로</option></select></div>
+
+    <div class="form-group">
+      <label class="form-label">빠른 선택</label>
+      <div class="preset-scroll" id="preset-scroll"></div>
     </div>
-    <div class="form-group"><label class="form-label">결제 주기</label><select class="form-select" id="input-cycle"><option value="monthly">월간</option><option value="yearly">연간</option><option value="weekly">주간</option></select></div>
+
+    <div class="form-group">
+      <label class="form-label">서비스 이름</label>
+      <input class="form-input" type="text" id="input-name" placeholder="예: 넷플릭스" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">아이콘 (이모지)</label>
+      <input class="form-input" type="text" id="input-emoji" placeholder="예: 🎬" maxlength="2" />
+    </div>
+    <div style="display:flex; gap:12px;">
+      <div class="form-group" style="flex:1;">
+        <label class="form-label">금액</label>
+        <input class="form-input" type="number" id="input-price" placeholder="9900" />
+      </div>
+      <div class="form-group" style="flex:1;">
+        <label class="form-label">통화</label>
+        <select class="form-select" id="input-currency">
+          <option value="KRW">₩ 원</option>
+          <option value="USD">$ 달러</option>
+          <option value="EUR">€ 유로</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">결제 주기</label>
+      <select class="form-select" id="input-cycle">
+        <option value="monthly">월간</option>
+        <option value="yearly">연간</option>
+        <option value="weekly">주간</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">매월 결제일 (선택)</label>
+      <input class="form-input" type="number" id="input-billing-day" placeholder="예: 15 (1~31)" min="1" max="31" />
+    </div>
     <button class="btn-submit" onclick="addSubscription()">추가하기</button>
   </div>
 </div>
 
+<!-- ═══ MODAL: 취소 가이드 ═══ -->
 <div class="overlay" id="guide-overlay" onclick="closeGuideOnBg(event)">
   <div class="modal" style="position:relative;">
     <div class="modal-handle"></div>
@@ -437,161 +767,803 @@
   </div>
 </div>
 
+<!-- ═══ MODAL: Gmail 스캔 ═══ -->
+<div class="overlay" id="gmail-overlay" onclick="closeGmailOnBg(event)">
+  <div class="modal" style="position:relative;" id="gmail-modal">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeGmailModal()">✕</button>
+    <div id="gmail-modal-content"></div>
+  </div>
+</div>
+
 <script>
+// ═══ DATA ═══
 const SERVICES = [
-  { id:'netflix-kr', name:'넷플릭스', emoji:'🎬', price:17000, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'넷플릭스 웹사이트 접속',desc:'netflix.com에 접속하세요.'},{title:'프로필 메뉴 클릭',desc:'우측 상단 프로필 아이콘 → [계정] 클릭'},{title:'멤버십 및 결제',desc:'"멤버십 취소" 버튼을 클릭하세요.'},{title:'취소 완료',desc:'취소 확인 후 현재 결제 기간 만료일까지는 계속 이용 가능해요.'}], tip:'취소해도 결제 기간 끝까지 시청 가능해요. 바로 끊어도 돈 낭비 없어요!' },
-  { id:'youtube-kr', name:'유튜브 프리미엄', emoji:'▶️', price:14900, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'YouTube 앱 또는 웹 접속',desc:'youtube.com에 로그인하세요.'},{title:'프로필 → 유료 멤버십',desc:'우측 상단 프로필 → [유료 멤버십] 클릭'},{title:'관리 → 취소',desc:'[Google One 관리] 또는 [멤버십 취소] 클릭'},{title:'취소 확인',desc:'이유 선택 후 취소를 완료하세요.'}], tip:'구글 계정의 구독 페이지(myaccount.google.com/payments-and-subscriptions)에서도 관리 가능해요.' },
-  { id:'coupangplay', name:'쿠팡플레이', emoji:'🛒', price:4990, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'쿠팡 앱 열기',desc:'쿠팡 앱에 접속하세요.'},{title:'마이쿠팡 → 쿠팡플레이',desc:'하단 [MY쿠팡] → [쿠팡플레이] 탭'},{title:'구독 관리 → 해지',desc:'[구독 관리] → [구독 해지하기] 클릭'},{title:'해지 완료',desc:'다음 결제일 전까지는 계속 이용할 수 있어요.'}], tip:'쿠팡 로켓와우 멤버십 해지와는 별개예요. 쿠팡플레이만 따로 해지 가능해요.' },
-  { id:'watcha', name:'왓챠', emoji:'🎭', price:9900, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'왓챠 앱 또는 웹 접속',desc:'watcha.com에 로그인하세요.'},{title:'프로필 → 설정',desc:'우측 상단 프로필 → [설정]'},{title:'이용권 관리 → 해지',desc:'[이용권 관리] → [이용권 해지] 클릭'},{title:'해지 사유 입력 후 완료',desc:'해지 사유를 선택하고 확인을 눌러 완료하세요.'}], tip:'월 중간에 해지해도 남은 기간 이용 가능해요.' },
-  { id:'wavve', name:'웨이브', emoji:'🌊', price:7900, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'웨이브 앱 또는 웹 접속',desc:'wavve.com에 로그인하세요.'},{title:'MY → 이용권 관리',desc:'하단 [MY] 탭 → [이용권 관리]'},{title:'정기 구독 해지',desc:'[정기 구독 해지하기] 버튼 클릭'},{title:'확인 후 완료',desc:'해지 확인을 눌러 완료하세요.'}], tip:'KT, SKT, LG U+ 통신사 제휴 요금제로 가입했다면 통신사 앱에서 해지해야 해요.' },
-  { id:'tving', name:'티빙', emoji:'📺', price:9900, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'티빙 앱 또는 웹 접속',desc:'tving.com에 로그인하세요.'},{title:'MY → 이용권 관리',desc:'[MY] 탭 → [이용권 관리]'},{title:'해지 신청',desc:'이용 중인 이용권의 [해지 신청] 클릭'},{title:'해지 완료',desc:'사유 선택 후 최종 확인을 눌러요.'}], tip:'네이버플러스 멤버십으로 이용 중이라면 네이버에서 해지해야 해요.' },
-  { id:'melon', name:'멜론', emoji:'🍈', price:10900, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'멜론 앱 접속',desc:'멜론 앱을 열고 로그인하세요.'},{title:'MY → 이용권 정보',desc:'하단 [MY] → [이용권 정보]'},{title:'이용권 해지',desc:'[이용권 해지] 버튼 클릭'},{title:'해지 확인',desc:'해지 사유 선택 후 완료해요.'}], tip:'카카오페이로 결제했다면 카카오페이 정기 결제에서도 해지해야 할 수 있어요.' },
-  { id:'spotify-kr', name:'스포티파이', emoji:'🎵', price:10900, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'스포티파이 웹 접속',desc:'spotify.com/account에 로그인하세요.'},{title:'플랜 관리',desc:'[플랜] 탭 → [프리미엄 취소] 클릭'},{title:'취소 확인',desc:'이유를 선택하고 [취소 계속] → 완료'},{title:'무료 플랜 전환',desc:'취소 후 무료(광고 포함) 플랜으로 자동 전환돼요.'}], tip:'취소해도 결제 기간 끝까지 프리미엄 유지돼요. 지금 바로 취소해도 돈 아끼는 거예요!' },
-  { id:'millie', name:'밀리의서재', emoji:'📖', price:9900, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'밀리의서재 앱 접속',desc:'앱을 열고 로그인하세요.'},{title:'MY → 멤버십 관리',desc:'하단 [MY] → [멤버십 관리]'},{title:'정기 결제 해지',desc:'[정기 결제 해지하기] 클릭'},{title:'완료',desc:'해지 확인 후 현재 기간 끝까지 이용 가능해요.'}], tip:'스토어(앱스토어/구글플레이)에서 결제했다면 해당 스토어 구독 관리에서도 해지해야 해요.' },
-  { id:'ridi', name:'리디셀렉트', emoji:'📕', price:6500, currency:'KRW', cycle:'monthly', category:'kr', steps:[{title:'리디 앱 또는 웹 접속',desc:'ridibooks.com에 로그인하세요.'},{title:'MY → 셀렉트 관리',desc:'[MY] → [셀렉트 이용권 관리]'},{title:'구독 해지',desc:'[구독 해지] 클릭 후 확인'},{title:'해지 완료',desc:'현재 이용 기간 만료 후 자동 종료돼요.'}], tip:'리디 셀렉트는 해지 후에도 다운로드한 책은 기간 내 읽을 수 있어요.' },
-  { id:'netflix-en', name:'Netflix', emoji:'🎬', price:15.49, currency:'USD', cycle:'monthly', category:'global', steps:[{title:'Go to Netflix.com',desc:'Sign in to your account.'},{title:'Account Settings',desc:'Click your profile → [Account]'},{title:'Cancel Membership',desc:'Click [Cancel Membership] and confirm.'},{title:'Done',desc:"You'll keep access until your billing period ends."}], tip:"Netflix doesn't charge a cancellation fee. Cancel today and keep watching until the period ends." },
-  { id:'spotify-en', name:'Spotify', emoji:'🎵', price:10.99, currency:'USD', cycle:'monthly', category:'global', steps:[{title:'Go to spotify.com/account',desc:'Log in to your Spotify account.'},{title:'Your Plan',desc:'Click [Change Plan] → scroll to Free plan'},{title:'Cancel Premium',desc:'Click [Cancel Premium] and confirm the reason.'},{title:'Free tier',desc:"You'll be moved to the free (ad-supported) plan."}], tip:'Premium continues until your billing date after cancellation. Cancel now to avoid the next charge.' },
-  { id:'amazon-prime', name:'Amazon Prime', emoji:'📦', price:14.99, currency:'USD', cycle:'monthly', category:'global', steps:[{title:'Go to amazon.com/prime',desc:'Sign in and go to Prime settings.'},{title:'Manage Membership',desc:'Click [Manage Membership]'},{title:'End Membership',desc:'Click [End Membership] and follow prompts.'},{title:'Confirm',desc:'Choose to end immediately or at period end.'}], tip:"If you haven't used Prime benefits this month, Amazon may offer a partial refund." },
-  { id:'disney-plus', name:'Disney+', emoji:'🏰', price:13.99, currency:'USD', cycle:'monthly', category:'global', steps:[{title:'Go to disneyplus.com',desc:'Sign in to your account.'},{title:'Profile → Account',desc:'Click your profile icon → [Account]'},{title:'Cancel Subscription',desc:'Under [Subscription], click [Cancel Subscription]'},{title:'Confirm',desc:'Select a reason and confirm cancellation.'}], tip:'Disney+ offers a 30-day free trial for new subscribers — worth using before deciding.' },
-  { id:'chatgpt-plus', name:'ChatGPT Plus', emoji:'🤖', price:20, currency:'USD', cycle:'monthly', category:'global', steps:[{title:'Go to chat.openai.com',desc:'Sign in to your account.'},{title:'Settings',desc:'Click your name (bottom left) → [Settings]'},{title:'Manage Subscription',desc:'Click [Manage Subscription] → Cancel'},{title:'Confirm',desc:"You'll keep Plus access until the billing period ends."}], tip:'Free tier (GPT-4o mini) is still quite capable. Consider downgrading instead of cancelling entirely.' },
-  { id:'adobe-cc', name:'Adobe Creative Cloud', emoji:'🎨', price:54.99, currency:'USD', cycle:'monthly', category:'global', steps:[{title:'Go to account.adobe.com',desc:'Sign in to your Adobe account.'},{title:'Plans & Products',desc:'Click [Manage Plan] next to Creative Cloud'},{title:'Cancel Plan',desc:'Click [Cancel Plan] — note any early termination fees'},{title:'Complete',desc:'Follow the cancellation flow to confirm.'}], tip:'⚠️ If under annual commitment, Adobe charges 50% of remaining balance. Check your contract first!' },
+  // 한국
+  { id:'netflix-kr', name:'넷플릭스', emoji:'🎬', price:17000, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'넷플릭스 웹사이트 접속', desc:'netflix.com에 접속하세요.' },
+      { title:'프로필 메뉴 클릭', desc:'우측 상단 프로필 아이콘 → [계정] 클릭' },
+      { title:'멤버십 및 결제', desc:'"멤버십 취소" 버튼을 클릭하세요.' },
+      { title:'취소 완료', desc:'취소 확인 후 현재 결제 기간 만료일까지는 계속 이용 가능해요.' }
+    ], tip:'취소해도 결제 기간 끝까지 시청 가능해요. 바로 끊어도 돈 낭비 없어요!' },
+  { id:'youtube-kr', name:'유튜브 프리미엄', emoji:'▶️', price:14900, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'YouTube 앱 또는 웹 접속', desc:'youtube.com에 로그인하세요.' },
+      { title:'프로필 → 유료 멤버십', desc:'우측 상단 프로필 → [유료 멤버십] 클릭' },
+      { title:'관리 → 취소', desc:'[Google One 관리] 또는 [멤버십 취소] 클릭' },
+      { title:'취소 확인', desc:'이유 선택 후 취소를 완료하세요.' }
+    ], tip:'구글 계정의 구독 페이지(myaccount.google.com/payments-and-subscriptions)에서도 관리 가능해요.' },
+  { id:'coupangplay', name:'쿠팡플레이', emoji:'🛒', price:4990, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'쿠팡 앱 열기', desc:'쿠팡 앱에 접속하세요.' },
+      { title:'마이쿠팡 → 쿠팡플레이', desc:'하단 [MY쿠팡] → [쿠팡플레이] 탭' },
+      { title:'구독 관리 → 해지', desc:'[구독 관리] → [구독 해지하기] 클릭' },
+      { title:'해지 완료', desc:'다음 결제일 전까지는 계속 이용할 수 있어요.' }
+    ], tip:'쿠팡 로켓와우 멤버십 해지와는 별개예요. 쿠팡플레이만 따로 해지 가능해요.' },
+  { id:'watcha', name:'왓챠', emoji:'🎭', price:9900, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'왓챠 앱 또는 웹 접속', desc:'watcha.com에 로그인하세요.' },
+      { title:'프로필 → 설정', desc:'우측 상단 프로필 → [설정]' },
+      { title:'이용권 관리 → 해지', desc:'[이용권 관리] → [이용권 해지] 클릭' },
+      { title:'해지 사유 입력 후 완료', desc:'해지 사유를 선택하고 확인을 눌러 완료하세요.' }
+    ], tip:'월 중간에 해지해도 남은 기간 이용 가능해요.' },
+  { id:'wavve', name:'웨이브', emoji:'🌊', price:7900, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'웨이브 앱 또는 웹 접속', desc:'wavve.com에 로그인하세요.' },
+      { title:'MY → 이용권 관리', desc:'하단 [MY] 탭 → [이용권 관리]' },
+      { title:'정기 구독 해지', desc:'[정기 구독 해지하기] 버튼 클릭' },
+      { title:'확인 후 완료', desc:'해지 확인을 눌러 완료하세요.' }
+    ], tip:'KT, SKT, LG U+ 통신사 제휴 요금제로 가입했다면 통신사 앱에서 해지해야 해요.' },
+  { id:'tving', name:'티빙', emoji:'📺', price:9900, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'티빙 앱 또는 웹 접속', desc:'tving.com에 로그인하세요.' },
+      { title:'MY → 이용권 관리', desc:'[MY] 탭 → [이용권 관리]' },
+      { title:'해지 신청', desc:'이용 중인 이용권의 [해지 신청] 클릭' },
+      { title:'해지 완료', desc:'사유 선택 후 최종 확인을 눌러요.' }
+    ], tip:'네이버플러스 멤버십으로 이용 중이라면 네이버에서 해지해야 해요.' },
+  { id:'melon', name:'멜론', emoji:'🍈', price:10900, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'멜론 앱 접속', desc:'멜론 앱을 열고 로그인하세요.' },
+      { title:'MY → 이용권 정보', desc:'하단 [MY] → [이용권 정보]' },
+      { title:'이용권 해지', desc:'[이용권 해지] 버튼 클릭' },
+      { title:'해지 확인', desc:'해지 사유 선택 후 완료해요.' }
+    ], tip:'카카오페이로 결제했다면 카카오페이 정기 결제에서도 해지해야 할 수 있어요.' },
+  { id:'spotify-kr', name:'스포티파이', emoji:'🎵', price:10900, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'스포티파이 웹 접속', desc:'spotify.com/account에 로그인하세요.' },
+      { title:'플랜 관리', desc:'[플랜] 탭 → [프리미엄 취소] 클릭' },
+      { title:'취소 확인', desc:'이유를 선택하고 [취소 계속] → 완료' },
+      { title:'무료 플랜 전환', desc:'취소 후 무료(광고 포함) 플랜으로 자동 전환돼요.' }
+    ], tip:'취소해도 결제 기간 끝까지 프리미엄 유지돼요. 지금 바로 취소해도 돈 아끼는 거예요!' },
+  { id:'millie', name:'밀리의서재', emoji:'📖', price:9900, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'밀리의서재 앱 접속', desc:'앱을 열고 로그인하세요.' },
+      { title:'MY → 멤버십 관리', desc:'하단 [MY] → [멤버십 관리]' },
+      { title:'정기 결제 해지', desc:'[정기 결제 해지하기] 클릭' },
+      { title:'완료', desc:'해지 확인 후 현재 기간 끝까지 이용 가능해요.' }
+    ], tip:'스토어(앱스토어/구글플레이)에서 결제했다면 해당 스토어 구독 관리에서도 해지해야 해요.' },
+  { id:'ridi', name:'리디셀렉트', emoji:'📕', price:6500, currency:'KRW', cycle:'monthly', category:'kr',
+    steps:[
+      { title:'리디 앱 또는 웹 접속', desc:'ridibooks.com에 로그인하세요.' },
+      { title:'MY → 셀렉트 관리', desc:'[MY] → [셀렉트 이용권 관리]' },
+      { title:'구독 해지', desc:'[구독 해지] 클릭 후 확인' },
+      { title:'해지 완료', desc:'현재 이용 기간 만료 후 자동 종료돼요.' }
+    ], tip:'리디 셀렉트는 해지 후에도 다운로드한 책은 기간 내 읽을 수 있어요.' },
+  // 글로벌
+  { id:'netflix-en', name:'Netflix', emoji:'🎬', price:15.49, currency:'USD', cycle:'monthly', category:'global',
+    steps:[
+      { title:'Go to Netflix.com', desc:'Sign in to your account.' },
+      { title:'Account Settings', desc:'Click your profile → [Account]' },
+      { title:'Cancel Membership', desc:'Click [Cancel Membership] and confirm.' },
+      { title:'Done', desc:"You'll keep access until your billing period ends." }
+    ], tip:"Netflix doesn't charge a cancellation fee. Cancel today and keep watching until the period ends." },
+  { id:'spotify-en', name:'Spotify', emoji:'🎵', price:10.99, currency:'USD', cycle:'monthly', category:'global',
+    steps:[
+      { title:'Go to spotify.com/account', desc:'Log in to your Spotify account.' },
+      { title:'Your Plan', desc:'Click [Change Plan] → scroll to Free plan' },
+      { title:'Cancel Premium', desc:'Click [Cancel Premium] and confirm the reason.' },
+      { title:'Free tier', desc:"You'll be moved to the free (ad-supported) plan." }
+    ], tip:'Premium continues until your billing date after cancellation. Cancel now to avoid the next charge.' },
+  { id:'amazon-prime', name:'Amazon Prime', emoji:'📦', price:14.99, currency:'USD', cycle:'monthly', category:'global',
+    steps:[
+      { title:'Go to amazon.com/prime', desc:'Sign in and go to Prime settings.' },
+      { title:'Manage Membership', desc:'Click [Manage Membership]' },
+      { title:'End Membership', desc:'Click [End Membership] and follow prompts.' },
+      { title:'Confirm', desc:'Choose to end immediately or at period end.' }
+    ], tip:"If you haven't used Prime benefits this month, Amazon may offer a partial refund." },
+  { id:'disney-plus', name:'Disney+', emoji:'🏰', price:13.99, currency:'USD', cycle:'monthly', category:'global',
+    steps:[
+      { title:'Go to disneyplus.com', desc:'Sign in to your account.' },
+      { title:'Profile → Account', desc:'Click your profile icon → [Account]' },
+      { title:'Cancel Subscription', desc:'Under [Subscription], click [Cancel Subscription]' },
+      { title:'Confirm', desc:'Select a reason and confirm cancellation.' }
+    ], tip:'Disney+ offers a 30-day free trial for new subscribers — worth using before deciding.' },
+  { id:'chatgpt-plus', name:'ChatGPT Plus', emoji:'🤖', price:20, currency:'USD', cycle:'monthly', category:'global',
+    steps:[
+      { title:'Go to chat.openai.com', desc:'Sign in to your account.' },
+      { title:'Settings', desc:'Click your name (bottom left) → [Settings]' },
+      { title:'Manage Subscription', desc:'Click [Manage Subscription] → Cancel' },
+      { title:'Confirm', desc:"You'll keep Plus access until the billing period ends." }
+    ], tip:'Free tier (GPT-4o mini) is still quite capable. Consider downgrading instead of cancelling entirely.' },
+  { id:'adobe-cc', name:'Adobe Creative Cloud', emoji:'🎨', price:54.99, currency:'USD', cycle:'monthly', category:'global',
+    steps:[
+      { title:'Go to account.adobe.com', desc:'Sign in to your Adobe account.' },
+      { title:'Plans & Products', desc:'Click [Manage Plan] next to Creative Cloud' },
+      { title:'Cancel Plan', desc:'Click [Cancel Plan] — note any early termination fees' },
+      { title:'Complete', desc:'Follow the cancellation flow to confirm.' }
+    ], tip:'⚠️ If under annual commitment, Adobe charges 50% of remaining balance. Check your contract first!' },
+];
+
+// Known sender domains for Gmail scan matching
+const GMAIL_DOMAINS = [
+  { domain: 'netflix.com', name: '넷플릭스', emoji: '🎬', price: 17000, currency: 'KRW' },
+  { domain: 'spotify.com', name: '스포티파이', emoji: '🎵', price: 10900, currency: 'KRW' },
+  { domain: 'youtube.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
+  { domain: 'google.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
+  { domain: 'amazon.com', name: 'Amazon Prime', emoji: '📦', price: 14.99, currency: 'USD' },
+  { domain: 'disneyplus.com', name: 'Disney+', emoji: '🏰', price: 13.99, currency: 'USD' },
+  { domain: 'openai.com', name: 'ChatGPT Plus', emoji: '🤖', price: 20, currency: 'USD' },
+  { domain: 'adobe.com', name: 'Adobe Creative Cloud', emoji: '🎨', price: 54.99, currency: 'USD' },
+  { domain: 'notion.so', name: 'Notion', emoji: '📝', price: 10, currency: 'USD' },
+  { domain: 'watcha.com', name: '왓챠', emoji: '🎭', price: 9900, currency: 'KRW' },
+  { domain: 'wavve.com', name: '웨이브', emoji: '🌊', price: 7900, currency: 'KRW' },
+  { domain: 'tving.co.kr', name: '티빙', emoji: '📺', price: 9900, currency: 'KRW' },
+  { domain: 'melon.com', name: '멜론', emoji: '🍈', price: 10900, currency: 'KRW' },
+  { domain: 'ridibooks.com', name: '리디셀렉트', emoji: '📕', price: 6500, currency: 'KRW' },
 ];
 
 let mySubscriptions = JSON.parse(localStorage.getItem('unsub_subs') || '[]');
 let savedAmount = parseFloat(localStorage.getItem('unsub_saved') || '0');
+let currentGuideId = null;
 
+// ═══ UTILS ═══
 function formatPrice(price, currency) {
   if (currency === 'KRW') return '₩' + price.toLocaleString();
   if (currency === 'USD') return '$' + price.toFixed(2);
   return '€' + price.toFixed(2);
 }
-function toMonthlyKRW(price, currency, cycle) {
-  let monthly = cycle === 'yearly' ? price/12 : cycle === 'weekly' ? price*4.33 : price;
-  if (currency === 'USD') return monthly * 1350;
-  if (currency === 'EUR') return monthly * 1460;
-  return monthly;
-}
-function toYearlyKRW(price, currency, cycle) { return toMonthlyKRW(price, currency, cycle) * 12; }
 
+function toMonthlyKRW(price, currency, cycle) {
+  let usd = currency === 'KRW' ? price / 1350 : currency === 'EUR' ? price * 1.08 : price;
+  let monthly = cycle === 'yearly' ? usd / 12 : cycle === 'weekly' ? usd * 4.33 : usd;
+  return currency === 'KRW' ? (cycle === 'yearly' ? price / 12 : cycle === 'weekly' ? price * 4.33 : price)
+    : monthly * 1350;
+}
+
+function toYearlyKRW(price, currency, cycle) {
+  return toMonthlyKRW(price, currency, cycle) * 12;
+}
+
+// ═══ SERVICE WORKER & NOTIFICATIONS ═══
+function registerSW() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw-unsub.js').catch(err => {
+      console.warn('SW registration failed:', err);
+    });
+  }
+}
+
+function updateBellUI() {
+  const btn = document.getElementById('btn-bell');
+  if (!btn) return;
+  if (!('Notification' in window)) {
+    btn.style.display = 'none';
+    return;
+  }
+  if (Notification.permission === 'granted') {
+    btn.classList.remove('needs-permission');
+    btn.classList.add('granted');
+  } else {
+    btn.classList.add('needs-permission');
+    btn.classList.remove('granted');
+  }
+}
+
+function handleBellClick() {
+  if (!('Notification' in window)) {
+    alert('이 브라우저는 알림을 지원하지 않아요.');
+    return;
+  }
+  if (Notification.permission === 'granted') {
+    alert('알림이 이미 활성화되어 있어요!\n결제일이 오늘이나 내일인 구독이 있으면 알려드릴게요.');
+    return;
+  }
+  Notification.requestPermission().then(perm => {
+    updateBellUI();
+    if (perm === 'granted') {
+      checkUpcomingPayments();
+    }
+  });
+}
+
+function checkUpcomingPayments() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+
+  const today = new Date().toDateString();
+  const lastCheck = localStorage.getItem('unsub_last_check');
+  if (lastCheck === today) return; // already checked today
+  localStorage.setItem('unsub_last_check', today);
+
+  const now = new Date();
+  const todayDay = now.getDate();
+  const tomorrowDate = new Date(now);
+  tomorrowDate.setDate(todayDay + 1);
+  const tomorrowDay = tomorrowDate.getDate();
+
+  const subsWithBillingDay = mySubscriptions.filter(s => s.billingDay);
+
+  subsWithBillingDay.forEach(sub => {
+    const day = parseInt(sub.billingDay, 10);
+    if (isNaN(day)) return;
+
+    if (day === todayDay) {
+      navigator.serviceWorker.ready.then(reg => {
+        reg.showNotification('💳 오늘 결제일이에요!', {
+          body: sub.name + ' — ' + formatPrice(sub.price, sub.currency),
+          tag: 'unsub-today-' + sub.name,
+          icon: '/hijimin/icon-192.png'
+        });
+      }).catch(() => {});
+    } else if (day === tomorrowDay) {
+      navigator.serviceWorker.ready.then(reg => {
+        reg.showNotification('⏰ 내일 결제 예정', {
+          body: sub.name + ' — ' + formatPrice(sub.price, sub.currency),
+          tag: 'unsub-tomorrow-' + sub.name,
+          icon: '/hijimin/icon-192.png'
+        });
+      }).catch(() => {});
+    }
+  });
+
+  // Also send message to service worker
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({
+      type: 'CHECK_PAYMENTS',
+      subscriptions: mySubscriptions
+    });
+  }
+}
+
+// ═══ NAVIGATION ═══
 function openApp() {
   document.getElementById('landing').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('bottom-nav').classList.add('show');
-  renderMyList(); renderGuides(); updateStats(); updateSaving();
+  renderMyList();
+  renderGuides();
+  updateStats();
+  updateSaving();
+  updateBellUI();
+  checkUpcomingPayments();
 }
+
 function switchTab(tab) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
-  const tabMap = {my:0, guide:1, saving:2};
-  document.querySelectorAll('.tab-btn')[tabMap[tab]].classList.add('active');
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabMap = { my: 0, guide: 1, saving: 2 };
+  tabBtns[tabMap[tab]].classList.add('active');
   document.getElementById('nav-' + tab).classList.add('active');
 }
+
+// ═══ MY LIST ═══
 function renderMyList() {
   const list = document.getElementById('sub-list');
   const empty = document.getElementById('empty-state');
-  if (!mySubscriptions.length) { list.style.display='none'; empty.style.display='block'; return; }
-  empty.style.display='none'; list.style.display='flex';
-  list.innerHTML = mySubscriptions.map((s,i) => `<div class="sub-card"><div class="sub-emoji">${s.emoji}</div><div class="sub-info"><div class="sub-name">${s.name}</div><div class="sub-meta">${s.cycle==='monthly'?'월간':s.cycle==='yearly'?'연간':'주간'} 결제</div></div><div class="sub-right"><div class="sub-cycle">${s.cycle==='monthly'?'월':s.cycle==='yearly'?'년':'주'}</div><div class="sub-price">${formatPrice(s.price,s.currency)}</div><button class="btn-guide" onclick="openGuideByName('${s.name}')">취소 방법</button><button class="btn-del" onclick="deleteSub(${i})">삭제</button></div></div>`).join('');
+  if (!mySubscriptions.length) {
+    list.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  list.style.display = 'flex';
+  list.innerHTML = mySubscriptions.map((s, i) => `
+    <div class="sub-card">
+      <div class="sub-emoji">${s.emoji}</div>
+      <div class="sub-info">
+        <div class="sub-name">${s.name}</div>
+        <div class="sub-meta">${s.cycle === 'monthly' ? '월간' : s.cycle === 'yearly' ? '연간' : '주간'} 결제</div>
+        ${s.billingDay ? '<span class="billing-day-badge">매월 ' + s.billingDay + '일</span>' : ''}
+      </div>
+      <div class="sub-right">
+        <div class="sub-cycle">${s.cycle === 'monthly' ? '월' : s.cycle === 'yearly' ? '년' : '주'}</div>
+        <div class="sub-price">${formatPrice(s.price, s.currency)}</div>
+        <button class="btn-guide" onclick="openGuideByName('${s.name}', ${i})">취소 방법</button>
+        <button class="btn-del" onclick="deleteSub(${i})">삭제</button>
+      </div>
+    </div>
+  `).join('');
 }
+
 function updateStats() {
-  const monthly = mySubscriptions.reduce((s,x) => s+toMonthlyKRW(x.price,x.currency,x.cycle), 0);
-  const yearly = monthly*12;
-  document.getElementById('stat-monthly').textContent = monthly>=10000 ? '₩'+(monthly/10000).toFixed(1)+'만' : '₩'+Math.round(monthly).toLocaleString();
-  document.getElementById('stat-yearly').textContent = yearly>=10000 ? '₩'+(yearly/10000).toFixed(0)+'만' : '₩'+Math.round(yearly).toLocaleString();
+  const monthly = mySubscriptions.reduce((s, x) => s + toMonthlyKRW(x.price, x.currency, x.cycle), 0);
+  const yearly = monthly * 12;
+  document.getElementById('stat-monthly').textContent = monthly >= 10000
+    ? '₩' + (monthly / 10000).toFixed(1) + '만'
+    : '₩' + Math.round(monthly).toLocaleString();
+  document.getElementById('stat-yearly').textContent = yearly >= 10000
+    ? '₩' + (yearly / 10000).toFixed(0) + '만'
+    : '₩' + Math.round(yearly).toLocaleString();
   document.getElementById('stat-count').textContent = mySubscriptions.length;
-  document.getElementById('stat-save').textContent = savedAmount>=10000 ? '₩'+(savedAmount/10000).toFixed(1)+'만' : '₩'+Math.round(savedAmount).toLocaleString();
+  document.getElementById('stat-save').textContent = savedAmount >= 10000
+    ? '₩' + (savedAmount / 10000).toFixed(1) + '만'
+    : '₩' + Math.round(savedAmount).toLocaleString();
 }
+
 function updateSaving() {
-  document.getElementById('saved-amount').textContent = savedAmount>=10000 ? '₩'+(savedAmount/10000).toFixed(1)+'만원' : '₩'+Math.round(savedAmount).toLocaleString()+'원';
-  document.getElementById('saved-sub').textContent = savedAmount===0 ? '아직 취소한 구독이 없어요' : '지금까지 절약 성공! 🎉';
+  const el = document.getElementById('saved-amount');
+  const sub = document.getElementById('saved-sub');
+  if (savedAmount === 0) {
+    el.textContent = '₩0';
+    sub.textContent = '아직 취소한 구독이 없어요';
+  } else {
+    el.textContent = savedAmount >= 10000
+      ? '₩' + (savedAmount / 10000).toFixed(1) + '만원'
+      : '₩' + Math.round(savedAmount).toLocaleString() + '원';
+    sub.textContent = '지금까지 절약 성공! 🎉';
+  }
 }
+
 function deleteSub(i) {
-  savedAmount += toYearlyKRW(mySubscriptions[i].price, mySubscriptions[i].currency, mySubscriptions[i].cycle);
+  const s = mySubscriptions[i];
+  const yearly = toYearlyKRW(s.price, s.currency, s.cycle);
+  savedAmount += yearly;
   localStorage.setItem('unsub_saved', savedAmount);
-  mySubscriptions.splice(i,1);
+  mySubscriptions.splice(i, 1);
   localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
-  renderMyList(); updateStats(); updateSaving();
+  renderMyList();
+  updateStats();
+  updateSaving();
 }
+
+// ═══ GUIDES ═══
 function renderGuides(filter) {
-  let services = filter ? SERVICES.filter(s=>s.name.toLowerCase().includes(filter.toLowerCase())) : SERVICES;
-  const kr = services.filter(s=>s.category==='kr');
-  const global = services.filter(s=>s.category==='global');
+  const list = document.getElementById('guide-list');
+  let services = SERVICES;
+  if (filter) {
+    const q = filter.toLowerCase();
+    services = SERVICES.filter(s => s.name.toLowerCase().includes(q));
+  }
+
+  const kr = services.filter(s => s.category === 'kr');
+  const global = services.filter(s => s.category === 'global');
+
   let html = '';
-  if (kr.length) { html += '<p class="section-label">🇰🇷 한국 서비스</p>'; html += kr.map(s=>`<div class="guide-card"><div class="guide-emoji">${s.emoji}</div><div class="guide-info"><div class="guide-name">${s.name}</div><div class="guide-price">${formatPrice(s.price,s.currency)}/${s.cycle==='monthly'?'월':'년'}</div></div><button class="btn-how" onclick="openGuideModal('${s.id}')">취소 방법</button></div>`).join(''); }
-  if (global.length) { html += '<p class="section-label">🌍 글로벌 서비스</p>'; html += global.map(s=>`<div class="guide-card"><div class="guide-emoji">${s.emoji}</div><div class="guide-info"><div class="guide-name">${s.name}</div><div class="guide-price">${formatPrice(s.price,s.currency)}/${s.cycle==='monthly'?'월':'년'}</div></div><button class="btn-how" onclick="openGuideModal('${s.id}')">취소 방법</button></div>`).join(''); }
+  if (kr.length) {
+    html += '<p class="section-label">🇰🇷 한국 서비스</p>';
+    html += kr.map(s => guideCard(s)).join('');
+  }
+  if (global.length) {
+    html += '<p class="section-label">🌍 글로벌 서비스</p>';
+    html += global.map(s => guideCard(s)).join('');
+  }
   if (!html) html = '<p style="text-align:center;color:var(--gray-400);padding:40px 0;">검색 결과가 없어요</p>';
-  document.getElementById('guide-list').innerHTML = html;
+  list.innerHTML = html;
 }
-function filterGuides() { renderGuides(document.getElementById('guide-search-input').value); }
+
+function guideCard(s) {
+  return `
+    <div class="guide-card">
+      <div class="guide-emoji">${s.emoji}</div>
+      <div class="guide-info">
+        <div class="guide-name">${s.name}</div>
+        <div class="guide-price">${formatPrice(s.price, s.currency)}/${s.cycle === 'monthly' ? '월' : s.cycle === 'yearly' ? '년' : '주'}</div>
+      </div>
+      <button class="btn-how" onclick="openGuideModal('${s.id}')">취소 방법</button>
+    </div>
+  `;
+}
+
+function filterGuides() {
+  renderGuides(document.getElementById('guide-search-input').value);
+}
+
 function openGuideModal(id) {
-  const s = SERVICES.find(x=>x.id===id);
+  const s = SERVICES.find(x => x.id === id);
   if (!s) return;
-  document.getElementById('guide-modal-content').innerHTML = `<div class="guide-modal-emoji">${s.emoji}</div><div class="guide-modal-name">${s.name}</div><div class="guide-modal-price">${formatPrice(s.price,s.currency)}/${s.cycle==='monthly'?'월':'년'}</div><div class="steps">${s.steps.map((st,i)=>`<div class="step"><div class="step-num">${i+1}</div><div class="step-text"><strong>${st.title}</strong>${st.desc}</div></div>`).join('')}</div>${s.tip?`<div class="guide-tip"><span>💡</span><p>${s.tip}</p></div>`:''}<button class="btn-add-this" onclick="addFromGuide('${id}')">+ 내 구독에 추가하기</button>`;
+  currentGuideId = id;
+  const content = document.getElementById('guide-modal-content');
+  content.innerHTML = `
+    <div class="guide-modal-emoji">${s.emoji}</div>
+    <div class="guide-modal-name">${s.name}</div>
+    <div class="guide-modal-price">${formatPrice(s.price, s.currency)}/${s.cycle === 'monthly' ? '월' : '년'}</div>
+    <div class="steps">
+      ${s.steps.map((st, i) => `
+        <div class="step">
+          <div class="step-num">${i + 1}</div>
+          <div class="step-text"><strong>${st.title}</strong>${st.desc}</div>
+        </div>
+      `).join('')}
+    </div>
+    ${s.tip ? `<div class="guide-tip"><span>💡</span><p>${s.tip}</p></div>` : ''}
+    <button class="btn-add-this" onclick="addFromGuide('${id}')">
+      + 내 구독에 추가하기
+    </button>
+  `;
   document.getElementById('guide-overlay').classList.add('show');
 }
-function openGuideByName(name) {
-  const s = SERVICES.find(x=>x.name===name);
-  if (s) openGuideModal(s.id);
-  else alert('이 서비스의 취소 가이드는 아직 준비 중이에요.\n\n서비스 앱 → MY → 구독 관리에서 취소할 수 있어요.');
-}
-function addFromGuide(id) {
-  const s = SERVICES.find(x=>x.id===id);
-  if (!s) return;
-  if (mySubscriptions.find(x=>x.name===s.name)) { alert('이미 추가된 구독이에요!'); return; }
-  mySubscriptions.push({name:s.name,emoji:s.emoji,price:s.price,currency:s.currency,cycle:s.cycle});
-  localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
-  closeGuideModal(); switchTab('my'); renderMyList(); updateStats();
-}
-function closeGuideModal() { document.getElementById('guide-overlay').classList.remove('show'); }
-function closeGuideOnBg(e) { if (e.target===document.getElementById('guide-overlay')) closeGuideModal(); }
 
+function openGuideByName(name, idx) {
+  const s = SERVICES.find(x => x.name === name);
+  if (s) {
+    openGuideModal(s.id);
+  } else {
+    alert('이 서비스의 취소 가이드는 아직 준비 중이에요.\n\n서비스 앱 → MY → 구독 관리에서 취소할 수 있어요.');
+  }
+}
+
+function addFromGuide(id) {
+  const s = SERVICES.find(x => x.id === id);
+  if (!s) return;
+  if (mySubscriptions.find(x => x.name === s.name)) {
+    alert('이미 추가된 구독이에요!');
+    return;
+  }
+  mySubscriptions.push({ name: s.name, emoji: s.emoji, price: s.price, currency: s.currency, cycle: s.cycle });
+  localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
+  closeGuideModal();
+  switchTab('my');
+  renderMyList();
+  updateStats();
+}
+
+function closeGuideModal() { document.getElementById('guide-overlay').classList.remove('show'); }
+function closeGuideOnBg(e) { if (e.target === document.getElementById('guide-overlay')) closeGuideModal(); }
+
+// ═══ ADD MODAL ═══
 const PRESETS = [
-  {name:'넷플릭스',emoji:'🎬',price:17000,currency:'KRW',cycle:'monthly'},
-  {name:'유튜브 프리미엄',emoji:'▶️',price:14900,currency:'KRW',cycle:'monthly'},
-  {name:'쿠팡플레이',emoji:'🛒',price:4990,currency:'KRW',cycle:'monthly'},
-  {name:'스포티파이',emoji:'🎵',price:10900,currency:'KRW',cycle:'monthly'},
-  {name:'멜론',emoji:'🍈',price:10900,currency:'KRW',cycle:'monthly'},
-  {name:'왓챠',emoji:'🎭',price:9900,currency:'KRW',cycle:'monthly'},
-  {name:'티빙',emoji:'📺',price:9900,currency:'KRW',cycle:'monthly'},
-  {name:'웨이브',emoji:'🌊',price:7900,currency:'KRW',cycle:'monthly'},
-  {name:'밀리의서재',emoji:'📖',price:9900,currency:'KRW',cycle:'monthly'},
-  {name:'ChatGPT Plus',emoji:'🤖',price:20,currency:'USD',cycle:'monthly'},
-  {name:'Notion',emoji:'📝',price:10,currency:'USD',cycle:'monthly'},
+  { name:'넷플릭스', emoji:'🎬', price:17000, currency:'KRW', cycle:'monthly' },
+  { name:'유튜브 프리미엄', emoji:'▶️', price:14900, currency:'KRW', cycle:'monthly' },
+  { name:'쿠팡플레이', emoji:'🛒', price:4990, currency:'KRW', cycle:'monthly' },
+  { name:'스포티파이', emoji:'🎵', price:10900, currency:'KRW', cycle:'monthly' },
+  { name:'멜론', emoji:'🍈', price:10900, currency:'KRW', cycle:'monthly' },
+  { name:'왓챠', emoji:'🎭', price:9900, currency:'KRW', cycle:'monthly' },
+  { name:'티빙', emoji:'📺', price:9900, currency:'KRW', cycle:'monthly' },
+  { name:'웨이브', emoji:'🌊', price:7900, currency:'KRW', cycle:'monthly' },
+  { name:'밀리의서재', emoji:'📖', price:9900, currency:'KRW', cycle:'monthly' },
+  { name:'ChatGPT Plus', emoji:'🤖', price:20, currency:'USD', cycle:'monthly' },
+  { name:'Notion', emoji:'📝', price:10, currency:'USD', cycle:'monthly' },
 ];
+
+let selectedPreset = null;
+
 function openAddModal() {
-  document.getElementById('input-name').value='';
-  document.getElementById('input-emoji').value='';
-  document.getElementById('input-price').value='';
-  document.getElementById('input-currency').value='KRW';
-  document.getElementById('input-cycle').value='monthly';
-  document.getElementById('preset-scroll').innerHTML = PRESETS.map((p,i)=>`<button class="preset-chip" id="preset-${i}" onclick="selectPreset(${i})">${p.emoji} ${p.name}</button>`).join('');
+  selectedPreset = null;
+  document.getElementById('input-name').value = '';
+  document.getElementById('input-emoji').value = '';
+  document.getElementById('input-price').value = '';
+  document.getElementById('input-currency').value = 'KRW';
+  document.getElementById('input-cycle').value = 'monthly';
+  document.getElementById('input-billing-day').value = '';
+  renderPresets();
   document.getElementById('add-overlay').classList.add('show');
 }
+
+function renderPresets() {
+  const scroll = document.getElementById('preset-scroll');
+  scroll.innerHTML = PRESETS.map((p, i) => `
+    <button class="preset-chip" id="preset-${i}" onclick="selectPreset(${i})">
+      ${p.emoji} ${p.name}
+    </button>
+  `).join('');
+}
+
 function selectPreset(i) {
-  document.querySelectorAll('.preset-chip').forEach(c=>c.classList.remove('selected'));
-  document.getElementById('preset-'+i).classList.add('selected');
-  const p=PRESETS[i];
-  document.getElementById('input-name').value=p.name;
-  document.getElementById('input-emoji').value=p.emoji;
-  document.getElementById('input-price').value=p.price;
-  document.getElementById('input-currency').value=p.currency;
-  document.getElementById('input-cycle').value=p.cycle;
+  selectedPreset = i;
+  document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('selected'));
+  document.getElementById('preset-' + i).classList.add('selected');
+  const p = PRESETS[i];
+  document.getElementById('input-name').value = p.name;
+  document.getElementById('input-emoji').value = p.emoji;
+  document.getElementById('input-price').value = p.price;
+  document.getElementById('input-currency').value = p.currency;
+  document.getElementById('input-cycle').value = p.cycle;
 }
+
 function addSubscription() {
-  const name=document.getElementById('input-name').value.trim();
-  const emoji=document.getElementById('input-emoji').value.trim()||'📌';
-  const price=parseFloat(document.getElementById('input-price').value);
-  const currency=document.getElementById('input-currency').value;
-  const cycle=document.getElementById('input-cycle').value;
-  if (!name||!price||isNaN(price)) { alert('이름과 금액을 입력해주세요!'); return; }
-  mySubscriptions.push({name,emoji,price,currency,cycle});
+  const name = document.getElementById('input-name').value.trim();
+  const emoji = document.getElementById('input-emoji').value.trim() || '📌';
+  const price = parseFloat(document.getElementById('input-price').value);
+  const currency = document.getElementById('input-currency').value;
+  const cycle = document.getElementById('input-cycle').value;
+  const billingDayRaw = document.getElementById('input-billing-day').value.trim();
+  if (!name || !price || isNaN(price)) {
+    alert('이름과 금액을 입력해주세요!');
+    return;
+  }
+  const sub = { name, emoji, price, currency, cycle };
+  if (billingDayRaw) {
+    const bd = parseInt(billingDayRaw, 10);
+    if (!isNaN(bd) && bd >= 1 && bd <= 31) {
+      sub.billingDay = bd;
+    }
+  }
+  mySubscriptions.push(sub);
   localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
-  closeAddModal(); renderMyList(); updateStats();
+  closeAddModal();
+  renderMyList();
+  updateStats();
 }
+
 function closeAddModal() { document.getElementById('add-overlay').classList.remove('show'); }
-function closeAddOnBg(e) { if (e.target===document.getElementById('add-overlay')) closeAddModal(); }
+function closeAddOnBg(e) { if (e.target === document.getElementById('add-overlay')) closeAddModal(); }
+
+// ═══ GMAIL MODAL ═══
+function openGmailModal() {
+  renderGmailModal();
+  document.getElementById('gmail-overlay').classList.add('show');
+}
+
+function closeGmailModal() {
+  document.getElementById('gmail-overlay').classList.remove('show');
+}
+
+function closeGmailOnBg(e) {
+  if (e.target === document.getElementById('gmail-overlay')) closeGmailModal();
+}
+
+function renderGmailModal() {
+  const clientId = localStorage.getItem('unsub_gclient');
+  const content = document.getElementById('gmail-modal-content');
+
+  if (!clientId) {
+    // State A: Setup
+    content.innerHTML = `
+      <div class="modal-title">Gmail 구독 자동 발견</div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">
+        Google Cloud Console에서 OAuth 클라이언트 ID를 발급받아 Gmail에서 구독 이메일을 자동으로 찾아드려요.
+      </p>
+      <div class="gmail-setup-steps">
+        <div class="gmail-setup-step">
+          <div class="gmail-setup-step-num">1</div>
+          <p><a href="https://console.cloud.google.com" target="_blank" style="color:var(--primary);font-weight:600;">console.cloud.google.com</a> → 새 프로젝트 만들기</p>
+        </div>
+        <div class="gmail-setup-step">
+          <div class="gmail-setup-step-num">2</div>
+          <p>API 및 서비스 → Gmail API 활성화</p>
+        </div>
+        <div class="gmail-setup-step">
+          <div class="gmail-setup-step-num">3</div>
+          <p>OAuth 동의 화면 → 외부 → 본인 이메일 테스트 사용자 추가</p>
+        </div>
+        <div class="gmail-setup-step">
+          <div class="gmail-setup-step-num">4</div>
+          <p>사용자 인증 정보 → OAuth 2.0 클라이언트 ID → 웹 애플리케이션 → 승인된 JS 원본에 <code>https://timlikeanjimin.github.io</code> 추가</p>
+        </div>
+        <div class="gmail-setup-step">
+          <div class="gmail-setup-step-num">5</div>
+          <p>클라이언트 ID 복사 후 아래에 붙여넣기</p>
+        </div>
+      </div>
+      <div class="gmail-client-row">
+        <input class="form-input" type="text" id="gmail-client-input" placeholder="123456789-xxxx.apps.googleusercontent.com" />
+        <button class="btn-connect" onclick="saveGmailClient()">연결하기</button>
+      </div>
+    `;
+  } else {
+    // State B: Scan
+    const truncated = clientId.length > 30 ? clientId.substring(0, 30) + '…' : clientId;
+    content.innerHTML = `
+      <div class="modal-title">Gmail 스캔</div>
+      <div class="gmail-stored-row">
+        <span style="font-size:18px;">🔑</span>
+        <span class="gmail-stored-id">${truncated}</span>
+        <button class="btn-change" onclick="clearGmailClient()">변경</button>
+      </div>
+      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;line-height:1.6;">
+        Gmail에서 구독 관련 이메일을 검색해 구독 서비스를 자동으로 찾아드려요. Google 계정 로그인이 필요해요.
+      </p>
+      <button class="btn-gmail-scan" onclick="startGmailScan()">
+        📧 Gmail 스캔 시작
+      </button>
+      <div id="gmail-scan-result" style="margin-top:20px;"></div>
+    `;
+  }
+}
+
+function saveGmailClient() {
+  const val = document.getElementById('gmail-client-input').value.trim();
+  if (!val) {
+    alert('클라이언트 ID를 입력해주세요.');
+    return;
+  }
+  localStorage.setItem('unsub_gclient', val);
+  renderGmailModal();
+}
+
+function clearGmailClient() {
+  localStorage.removeItem('unsub_gclient');
+  renderGmailModal();
+}
+
+function startGmailScan() {
+  const clientId = localStorage.getItem('unsub_gclient');
+  if (!clientId) return;
+
+  const resultEl = document.getElementById('gmail-scan-result');
+  resultEl.innerHTML = `
+    <div class="spinner-wrap">
+      <div class="spinner"></div>
+      <div class="spinner-text">Google 로그인 중...</div>
+    </div>
+  `;
+
+  // Load Google Identity Services script dynamically
+  if (window.google && window.google.accounts) {
+    initGmailOAuth(clientId, resultEl);
+    return;
+  }
+
+  const script = document.createElement('script');
+  script.src = 'https://accounts.google.com/gsi/client';
+  script.async = true;
+  script.defer = true;
+  script.onload = () => initGmailOAuth(clientId, resultEl);
+  script.onerror = () => {
+    resultEl.innerHTML = '<p style="color:var(--red);text-align:center;padding:20px 0;">Google 스크립트 로드에 실패했어요. 네트워크를 확인해주세요.</p>';
+  };
+  document.head.appendChild(script);
+}
+
+function initGmailOAuth(clientId, resultEl) {
+  try {
+    google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'https://www.googleapis.com/auth/gmail.readonly',
+      callback: async (resp) => {
+        if (resp.error) {
+          resultEl.innerHTML = '<p style="color:var(--red);text-align:center;padding:20px 0;">로그인에 실패했어요: ' + (resp.error_description || resp.error) + '</p>';
+          return;
+        }
+        await doGmailScan(resp.access_token, resultEl);
+      }
+    }).requestAccessToken();
+  } catch (err) {
+    resultEl.innerHTML = '<p style="color:var(--red);text-align:center;padding:20px 0;">OAuth 초기화 실패: ' + err.message + '</p>';
+  }
+}
+
+async function doGmailScan(token, resultEl) {
+  resultEl.innerHTML = `
+    <div class="spinner-wrap">
+      <div class="spinner"></div>
+      <div class="spinner-text">Gmail 검색 중...</div>
+    </div>
+  `;
+
+  try {
+    const query = encodeURIComponent('구독 OR 정기결제 OR subscription OR receipt OR invoice OR 넷플릭스 OR 왓챠 OR spotify OR netflix');
+    const listResp = await fetch(
+      `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${query}&maxResults=100`,
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+    const listData = await listResp.json();
+
+    if (!listData.messages || listData.messages.length === 0) {
+      resultEl.innerHTML = '<div class="gmail-empty">구독 관련 이메일을 찾지 못했어요 😥</div>';
+      return;
+    }
+
+    resultEl.innerHTML = `
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+        <div class="spinner-text">이메일 분석 중 (최대 30개)...</div>
+      </div>
+    `;
+
+    const messages = listData.messages.slice(0, 30);
+    const foundServices = new Map(); // name -> service object
+
+    await Promise.all(messages.map(async (msg) => {
+      try {
+        const msgResp = await fetch(
+          `https://gmail.googleapis.com/gmail/v1/users/me/messages/${msg.id}?format=metadata&metadataHeaders=Subject&metadataHeaders=From`,
+          { headers: { Authorization: 'Bearer ' + token } }
+        );
+        const msgData = await msgResp.json();
+        const headers = (msgData.payload && msgData.payload.headers) || [];
+        const subject = (headers.find(h => h.name === 'Subject') || {}).value || '';
+        const from = (headers.find(h => h.name === 'From') || {}).value || '';
+        const fromLower = from.toLowerCase();
+        const subjectLower = subject.toLowerCase();
+
+        // Match against known domains
+        GMAIL_DOMAINS.forEach(d => {
+          if (foundServices.has(d.name)) return;
+          if (fromLower.includes(d.domain)) {
+            foundServices.set(d.name, { name: d.name, emoji: d.emoji, price: d.price, currency: d.currency, cycle: 'monthly' });
+            return;
+          }
+        });
+
+        // Match against SERVICES by name keywords in subject/from
+        SERVICES.forEach(s => {
+          if (foundServices.has(s.name)) return;
+          const nameLower = s.name.toLowerCase();
+          if (subjectLower.includes(nameLower) || fromLower.includes(nameLower)) {
+            foundServices.set(s.name, { name: s.name, emoji: s.emoji, price: s.price, currency: s.currency, cycle: s.cycle });
+          }
+        });
+      } catch (e) {
+        // skip individual message errors
+      }
+    }));
+
+    if (foundServices.size === 0) {
+      resultEl.innerHTML = '<div class="gmail-empty">구독 관련 이메일을 찾지 못했어요 😥</div>';
+      return;
+    }
+
+    const results = Array.from(foundServices.values());
+    const resultItems = results.map((s, i) => {
+      const alreadyAdded = mySubscriptions.some(x => x.name === s.name);
+      return `
+        <div class="gmail-result-card" id="gmail-result-${i}" onclick="toggleGmailResult(${i}, ${alreadyAdded})">
+          <input type="checkbox" id="gmail-cb-${i}" ${alreadyAdded ? 'disabled checked' : ''} onclick="event.stopPropagation();toggleGmailResult(${i}, ${alreadyAdded})" />
+          <span class="gmail-result-emoji">${s.emoji}</span>
+          <div class="gmail-result-info">
+            <div class="gmail-result-name">${s.name}</div>
+            <div class="gmail-result-price">${formatPrice(s.price, s.currency)}/월</div>
+          </div>
+          ${alreadyAdded ? '<span class="already-badge">이미 추가됨</span>' : ''}
+        </div>
+      `;
+    }).join('');
+
+    resultEl.innerHTML = `
+      <div class="gmail-results-header">
+        <span>📬</span> 발견된 구독 ${results.length}개
+      </div>
+      <div class="gmail-result-list" id="gmail-result-list">
+        ${resultItems}
+      </div>
+      <button class="btn-add-checked" onclick="addCheckedGmailSubs(${JSON.stringify(results).replace(/"/g, '&quot;')})">선택 항목 추가하기</button>
+    `;
+
+    // Store results for checkbox interaction
+    window._gmailScanResults = results;
+  } catch (err) {
+    resultEl.innerHTML = '<p style="color:var(--red);text-align:center;padding:20px 0;">스캔 중 오류가 발생했어요: ' + err.message + '</p>';
+  }
+}
+
+function toggleGmailResult(i, alreadyAdded) {
+  if (alreadyAdded) return;
+  const card = document.getElementById('gmail-result-' + i);
+  const cb = document.getElementById('gmail-cb-' + i);
+  if (!card || !cb) return;
+  cb.checked = !cb.checked;
+  card.classList.toggle('checked', cb.checked);
+}
+
+function addCheckedGmailSubs(results) {
+  let addedCount = 0;
+  results.forEach((s, i) => {
+    const cb = document.getElementById('gmail-cb-' + i);
+    if (cb && cb.checked && !cb.disabled) {
+      if (!mySubscriptions.some(x => x.name === s.name)) {
+        mySubscriptions.push({ name: s.name, emoji: s.emoji, price: s.price, currency: s.currency, cycle: s.cycle || 'monthly' });
+        addedCount++;
+      }
+    }
+  });
+  if (addedCount === 0) {
+    alert('추가할 항목을 선택해주세요.');
+    return;
+  }
+  localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
+  closeGmailModal();
+  switchTab('my');
+  renderMyList();
+  updateStats();
+  alert(addedCount + '개 구독이 추가되었어요!');
+}
+
+// ═══ INIT ═══
+registerSW();
 </script>
 </body>
 </html>

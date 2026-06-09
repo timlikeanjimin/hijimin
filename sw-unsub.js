@@ -8,11 +8,27 @@ self.addEventListener('activate', event => {
   event.waitUntil(self.clients.claim());
 });
 
+// Background push notification (from Cloudflare Worker)
+self.addEventListener('push', event => {
+  let data = { title: '💳 UNSUB 알림', body: '결제 일정을 확인하세요', url: '/hijimin/unsub.html' };
+  try { if (event.data) data = { ...data, ...event.data.json() }; } catch (e) {}
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/hijimin/unsub-icon.svg',
+      badge: '/hijimin/unsub-icon.svg',
+      tag: 'unsub-push',
+      data: { url: data.url },
+      vibrate: [200, 100, 200],
+    })
+  );
+});
+
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  event.waitUntil(
-    clients.openWindow('/hijimin/unsub.html')
-  );
+  const url = (event.notification.data && event.notification.data.url) || '/hijimin/unsub.html';
+  event.waitUntil(clients.openWindow(url));
 });
 
 self.addEventListener('message', event => {

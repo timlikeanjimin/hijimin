@@ -6,6 +6,11 @@
   <title>UNSUB — 구독 정리 도우미</title>
   <meta name="description" content="매달 새나가는 구독료를 한눈에. 안 쓰는 구독 끊고 돈 아끼세요." />
   <meta name="theme-color" content="#6366F1" />
+  <link rel="manifest" href="unsub-manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="UNSUB" />
+  <link rel="apple-touch-icon" href="unsub-icon.svg" />
   <style>
     :root {
       --primary: #6366F1;
@@ -502,6 +507,85 @@
       font-size: 15px; font-weight: 700;
     }
     .gmail-empty { text-align: center; padding: 30px 0; color: var(--gray-400); font-size: 14px; }
+
+    /* Usage frequency chips */
+    .freq-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .freq-chip {
+      padding: 6px 14px; border-radius: 99px; font-size: 13px; font-weight: 500;
+      border: 1.5px solid var(--gray-200); background: #fff; color: var(--gray-500);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .freq-chip.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); font-weight: 600; }
+
+    /* Cost per use badge on subscription card */
+    .cpu-badge {
+      font-size: 11px; color: var(--gray-400); margin-top: 2px;
+    }
+    .cpu-badge.expensive { color: #DC2626; font-weight: 600; }
+
+    /* Recommendation badge */
+    .rec-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; margin-top: 4px;
+    }
+    .rec-badge.cancel { background: #FEE2E2; color: #DC2626; }
+    .rec-badge.review { background: #FEF9C3; color: #CA8A04; }
+    .rec-badge.keep { background: #D1FAE5; color: #059669; }
+
+    /* Monthly check-in banner */
+    .checkin-banner {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      border-radius: 16px; padding: 16px 18px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px; cursor: pointer;
+    }
+    .checkin-banner-icon { font-size: 28px; flex-shrink: 0; }
+    .checkin-banner-text strong { display: block; font-size: 14px; font-weight: 700; color: #fff; }
+    .checkin-banner-text small { font-size: 12px; color: rgba(255,255,255,0.8); }
+
+    /* CPU breakdown in stats */
+    .cpu-section { margin-top: 24px; }
+    .cpu-section-title { font-size: 14px; font-weight: 700; color: var(--gray-700); margin-bottom: 12px; }
+    .cpu-row {
+      background: #fff; border-radius: 12px; padding: 12px 14px;
+      box-shadow: var(--shadow); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .cpu-row-emoji { font-size: 24px; flex-shrink: 0; }
+    .cpu-row-info { flex: 1; min-width: 0; }
+    .cpu-row-name { font-size: 14px; font-weight: 700; }
+    .cpu-row-freq { font-size: 12px; color: var(--gray-500); }
+    .cpu-row-right { text-align: right; flex-shrink: 0; }
+    .cpu-row-cost { font-size: 15px; font-weight: 800; }
+    .cpu-row-cost.cheap { color: var(--green); }
+    .cpu-row-cost.mid { color: var(--amber); }
+    .cpu-row-cost.pricey { color: #DC2626; }
+    .cancel-callout {
+      background: #FEE2E2; border-radius: 12px; padding: 14px 16px;
+      margin-bottom: 16px; border: 1.5px solid #FECACA;
+    }
+    .cancel-callout p { font-size: 13px; color: #DC2626; font-weight: 600; line-height: 1.5; }
+    .cancel-callout-title { font-size: 13px; font-weight: 700; color: #DC2626; margin-bottom: 8px; }
+    .cancel-callout-item { font-size: 13px; color: var(--gray-700); padding: 2px 0; display: flex; align-items: center; gap: 6px; }
+
+    /* Check-in modal */
+    .checkin-item {
+      background: var(--gray-50); border-radius: 12px; padding: 14px;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 12px;
+    }
+    .checkin-item-emoji { font-size: 26px; flex-shrink: 0; }
+    .checkin-item-info { flex: 1; min-width: 0; }
+    .checkin-item-name { font-size: 14px; font-weight: 700; }
+    .checkin-item-price { font-size: 12px; color: var(--gray-500); }
+    .checkin-item-btns { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-checkin-keep {
+      background: var(--green-light); color: var(--green);
+      border-radius: 8px; padding: 6px 10px;
+      font-size: 12px; font-weight: 700;
+    }
+    .btn-checkin-cancel {
+      background: var(--red-light); color: var(--red);
+      border-radius: 8px; padding: 6px 10px;
+      font-size: 12px; font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -619,12 +703,21 @@
 
   <!-- 내 구독 -->
   <div class="panel active" id="panel-my">
+    <!-- Monthly check-in banner -->
+    <div class="checkin-banner" id="checkin-banner" style="display:none;" onclick="openCheckinModal()">
+      <span class="checkin-banner-icon">📋</span>
+      <div class="checkin-banner-text">
+        <strong>이번 달 구독 점검하기</strong>
+        <small>한 달에 한 번 체크해서 불필요한 구독을 찾아요</small>
+      </div>
+    </div>
+
     <!-- Gmail banner (always shown above list/empty) -->
     <div class="gmail-banner" onclick="openGmailModal()">
       <span class="gmail-banner-icon">📧</span>
       <div class="gmail-banner-text">
-        <strong>Gmail 스캔</strong>
-        <small>구독 이메일에서 자동으로 찾아드려요</small>
+        <strong>Google로 구독 자동 발견</strong>
+        <small>Gmail 로그인 한 번으로 구독을 찾아드려요</small>
       </div>
       <span class="gmail-banner-arrow">›</span>
     </div>
@@ -654,6 +747,7 @@
       <div class="amount" id="saved-amount">₩0</div>
       <div class="sub" id="saved-sub">아직 취소한 구독이 없어요</div>
     </div>
+    <div id="cpu-breakdown-section"></div>
     <p class="section-label">💡 절약 팁</p>
     <div class="tips-list">
       <div class="tip-card">
@@ -751,6 +845,11 @@
       </select>
     </div>
     <div class="form-group">
+      <label class="form-label">사용 빈도 <span style="color:var(--gray-400);font-weight:400;">(선택)</span></label>
+      <p style="font-size:12px;color:var(--gray-400);margin:-4px 0 10px;">입력하면 회당 비용으로 취소 추천을 분석해드려요</p>
+      <div class="freq-group" id="freq-chips"></div>
+    </div>
+    <div class="form-group">
       <label class="form-label">매월 결제일 (선택)</label>
       <input class="form-input" type="number" id="input-billing-day" placeholder="예: 15 (1~31)" min="1" max="31" />
     </div>
@@ -773,6 +872,18 @@
     <div class="modal-handle"></div>
     <button class="modal-close" onclick="closeGmailModal()">✕</button>
     <div id="gmail-modal-content"></div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: 이번 달 체크인 ═══ -->
+<div class="overlay" id="checkin-overlay" onclick="closeCheckinOnBg(event)">
+  <div class="modal" style="position:relative;">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeCheckinModal()">✕</button>
+    <div class="modal-title">이번 달 구독 점검 📋</div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">각 구독을 계속 유지할지 확인해보세요. 취소하면 해당 구독이 삭제됩니다.</p>
+    <div id="checkin-list"></div>
+    <button class="btn-submit" onclick="closeCheckinModal()" style="margin-top:8px;">완료</button>
   </div>
 </div>
 
@@ -897,21 +1008,68 @@ const SERVICES = [
 
 // Known sender domains for Gmail scan matching
 const GMAIL_DOMAINS = [
+  // 한국 동영상
   { domain: 'netflix.com', name: '넷플릭스', emoji: '🎬', price: 17000, currency: 'KRW' },
-  { domain: 'spotify.com', name: '스포티파이', emoji: '🎵', price: 10900, currency: 'KRW' },
-  { domain: 'youtube.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
-  { domain: 'google.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
-  { domain: 'amazon.com', name: 'Amazon Prime', emoji: '📦', price: 14.99, currency: 'USD' },
-  { domain: 'disneyplus.com', name: 'Disney+', emoji: '🏰', price: 13.99, currency: 'USD' },
-  { domain: 'openai.com', name: 'ChatGPT Plus', emoji: '🤖', price: 20, currency: 'USD' },
-  { domain: 'adobe.com', name: 'Adobe Creative Cloud', emoji: '🎨', price: 54.99, currency: 'USD' },
-  { domain: 'notion.so', name: 'Notion', emoji: '📝', price: 10, currency: 'USD' },
   { domain: 'watcha.com', name: '왓챠', emoji: '🎭', price: 9900, currency: 'KRW' },
   { domain: 'wavve.com', name: '웨이브', emoji: '🌊', price: 7900, currency: 'KRW' },
   { domain: 'tving.co.kr', name: '티빙', emoji: '📺', price: 9900, currency: 'KRW' },
+  // 한국 음악
   { domain: 'melon.com', name: '멜론', emoji: '🍈', price: 10900, currency: 'KRW' },
+  { domain: 'genie.co.kr', name: '지니뮤직', emoji: '🎵', price: 8900, currency: 'KRW' },
+  { domain: 'bugs.co.kr', name: '벅스', emoji: '🎶', price: 7900, currency: 'KRW' },
+  { domain: 'spotify.com', name: '스포티파이', emoji: '🎵', price: 10900, currency: 'KRW' },
+  // 한국 독서
   { domain: 'ridibooks.com', name: '리디셀렉트', emoji: '📕', price: 6500, currency: 'KRW' },
+  { domain: 'millie.co.kr', name: '밀리의서재', emoji: '📖', price: 9900, currency: 'KRW' },
+  // 한국 플랫폼
+  { domain: 'naver.com', name: '네이버 플러스', emoji: '🟢', price: 4900, currency: 'KRW' },
+  { domain: 'kakao.com', name: '카카오', emoji: '💛', price: 3300, currency: 'KRW' },
+  { domain: 'kakaocorp.com', name: '카카오', emoji: '💛', price: 3300, currency: 'KRW' },
+  { domain: 'coupang.com', name: '쿠팡 로켓와우', emoji: '🛒', price: 7890, currency: 'KRW' },
+  // 글로벌
+  { domain: 'youtube.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
+  { domain: 'google.com', name: '유튜브 프리미엄', emoji: '▶️', price: 14900, currency: 'KRW' },
+  { domain: 'apple.com', name: 'Apple 서비스', emoji: '🍎', price: 9900, currency: 'KRW' },
+  { domain: 'amazon.com', name: 'Amazon Prime', emoji: '📦', price: 14.99, currency: 'USD' },
+  { domain: 'disneyplus.com', name: 'Disney+', emoji: '🏰', price: 13.99, currency: 'USD' },
+  { domain: 'disney.com', name: 'Disney+', emoji: '🏰', price: 13.99, currency: 'USD' },
+  { domain: 'openai.com', name: 'ChatGPT Plus', emoji: '🤖', price: 20, currency: 'USD' },
+  { domain: 'adobe.com', name: 'Adobe Creative Cloud', emoji: '🎨', price: 54.99, currency: 'USD' },
+  { domain: 'notion.so', name: 'Notion', emoji: '📝', price: 10, currency: 'USD' },
+  { domain: 'figma.com', name: 'Figma', emoji: '✏️', price: 15, currency: 'USD' },
+  { domain: 'canva.com', name: 'Canva Pro', emoji: '🎨', price: 12.99, currency: 'USD' },
+  { domain: 'dropbox.com', name: 'Dropbox', emoji: '📁', price: 11.99, currency: 'USD' },
+  { domain: 'microsoft.com', name: 'Microsoft 365', emoji: '💼', price: 6.99, currency: 'USD' },
+  { domain: 'discord.com', name: 'Discord Nitro', emoji: '🎮', price: 9.99, currency: 'USD' },
+  { domain: 'github.com', name: 'GitHub', emoji: '💻', price: 4, currency: 'USD' },
+  { domain: 'twitch.tv', name: 'Twitch', emoji: '🟣', price: 4.99, currency: 'USD' },
+  { domain: 'hbo.com', name: 'Max', emoji: '📺', price: 15.99, currency: 'USD' },
 ];
+
+const FREQUENCY_OPTIONS = [
+  { value: 'daily', label: '매일', usesPerMonth: 30 },
+  { value: 'few_weekly', label: '주 2~3회', usesPerMonth: 10 },
+  { value: 'weekly', label: '주 1회', usesPerMonth: 4 },
+  { value: 'monthly', label: '월 1~2회', usesPerMonth: 1.5 },
+  { value: 'rarely', label: '거의 안 씀', usesPerMonth: 0.3 },
+];
+
+function getCostPerUse(sub) {
+  if (!sub.frequency) return null;
+  const opt = FREQUENCY_OPTIONS.find(f => f.value === sub.frequency);
+  if (!opt) return null;
+  const monthly = toMonthlyKRW(sub.price, sub.currency, sub.cycle);
+  return monthly / opt.usesPerMonth;
+}
+
+function getRecommendation(sub) {
+  if (!sub.frequency) return null;
+  const cpu = getCostPerUse(sub);
+  if (sub.frequency === 'rarely') return 'cancel';
+  if (cpu > 5000) return 'cancel';
+  if (cpu > 2000) return 'review';
+  return 'keep';
+}
 
 let mySubscriptions = JSON.parse(localStorage.getItem('unsub_subs') || '[]');
 let savedAmount = parseFloat(localStorage.getItem('unsub_saved') || '0');
@@ -1110,6 +1268,7 @@ function openApp() {
   updateSaving();
   updateBellUI();
   checkUpcomingPayments();
+  showCheckinBannerIfNeeded();
 }
 
 function switchTab(tab) {
@@ -1127,6 +1286,7 @@ function switchTab(tab) {
 function renderMyList() {
   const list = document.getElementById('sub-list');
   const empty = document.getElementById('empty-state');
+  showCheckinBannerIfNeeded();
   if (!mySubscriptions.length) {
     list.style.display = 'none';
     empty.style.display = 'block';
@@ -1134,13 +1294,19 @@ function renderMyList() {
   }
   empty.style.display = 'none';
   list.style.display = 'flex';
-  list.innerHTML = mySubscriptions.map((s, i) => `
+  list.innerHTML = mySubscriptions.map((s, i) => {
+    const cpu = getCostPerUse(s);
+    const rec = getRecommendation(s);
+    const freq = FREQUENCY_OPTIONS.find(f => f.value === s.frequency);
+    return `
     <div class="sub-card">
       <div class="sub-emoji">${s.emoji}</div>
       <div class="sub-info">
         <div class="sub-name">${s.name}</div>
         <div class="sub-meta">${s.cycle === 'monthly' ? '월간' : s.cycle === 'yearly' ? '연간' : '주간'} 결제</div>
         ${s.billingDay ? '<span class="billing-day-badge">매월 ' + s.billingDay + '일</span>' : ''}
+        ${freq ? `<div class="cpu-badge${cpu > 5000 ? ' expensive' : ''}">${freq.label} · 회당 ${cpu ? '₩' + Math.round(cpu).toLocaleString() : '-'}</div>` : ''}
+        ${rec ? `<span class="rec-badge ${rec}">${rec === 'cancel' ? '취소 추천' : rec === 'review' ? '검토 필요' : '유지 추천'}</span>` : ''}
       </div>
       <div class="sub-right">
         <div class="sub-cycle">${s.cycle === 'monthly' ? '월' : s.cycle === 'yearly' ? '년' : '주'}</div>
@@ -1149,7 +1315,8 @@ function renderMyList() {
         <button class="btn-del" onclick="deleteSub(${i})">삭제</button>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function updateStats() {
@@ -1179,6 +1346,66 @@ function updateSaving() {
       : '₩' + Math.round(savedAmount).toLocaleString() + '원';
     sub.textContent = '지금까지 절약 성공! 🎉';
   }
+  renderCpuBreakdown();
+}
+
+function renderCpuBreakdown() {
+  const section = document.getElementById('cpu-breakdown-section');
+  if (!section) return;
+
+  // Only show subs that have frequency set
+  const subsWithFreq = mySubscriptions.filter(s => s.frequency);
+  if (!subsWithFreq.length) {
+    section.innerHTML = '';
+    return;
+  }
+
+  // Sort by cost-per-use descending (most expensive first)
+  const sorted = [...subsWithFreq].map(s => ({
+    sub: s,
+    cpu: getCostPerUse(s),
+    rec: getRecommendation(s),
+    freq: FREQUENCY_OPTIONS.find(f => f.value === s.frequency)
+  })).sort((a, b) => (b.cpu || 0) - (a.cpu || 0));
+
+  const maxCpu = sorted[0].cpu || 1;
+
+  // Cancel-recommended subs
+  const cancelSubs = sorted.filter(x => x.rec === 'cancel');
+
+  let html = '<div class="cpu-section">';
+  html += '<div class="cpu-section-title">📊 회당 비용 분석</div>';
+
+  if (cancelSubs.length) {
+    const yearSaving = cancelSubs.reduce((acc, x) => acc + toYearlyKRW(x.sub.price, x.sub.currency, x.sub.cycle), 0);
+    html += `<div class="cancel-callout">
+      <div class="cancel-callout-title">취소하면 연간 ₩${Math.round(yearSaving).toLocaleString()} 절약</div>
+      ${cancelSubs.map(x => `<div class="cancel-callout-item">✕ ${x.sub.emoji} ${x.sub.name} (${x.freq ? x.freq.label : ''} · 회당 ₩${Math.round(x.cpu || 0).toLocaleString()})</div>`).join('')}
+    </div>`;
+  }
+
+  html += sorted.map(({ sub, cpu, rec, freq }) => {
+    const barPct = Math.min(100, Math.round(((cpu || 0) / maxCpu) * 100));
+    const barClass = rec === 'cancel' ? 'dear' : rec === 'review' ? 'mid' : 'cheap';
+    const costClass = rec === 'cancel' ? 'pricey' : rec === 'review' ? 'mid' : 'cheap';
+    const recLabel = rec === 'cancel' ? '취소 추천' : rec === 'review' ? '검토 필요' : '유지 추천';
+    return `
+    <div class="cpu-row">
+      <div class="cpu-row-emoji">${sub.emoji}</div>
+      <div class="cpu-row-info">
+        <div class="cpu-row-name">${sub.name}</div>
+        <div class="cpu-row-freq">${freq ? freq.label : ''} · <span class="cpu-row-cost ${costClass}">회당 ₩${Math.round(cpu || 0).toLocaleString()}</span>
+          <span class="rec-badge ${rec}" style="margin-left:4px;">${recLabel}</span>
+        </div>
+        <div class="cpu-bar-wrap" style="margin-top:6px;">
+          <div class="cpu-bar ${barClass}" style="width:${barPct}%;"></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  html += '</div>';
+  section.innerHTML = html;
 }
 
 function deleteSub(i) {
@@ -1304,8 +1531,32 @@ const PRESETS = [
 
 let selectedPreset = null;
 
+let selectedFrequency = null;
+
+function renderFreqChips(currentFreq) {
+  const container = document.getElementById('freq-chips');
+  if (!container) return;
+  container.innerHTML = FREQUENCY_OPTIONS.map(opt => `
+    <div class="freq-chip${currentFreq === opt.value ? ' active' : ''}"
+         data-freq="${opt.value}" onclick="toggleFreqChip(this, '${opt.value}')">${opt.label}</div>
+  `).join('');
+}
+
+function toggleFreqChip(el, value) {
+  if (selectedFrequency === value) {
+    // Deselect
+    selectedFrequency = null;
+    el.classList.remove('active');
+  } else {
+    selectedFrequency = value;
+    document.querySelectorAll('#freq-chips .freq-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+}
+
 function openAddModal() {
   selectedPreset = null;
+  selectedFrequency = null;
   document.getElementById('input-name').value = '';
   document.getElementById('input-emoji').value = '';
   document.getElementById('input-price').value = '';
@@ -1313,6 +1564,7 @@ function openAddModal() {
   document.getElementById('input-cycle').value = 'monthly';
   document.getElementById('input-billing-day').value = '';
   renderPresets();
+  renderFreqChips(null);
   document.getElementById('add-overlay').classList.add('show');
 }
 
@@ -1355,6 +1607,9 @@ function addSubscription() {
       sub.billingDay = bd;
     }
   }
+  if (selectedFrequency) {
+    sub.frequency = selectedFrequency;
+  }
   mySubscriptions.push(sub);
   localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
   closeAddModal();
@@ -1367,6 +1622,8 @@ function closeAddModal() { document.getElementById('add-overlay').classList.remo
 function closeAddOnBg(e) { if (e.target === document.getElementById('add-overlay')) closeAddModal(); }
 
 // ═══ GMAIL MODAL ═══
+const GMAIL_CLIENT_ID = '779215723693-q7f30fhoqjmau1qeamam60uen5qr7gvp.apps.googleusercontent.com';
+
 function openGmailModal() {
   renderGmailModal();
   document.getElementById('gmail-overlay').classList.add('show');
@@ -1381,82 +1638,22 @@ function closeGmailOnBg(e) {
 }
 
 function renderGmailModal() {
-  const clientId = localStorage.getItem('unsub_gclient');
   const content = document.getElementById('gmail-modal-content');
-
-  if (!clientId) {
-    // State A: Setup
-    content.innerHTML = `
-      <div class="modal-title">Gmail 구독 자동 발견</div>
-      <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">
-        Google Cloud Console에서 OAuth 클라이언트 ID를 발급받아 Gmail에서 구독 이메일을 자동으로 찾아드려요.
-      </p>
-      <div class="gmail-setup-steps">
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">1</div>
-          <p><a href="https://console.cloud.google.com" target="_blank" style="color:var(--primary);font-weight:600;">console.cloud.google.com</a> → 새 프로젝트 만들기</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">2</div>
-          <p>API 및 서비스 → Gmail API 활성화</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">3</div>
-          <p>OAuth 동의 화면 → 외부 → 본인 이메일 테스트 사용자 추가</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">4</div>
-          <p>사용자 인증 정보 → OAuth 2.0 클라이언트 ID → 웹 애플리케이션 → 승인된 JS 원본에 <code>https://timlikeanjimin.github.io</code> 추가</p>
-        </div>
-        <div class="gmail-setup-step">
-          <div class="gmail-setup-step-num">5</div>
-          <p>클라이언트 ID 복사 후 아래에 붙여넣기</p>
-        </div>
-      </div>
-      <div class="gmail-client-row">
-        <input class="form-input" type="text" id="gmail-client-input" placeholder="123456789-xxxx.apps.googleusercontent.com" />
-        <button class="btn-connect" onclick="saveGmailClient()">연결하기</button>
-      </div>
-    `;
-  } else {
-    // State B: Scan
-    const truncated = clientId.length > 30 ? clientId.substring(0, 30) + '…' : clientId;
-    content.innerHTML = `
-      <div class="modal-title">Gmail 스캔</div>
-      <div class="gmail-stored-row">
-        <span style="font-size:18px;">🔑</span>
-        <span class="gmail-stored-id">${truncated}</span>
-        <button class="btn-change" onclick="clearGmailClient()">변경</button>
-      </div>
-      <p style="font-size:13px;color:var(--gray-500);margin-bottom:20px;line-height:1.6;">
-        Gmail에서 구독 관련 이메일을 검색해 구독 서비스를 자동으로 찾아드려요. Google 계정 로그인이 필요해요.
-      </p>
-      <button class="btn-gmail-scan" onclick="startGmailScan()">
-        📧 Gmail 스캔 시작
-      </button>
-      <div id="gmail-scan-result" style="margin-top:20px;"></div>
-    `;
-  }
-}
-
-function saveGmailClient() {
-  const val = document.getElementById('gmail-client-input').value.trim();
-  if (!val) {
-    alert('클라이언트 ID를 입력해주세요.');
-    return;
-  }
-  localStorage.setItem('unsub_gclient', val);
-  renderGmailModal();
-}
-
-function clearGmailClient() {
-  localStorage.removeItem('unsub_gclient');
-  renderGmailModal();
+  content.innerHTML = `
+    <div class="modal-title">Gmail 구독 자동 발견</div>
+    <p style="font-size:14px;color:var(--gray-500);margin-bottom:24px;line-height:1.65;">
+      Google 계정으로 로그인하면 Gmail에서 구독 관련 이메일을 자동으로 찾아드려요. 이메일을 읽기만 하며 다른 어떤 작업도 하지 않아요.
+    </p>
+    <button class="btn-gmail-scan" onclick="startGmailScan()" style="display:flex;align-items:center;justify-content:center;gap:10px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Google로 계속하기
+    </button>
+    <div id="gmail-scan-result" style="margin-top:20px;"></div>
+  `;
 }
 
 function startGmailScan() {
-  const clientId = localStorage.getItem('unsub_gclient');
-  if (!clientId) return;
+  const clientId = GMAIL_CLIENT_ID;
 
   const resultEl = document.getElementById('gmail-scan-result');
   resultEl.innerHTML = `
@@ -1510,7 +1707,7 @@ async function doGmailScan(token, resultEl) {
   `;
 
   try {
-    const query = encodeURIComponent('구독 OR 정기결제 OR subscription OR receipt OR invoice OR 넷플릭스 OR 왓챠 OR spotify OR netflix');
+    const query = encodeURIComponent('정기결제 OR 구독결제 OR 구독 결제 OR 멤버십 결제 OR 이용료 결제 OR subscription receipt OR invoice OR payment confirmation OR label:receipts');
     const listResp = await fetch(
       `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${query}&maxResults=100`,
       { headers: { Authorization: 'Bearer ' + token } }
@@ -1525,11 +1722,11 @@ async function doGmailScan(token, resultEl) {
     resultEl.innerHTML = `
       <div class="spinner-wrap">
         <div class="spinner"></div>
-        <div class="spinner-text">이메일 분석 중 (최대 30개)...</div>
+        <div class="spinner-text">이메일 분석 중 (최대 100개)...</div>
       </div>
     `;
 
-    const messages = listData.messages.slice(0, 30);
+    const messages = listData.messages.slice(0, 100);
     const foundServices = new Map(); // name -> service object
 
     await Promise.all(messages.map(async (msg) => {
@@ -1545,10 +1742,21 @@ async function doGmailScan(token, resultEl) {
         const fromLower = from.toLowerCase();
         const subjectLower = subject.toLowerCase();
 
+        // Google Play 구독 영수증 특별 처리
+        if (fromLower.includes('google') && (subjectLower.includes('google play') || subjectLower.includes('구글 플레이'))) {
+          if (!foundServices.has('Google Play 구독')) {
+            const appMatch = subject.match(/["「『](.+?)["」』]/);
+            const appName = appMatch ? appMatch[1] : 'Google Play 구독';
+            foundServices.set(appName, { name: appName, emoji: '▶️', price: 0, currency: 'KRW', cycle: 'monthly' });
+          }
+        }
+
         // Match against known domains
         GMAIL_DOMAINS.forEach(d => {
           if (foundServices.has(d.name)) return;
           if (fromLower.includes(d.domain)) {
+            // 유튜브 프리미엄은 제목에 "YouTube" 또는 "유튜브"가 있어야 매칭
+            if (d.name === '유튜브 프리미엄' && !subjectLower.includes('youtube') && !subjectLower.includes('유튜브') && !subjectLower.includes('premium')) return;
             foundServices.set(d.name, { name: d.name, emoji: d.emoji, price: d.price, currency: d.currency, cycle: 'monthly' });
             return;
           }
@@ -1562,6 +1770,22 @@ async function doGmailScan(token, resultEl) {
             foundServices.set(s.name, { name: s.name, emoji: s.emoji, price: s.price, currency: s.currency, cycle: s.cycle });
           }
         });
+
+        // 목록에 없는 서비스: 구독/결제 키워드 + 발신자 이름 추출
+        const billingKw = ['정기결제', '구독결제', '이용료', '멤버십', '구독료', 'subscription', 'invoice', 'payment receipt'];
+        const hasBillingKw = billingKw.some(kw => subjectLower.includes(kw));
+        if (hasBillingKw) {
+          const nameMatch = from.match(/^"?([^"<]+?)"?\s*</);
+          const senderName = nameMatch ? nameMatch[1].trim() : null;
+          if (senderName && senderName.length > 1 && senderName.length < 40) {
+            const alreadyMatched = [...foundServices.values()].some(s =>
+              fromLower.includes(s.name.toLowerCase()) || senderName.toLowerCase().includes(s.name.toLowerCase())
+            );
+            if (!alreadyMatched && !foundServices.has(senderName)) {
+              foundServices.set(senderName, { name: senderName, emoji: '💳', price: 0, currency: 'KRW', cycle: 'monthly' });
+            }
+          }
+        }
       } catch (e) {
         // skip individual message errors
       }
@@ -1581,7 +1805,7 @@ async function doGmailScan(token, resultEl) {
           <span class="gmail-result-emoji">${s.emoji}</span>
           <div class="gmail-result-info">
             <div class="gmail-result-name">${s.name}</div>
-            <div class="gmail-result-price">${formatPrice(s.price, s.currency)}/월</div>
+            <div class="gmail-result-price">${s.price > 0 ? formatPrice(s.price, s.currency) + '/월' : '금액 직접 입력 필요'}</div>
           </div>
           ${alreadyAdded ? '<span class="already-badge">이미 추가됨</span>' : ''}
         </div>
@@ -1635,6 +1859,88 @@ function addCheckedGmailSubs(results) {
   renderMyList();
   updateStats();
   alert(addedCount + '개 구독이 추가되었어요!');
+}
+
+// ═══ CHECK-IN MODAL ═══
+function showCheckinBannerIfNeeded() {
+  const banner = document.getElementById('checkin-banner');
+  if (!banner || !mySubscriptions.length) return;
+  const now = new Date();
+  const thisMonth = now.getFullYear() + '-' + (now.getMonth() + 1);
+  const lastCheckin = localStorage.getItem('unsub_last_checkin');
+  if (lastCheckin === thisMonth) {
+    banner.style.display = 'none';
+  } else {
+    banner.style.display = 'flex';
+  }
+}
+
+function openCheckinModal() {
+  const list = document.getElementById('checkin-list');
+  if (!list) return;
+  list.innerHTML = mySubscriptions.map((s, i) => `
+    <div class="checkin-item" id="checkin-item-${i}">
+      <div class="checkin-item-emoji">${s.emoji}</div>
+      <div class="checkin-item-info">
+        <div class="checkin-item-name">${s.name}</div>
+        <div class="checkin-item-price">${formatPrice(s.price, s.currency)}/${s.cycle === 'monthly' ? '월' : s.cycle === 'yearly' ? '년' : '주'}</div>
+      </div>
+      <div class="checkin-item-btns">
+        <button class="btn-checkin-keep" onclick="checkinKeep(${i})">유지</button>
+        <button class="btn-checkin-cancel" onclick="checkinCancel(${i})">취소</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('checkin-overlay').classList.add('show');
+}
+
+function checkinKeep(i) {
+  const item = document.getElementById('checkin-item-' + i);
+  if (item) {
+    item.style.opacity = '0.4';
+    item.querySelector('.checkin-item-btns').innerHTML = '<span style="font-size:12px;color:var(--green);font-weight:700;">유지 ✓</span>';
+  }
+}
+
+function checkinCancel(i) {
+  const s = mySubscriptions[i];
+  if (!s) return;
+  const item = document.getElementById('checkin-item-' + i);
+  if (item) {
+    item.style.opacity = '0.4';
+    item.querySelector('.checkin-item-btns').innerHTML = '<span style="font-size:12px;color:var(--red);font-weight:700;">취소됨</span>';
+  }
+  // Remove from list (update indices carefully by marking)
+  mySubscriptions[i]._checkinCancel = true;
+}
+
+function closeCheckinModal() {
+  // Actually delete marked subs
+  const toDelete = mySubscriptions.filter(s => s._checkinCancel);
+  toDelete.forEach(s => {
+    const yearly = toYearlyKRW(s.price, s.currency, s.cycle);
+    savedAmount += yearly;
+  });
+  mySubscriptions = mySubscriptions.filter(s => !s._checkinCancel);
+  if (toDelete.length) {
+    localStorage.setItem('unsub_saved', savedAmount);
+    localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
+    renderMyList();
+    updateStats();
+    updateSaving();
+  }
+
+  // Mark this month as checked
+  const now = new Date();
+  const thisMonth = now.getFullYear() + '-' + (now.getMonth() + 1);
+  localStorage.setItem('unsub_last_checkin', thisMonth);
+
+  document.getElementById('checkin-overlay').classList.remove('show');
+  showCheckinBannerIfNeeded();
+}
+
+function closeCheckinOnBg(e) {
+  if (e.target === document.getElementById('checkin-overlay')) closeCheckinModal();
 }
 
 // ═══ INIT ═══

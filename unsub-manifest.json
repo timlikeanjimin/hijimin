@@ -1,0 +1,20 @@
+{
+  "name": "UNSUB — 구독 정리",
+  "short_name": "UNSUB",
+  "description": "매달 새나가는 구독료 추적 & 취소 가이드",
+  "start_url": "/hijimin/unsub.html",
+  "scope": "/hijimin/",
+  "display": "standalone",
+  "background_color": "#6366F1",
+  "theme_color": "#6366F1",
+  "lang": "ko",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/hijimin/unsub-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

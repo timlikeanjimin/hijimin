@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "UNSUB",
+    "slug": "unsub",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "com.unsub.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#6366F1"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.unsub.app",
+      "supportsTablet": false
+    },
+    "plugins": [
+      "expo-notifications"
+    ]
+  }
+}

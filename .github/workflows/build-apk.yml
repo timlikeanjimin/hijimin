@@ -1,0 +1,59 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'unsub-app/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: unsub-app/package.json
+
+      - name: Ensure node available system-wide (for Gradle)
+        run: sudo ln -sf "$(which node)" /usr/bin/node && sudo ln -sf "$(which npm)" /usr/bin/npm
+
+      - name: Install dependencies
+        working-directory: unsub-app
+        run: npm install
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Expo prebuild (generate Android project)
+        working-directory: unsub-app
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Make Gradle executable
+        working-directory: unsub-app/android
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        working-directory: unsub-app/android
+        run: ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tail -80
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: UNSUB-debug-${{ github.run_number }}
+          path: unsub-app/android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30

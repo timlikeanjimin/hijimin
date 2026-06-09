@@ -507,6 +507,85 @@
       font-size: 15px; font-weight: 700;
     }
     .gmail-empty { text-align: center; padding: 30px 0; color: var(--gray-400); font-size: 14px; }
+
+    /* Usage frequency chips */
+    .freq-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .freq-chip {
+      padding: 6px 14px; border-radius: 99px; font-size: 13px; font-weight: 500;
+      border: 1.5px solid var(--gray-200); background: #fff; color: var(--gray-500);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .freq-chip.active { border-color: var(--primary); background: var(--primary-light); color: var(--primary); font-weight: 600; }
+
+    /* Cost per use badge on subscription card */
+    .cpu-badge {
+      font-size: 11px; color: var(--gray-400); margin-top: 2px;
+    }
+    .cpu-badge.expensive { color: #DC2626; font-weight: 600; }
+
+    /* Recommendation badge */
+    .rec-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 600; margin-top: 4px;
+    }
+    .rec-badge.cancel { background: #FEE2E2; color: #DC2626; }
+    .rec-badge.review { background: #FEF9C3; color: #CA8A04; }
+    .rec-badge.keep { background: #D1FAE5; color: #059669; }
+
+    /* Monthly check-in banner */
+    .checkin-banner {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      border-radius: 16px; padding: 16px 18px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px; cursor: pointer;
+    }
+    .checkin-banner-icon { font-size: 28px; flex-shrink: 0; }
+    .checkin-banner-text strong { display: block; font-size: 14px; font-weight: 700; color: #fff; }
+    .checkin-banner-text small { font-size: 12px; color: rgba(255,255,255,0.8); }
+
+    /* CPU breakdown in stats */
+    .cpu-section { margin-top: 24px; }
+    .cpu-section-title { font-size: 14px; font-weight: 700; color: var(--gray-700); margin-bottom: 12px; }
+    .cpu-row {
+      background: #fff; border-radius: 12px; padding: 12px 14px;
+      box-shadow: var(--shadow); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .cpu-row-emoji { font-size: 24px; flex-shrink: 0; }
+    .cpu-row-info { flex: 1; min-width: 0; }
+    .cpu-row-name { font-size: 14px; font-weight: 700; }
+    .cpu-row-freq { font-size: 12px; color: var(--gray-500); }
+    .cpu-row-right { text-align: right; flex-shrink: 0; }
+    .cpu-row-cost { font-size: 15px; font-weight: 800; }
+    .cpu-row-cost.cheap { color: var(--green); }
+    .cpu-row-cost.mid { color: var(--amber); }
+    .cpu-row-cost.pricey { color: #DC2626; }
+    .cancel-callout {
+      background: #FEE2E2; border-radius: 12px; padding: 14px 16px;
+      margin-bottom: 16px; border: 1.5px solid #FECACA;
+    }
+    .cancel-callout p { font-size: 13px; color: #DC2626; font-weight: 600; line-height: 1.5; }
+    .cancel-callout-title { font-size: 13px; font-weight: 700; color: #DC2626; margin-bottom: 8px; }
+    .cancel-callout-item { font-size: 13px; color: var(--gray-700); padding: 2px 0; display: flex; align-items: center; gap: 6px; }
+
+    /* Check-in modal */
+    .checkin-item {
+      background: var(--gray-50); border-radius: 12px; padding: 14px;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 12px;
+    }
+    .checkin-item-emoji { font-size: 26px; flex-shrink: 0; }
+    .checkin-item-info { flex: 1; min-width: 0; }
+    .checkin-item-name { font-size: 14px; font-weight: 700; }
+    .checkin-item-price { font-size: 12px; color: var(--gray-500); }
+    .checkin-item-btns { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-checkin-keep {
+      background: var(--green-light); color: var(--green);
+      border-radius: 8px; padding: 6px 10px;
+      font-size: 12px; font-weight: 700;
+    }
+    .btn-checkin-cancel {
+      background: var(--red-light); color: var(--red);
+      border-radius: 8px; padding: 6px 10px;
+      font-size: 12px; font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -624,6 +703,15 @@
 
   <!-- 내 구독 -->
   <div class="panel active" id="panel-my">
+    <!-- Monthly check-in banner -->
+    <div class="checkin-banner" id="checkin-banner" style="display:none;" onclick="openCheckinModal()">
+      <span class="checkin-banner-icon">📋</span>
+      <div class="checkin-banner-text">
+        <strong>이번 달 구독 점검하기</strong>
+        <small>한 달에 한 번 체크해서 불필요한 구독을 찾아요</small>
+      </div>
+    </div>
+
     <!-- Gmail banner (always shown above list/empty) -->
     <div class="gmail-banner" onclick="openGmailModal()">
       <span class="gmail-banner-icon">📧</span>
@@ -659,6 +747,7 @@
       <div class="amount" id="saved-amount">₩0</div>
       <div class="sub" id="saved-sub">아직 취소한 구독이 없어요</div>
     </div>
+    <div id="cpu-breakdown-section"></div>
     <p class="section-label">💡 절약 팁</p>
     <div class="tips-list">
       <div class="tip-card">
@@ -756,6 +845,11 @@
       </select>
     </div>
     <div class="form-group">
+      <label class="form-label">사용 빈도 <span style="color:var(--gray-400);font-weight:400;">(선택)</span></label>
+      <p style="font-size:12px;color:var(--gray-400);margin:-4px 0 10px;">입력하면 회당 비용으로 취소 추천을 분석해드려요</p>
+      <div class="freq-group" id="freq-chips"></div>
+    </div>
+    <div class="form-group">
       <label class="form-label">매월 결제일 (선택)</label>
       <input class="form-input" type="number" id="input-billing-day" placeholder="예: 15 (1~31)" min="1" max="31" />
     </div>
@@ -778,6 +872,18 @@
     <div class="modal-handle"></div>
     <button class="modal-close" onclick="closeGmailModal()">✕</button>
     <div id="gmail-modal-content"></div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: 이번 달 체크인 ═══ -->
+<div class="overlay" id="checkin-overlay" onclick="closeCheckinOnBg(event)">
+  <div class="modal" style="position:relative;">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeCheckinModal()">✕</button>
+    <div class="modal-title">이번 달 구독 점검 📋</div>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6;">각 구독을 계속 유지할지 확인해보세요. 취소하면 해당 구독이 삭제됩니다.</p>
+    <div id="checkin-list"></div>
+    <button class="btn-submit" onclick="closeCheckinModal()" style="margin-top:8px;">완료</button>
   </div>
 </div>
 
@@ -940,6 +1046,31 @@ const GMAIL_DOMAINS = [
   { domain: 'hbo.com', name: 'Max', emoji: '📺', price: 15.99, currency: 'USD' },
 ];
 
+const FREQUENCY_OPTIONS = [
+  { value: 'daily', label: '매일', usesPerMonth: 30 },
+  { value: 'few_weekly', label: '주 2~3회', usesPerMonth: 10 },
+  { value: 'weekly', label: '주 1회', usesPerMonth: 4 },
+  { value: 'monthly', label: '월 1~2회', usesPerMonth: 1.5 },
+  { value: 'rarely', label: '거의 안 씀', usesPerMonth: 0.3 },
+];
+
+function getCostPerUse(sub) {
+  if (!sub.frequency) return null;
+  const opt = FREQUENCY_OPTIONS.find(f => f.value === sub.frequency);
+  if (!opt) return null;
+  const monthly = toMonthlyKRW(sub.price, sub.currency, sub.cycle);
+  return monthly / opt.usesPerMonth;
+}
+
+function getRecommendation(sub) {
+  if (!sub.frequency) return null;
+  const cpu = getCostPerUse(sub);
+  if (sub.frequency === 'rarely') return 'cancel';
+  if (cpu > 5000) return 'cancel';
+  if (cpu > 2000) return 'review';
+  return 'keep';
+}
+
 let mySubscriptions = JSON.parse(localStorage.getItem('unsub_subs') || '[]');
 let savedAmount = parseFloat(localStorage.getItem('unsub_saved') || '0');
 let currentGuideId = null;
@@ -1063,6 +1194,7 @@ function openApp() {
   updateSaving();
   updateBellUI();
   checkUpcomingPayments();
+  showCheckinBannerIfNeeded();
 }
 
 function switchTab(tab) {
@@ -1080,6 +1212,7 @@ function switchTab(tab) {
 function renderMyList() {
   const list = document.getElementById('sub-list');
   const empty = document.getElementById('empty-state');
+  showCheckinBannerIfNeeded();
   if (!mySubscriptions.length) {
     list.style.display = 'none';
     empty.style.display = 'block';
@@ -1087,13 +1220,19 @@ function renderMyList() {
   }
   empty.style.display = 'none';
   list.style.display = 'flex';
-  list.innerHTML = mySubscriptions.map((s, i) => `
+  list.innerHTML = mySubscriptions.map((s, i) => {
+    const cpu = getCostPerUse(s);
+    const rec = getRecommendation(s);
+    const freq = FREQUENCY_OPTIONS.find(f => f.value === s.frequency);
+    return `
     <div class="sub-card">
       <div class="sub-emoji">${s.emoji}</div>
       <div class="sub-info">
         <div class="sub-name">${s.name}</div>
         <div class="sub-meta">${s.cycle === 'monthly' ? '월간' : s.cycle === 'yearly' ? '연간' : '주간'} 결제</div>
         ${s.billingDay ? '<span class="billing-day-badge">매월 ' + s.billingDay + '일</span>' : ''}
+        ${freq ? `<div class="cpu-badge${cpu > 5000 ? ' expensive' : ''}">${freq.label} · 회당 ${cpu ? '₩' + Math.round(cpu).toLocaleString() : '-'}</div>` : ''}
+        ${rec ? `<span class="rec-badge ${rec}">${rec === 'cancel' ? '취소 추천' : rec === 'review' ? '검토 필요' : '유지 추천'}</span>` : ''}
       </div>
       <div class="sub-right">
         <div class="sub-cycle">${s.cycle === 'monthly' ? '월' : s.cycle === 'yearly' ? '년' : '주'}</div>
@@ -1102,7 +1241,8 @@ function renderMyList() {
         <button class="btn-del" onclick="deleteSub(${i})">삭제</button>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function updateStats() {
@@ -1132,6 +1272,66 @@ function updateSaving() {
       : '₩' + Math.round(savedAmount).toLocaleString() + '원';
     sub.textContent = '지금까지 절약 성공! 🎉';
   }
+  renderCpuBreakdown();
+}
+
+function renderCpuBreakdown() {
+  const section = document.getElementById('cpu-breakdown-section');
+  if (!section) return;
+
+  // Only show subs that have frequency set
+  const subsWithFreq = mySubscriptions.filter(s => s.frequency);
+  if (!subsWithFreq.length) {
+    section.innerHTML = '';
+    return;
+  }
+
+  // Sort by cost-per-use descending (most expensive first)
+  const sorted = [...subsWithFreq].map(s => ({
+    sub: s,
+    cpu: getCostPerUse(s),
+    rec: getRecommendation(s),
+    freq: FREQUENCY_OPTIONS.find(f => f.value === s.frequency)
+  })).sort((a, b) => (b.cpu || 0) - (a.cpu || 0));
+
+  const maxCpu = sorted[0].cpu || 1;
+
+  // Cancel-recommended subs
+  const cancelSubs = sorted.filter(x => x.rec === 'cancel');
+
+  let html = '<div class="cpu-section">';
+  html += '<div class="cpu-section-title">📊 회당 비용 분석</div>';
+
+  if (cancelSubs.length) {
+    const yearSaving = cancelSubs.reduce((acc, x) => acc + toYearlyKRW(x.sub.price, x.sub.currency, x.sub.cycle), 0);
+    html += `<div class="cancel-callout">
+      <div class="cancel-callout-title">취소하면 연간 ₩${Math.round(yearSaving).toLocaleString()} 절약</div>
+      ${cancelSubs.map(x => `<div class="cancel-callout-item">✕ ${x.sub.emoji} ${x.sub.name} (${x.freq ? x.freq.label : ''} · 회당 ₩${Math.round(x.cpu || 0).toLocaleString()})</div>`).join('')}
+    </div>`;
+  }
+
+  html += sorted.map(({ sub, cpu, rec, freq }) => {
+    const barPct = Math.min(100, Math.round(((cpu || 0) / maxCpu) * 100));
+    const barClass = rec === 'cancel' ? 'dear' : rec === 'review' ? 'mid' : 'cheap';
+    const costClass = rec === 'cancel' ? 'pricey' : rec === 'review' ? 'mid' : 'cheap';
+    const recLabel = rec === 'cancel' ? '취소 추천' : rec === 'review' ? '검토 필요' : '유지 추천';
+    return `
+    <div class="cpu-row">
+      <div class="cpu-row-emoji">${sub.emoji}</div>
+      <div class="cpu-row-info">
+        <div class="cpu-row-name">${sub.name}</div>
+        <div class="cpu-row-freq">${freq ? freq.label : ''} · <span class="cpu-row-cost ${costClass}">회당 ₩${Math.round(cpu || 0).toLocaleString()}</span>
+          <span class="rec-badge ${rec}" style="margin-left:4px;">${recLabel}</span>
+        </div>
+        <div class="cpu-bar-wrap" style="margin-top:6px;">
+          <div class="cpu-bar ${barClass}" style="width:${barPct}%;"></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  html += '</div>';
+  section.innerHTML = html;
 }
 
 function deleteSub(i) {
@@ -1257,8 +1457,32 @@ const PRESETS = [
 
 let selectedPreset = null;
 
+let selectedFrequency = null;
+
+function renderFreqChips(currentFreq) {
+  const container = document.getElementById('freq-chips');
+  if (!container) return;
+  container.innerHTML = FREQUENCY_OPTIONS.map(opt => `
+    <div class="freq-chip${currentFreq === opt.value ? ' active' : ''}"
+         data-freq="${opt.value}" onclick="toggleFreqChip(this, '${opt.value}')">${opt.label}</div>
+  `).join('');
+}
+
+function toggleFreqChip(el, value) {
+  if (selectedFrequency === value) {
+    // Deselect
+    selectedFrequency = null;
+    el.classList.remove('active');
+  } else {
+    selectedFrequency = value;
+    document.querySelectorAll('#freq-chips .freq-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+}
+
 function openAddModal() {
   selectedPreset = null;
+  selectedFrequency = null;
   document.getElementById('input-name').value = '';
   document.getElementById('input-emoji').value = '';
   document.getElementById('input-price').value = '';
@@ -1266,6 +1490,7 @@ function openAddModal() {
   document.getElementById('input-cycle').value = 'monthly';
   document.getElementById('input-billing-day').value = '';
   renderPresets();
+  renderFreqChips(null);
   document.getElementById('add-overlay').classList.add('show');
 }
 
@@ -1307,6 +1532,9 @@ function addSubscription() {
     if (!isNaN(bd) && bd >= 1 && bd <= 31) {
       sub.billingDay = bd;
     }
+  }
+  if (selectedFrequency) {
+    sub.frequency = selectedFrequency;
   }
   mySubscriptions.push(sub);
   localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
@@ -1556,6 +1784,88 @@ function addCheckedGmailSubs(results) {
   renderMyList();
   updateStats();
   alert(addedCount + '개 구독이 추가되었어요!');
+}
+
+// ═══ CHECK-IN MODAL ═══
+function showCheckinBannerIfNeeded() {
+  const banner = document.getElementById('checkin-banner');
+  if (!banner || !mySubscriptions.length) return;
+  const now = new Date();
+  const thisMonth = now.getFullYear() + '-' + (now.getMonth() + 1);
+  const lastCheckin = localStorage.getItem('unsub_last_checkin');
+  if (lastCheckin === thisMonth) {
+    banner.style.display = 'none';
+  } else {
+    banner.style.display = 'flex';
+  }
+}
+
+function openCheckinModal() {
+  const list = document.getElementById('checkin-list');
+  if (!list) return;
+  list.innerHTML = mySubscriptions.map((s, i) => `
+    <div class="checkin-item" id="checkin-item-${i}">
+      <div class="checkin-item-emoji">${s.emoji}</div>
+      <div class="checkin-item-info">
+        <div class="checkin-item-name">${s.name}</div>
+        <div class="checkin-item-price">${formatPrice(s.price, s.currency)}/${s.cycle === 'monthly' ? '월' : s.cycle === 'yearly' ? '년' : '주'}</div>
+      </div>
+      <div class="checkin-item-btns">
+        <button class="btn-checkin-keep" onclick="checkinKeep(${i})">유지</button>
+        <button class="btn-checkin-cancel" onclick="checkinCancel(${i})">취소</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('checkin-overlay').classList.add('show');
+}
+
+function checkinKeep(i) {
+  const item = document.getElementById('checkin-item-' + i);
+  if (item) {
+    item.style.opacity = '0.4';
+    item.querySelector('.checkin-item-btns').innerHTML = '<span style="font-size:12px;color:var(--green);font-weight:700;">유지 ✓</span>';
+  }
+}
+
+function checkinCancel(i) {
+  const s = mySubscriptions[i];
+  if (!s) return;
+  const item = document.getElementById('checkin-item-' + i);
+  if (item) {
+    item.style.opacity = '0.4';
+    item.querySelector('.checkin-item-btns').innerHTML = '<span style="font-size:12px;color:var(--red);font-weight:700;">취소됨</span>';
+  }
+  // Remove from list (update indices carefully by marking)
+  mySubscriptions[i]._checkinCancel = true;
+}
+
+function closeCheckinModal() {
+  // Actually delete marked subs
+  const toDelete = mySubscriptions.filter(s => s._checkinCancel);
+  toDelete.forEach(s => {
+    const yearly = toYearlyKRW(s.price, s.currency, s.cycle);
+    savedAmount += yearly;
+  });
+  mySubscriptions = mySubscriptions.filter(s => !s._checkinCancel);
+  if (toDelete.length) {
+    localStorage.setItem('unsub_saved', savedAmount);
+    localStorage.setItem('unsub_subs', JSON.stringify(mySubscriptions));
+    renderMyList();
+    updateStats();
+    updateSaving();
+  }
+
+  // Mark this month as checked
+  const now = new Date();
+  const thisMonth = now.getFullYear() + '-' + (now.getMonth() + 1);
+  localStorage.setItem('unsub_last_checkin', thisMonth);
+
+  document.getElementById('checkin-overlay').classList.remove('show');
+  showCheckinBannerIfNeeded();
+}
+
+function closeCheckinOnBg(e) {
+  if (e.target === document.getElementById('checkin-overlay')) closeCheckinModal();
 }
 
 // ═══ INIT ═══

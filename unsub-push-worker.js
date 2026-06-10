@@ -51,8 +51,8 @@ async function encryptPush(subscription, payload) {
   const prkKey = await hkdfExtract(auth, ecdh);
   const ikm    = await hkdfExpand(prkKey, concat(enc.encode('WebPush: info\x00'), uaPub, asPub), 32);
   const prk2   = await hkdfExtract(salt, ikm);
-  const cek    = await hkdfExpand(prk2, concat(enc.encode('Content-Encoding: aes128gcm\x00'), new Uint8Array([1])), 16);
-  const nonce  = await hkdfExpand(prk2, concat(enc.encode('Content-Encoding: nonce\x00'), new Uint8Array([1])), 12);
+  const cek    = await hkdfExpand(prk2, enc.encode('Content-Encoding: aes128gcm\x00'), 16);
+  const nonce  = await hkdfExpand(prk2, enc.encode('Content-Encoding: nonce\x00'), 12);
 
   const ck = await crypto.subtle.importKey('raw', cek, 'AES-GCM', false, ['encrypt']);
   const ct = new Uint8Array(await crypto.subtle.encrypt(

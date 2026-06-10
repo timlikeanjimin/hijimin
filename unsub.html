@@ -1118,7 +1118,10 @@ function updateBellUI() {
   const btn = document.getElementById('btn-bell');
   if (!btn) return;
   if (!('Notification' in window)) {
-    btn.style.display = 'none';
+    // Keep the bell visible so tapping it explains how to enable
+    // notifications (e.g. iOS requires adding to home screen first)
+    btn.classList.add('needs-permission');
+    btn.classList.remove('granted');
     return;
   }
   if (Notification.permission === 'granted') {
@@ -1131,8 +1134,13 @@ function updateBellUI() {
 }
 
 function handleBellClick() {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   if (!('Notification' in window)) {
-    alert('이 브라우저는 알림을 지원하지 않아요.');
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !isStandalone) {
+      alert('아이폰에서는 홈 화면에 추가한 앱에서만 알림이 가능해요.\n\n1. Safari 하단 공유 버튼(⬆️) 탭\n2. "홈 화면에 추가" 선택\n3. 홈 화면의 UNSUB 아이콘으로 다시 열기\n4. 벨 버튼 다시 누르기');
+    } else {
+      alert('이 브라우저는 알림을 지원하지 않아요.');
+    }
     return;
   }
   if (Notification.permission === 'granted') {
@@ -1140,11 +1148,22 @@ function handleBellClick() {
     showPushOptions();
     return;
   }
+  if (Notification.permission === 'denied') {
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+      alert('알림이 거부된 상태예요.\n\n가장 쉬운 해결 방법:\n1. 홈 화면에서 UNSUB 아이콘 삭제\n2. Safari에서 다시 접속 → 홈 화면에 추가\n3. 새 아이콘으로 열어서 벨 버튼 누르기\n\n또는: 설정 → 알림 → UNSUB에서 허용으로 변경');
+    } else {
+      alert('알림이 거부된 상태예요.\n브라우저 주소창의 자물쇠/설정 아이콘에서 알림을 허용으로 바꿔주세요.');
+    }
+    return;
+  }
   Notification.requestPermission().then(perm => {
     updateBellUI();
     if (perm === 'granted') {
       checkUpcomingPayments();
       syncPushSubscription();
+      alert('알림이 켜졌어요! 🎉\n벨 버튼을 다시 누르면 테스트 알림을 보낼 수 있어요.');
+    } else if (perm === 'denied') {
+      alert('알림이 거부됐어요. 나중에 마음이 바뀌면 벨 버튼을 다시 눌러 안내를 확인하세요.');
     }
   });
 }

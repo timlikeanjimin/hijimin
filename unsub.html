@@ -846,7 +846,7 @@
     </div>
     <div class="form-group">
       <label class="form-label">사용 빈도 <span style="color:var(--gray-400);font-weight:400;">(선택)</span></label>
-      <p style="font-size:12px;color:var(--gray-400);margin:-4px 0 10px;">입력하면 회당 비용으로 취소 추천을 분석해드려요</p>
+      <p style="font-size:12px;color:var(--gray-400);margin:-4px 0 10px;">입력하면 "한 번 쓸 때 얼마인지" 계산해서 취소 추천을 분석해드려요</p>
       <div class="freq-group" id="freq-chips"></div>
     </div>
     <div class="form-group">
@@ -1325,7 +1325,7 @@ function renderMyList() {
         <div class="sub-name">${s.name}</div>
         <div class="sub-meta">${s.cycle === 'monthly' ? '월간' : s.cycle === 'yearly' ? '연간' : '주간'} 결제</div>
         ${s.billingDay ? '<span class="billing-day-badge">매월 ' + s.billingDay + '일</span>' : ''}
-        ${freq ? `<div class="cpu-badge${cpu > 5000 ? ' expensive' : ''}">${freq.label} · 회당 ${cpu ? '₩' + Math.round(cpu).toLocaleString() : '-'}</div>` : ''}
+        ${freq ? `<div class="cpu-badge${cpu > 5000 ? ' expensive' : ''}">${freq.label} · 한 번 쓸 때마다 ${cpu ? '₩' + Math.round(cpu).toLocaleString() : '-'} 내는 셈</div>` : ''}
         ${rec ? `<span class="rec-badge ${rec}">${rec === 'cancel' ? '취소 추천' : rec === 'review' ? '검토 필요' : '유지 추천'}</span>` : ''}
       </div>
       <div class="sub-right">
@@ -1394,13 +1394,13 @@ function renderCpuBreakdown() {
   const cancelSubs = sorted.filter(x => x.rec === 'cancel');
 
   let html = '<div class="cpu-section">';
-  html += '<div class="cpu-section-title">📊 회당 비용 분석</div>';
+  html += '<div class="cpu-section-title">📊 한 번 쓸 때 얼마? — 사용 빈도 분석</div>';
 
   if (cancelSubs.length) {
     const yearSaving = cancelSubs.reduce((acc, x) => acc + toYearlyKRW(x.sub.price, x.sub.currency, x.sub.cycle), 0);
     html += `<div class="cancel-callout">
       <div class="cancel-callout-title">취소하면 연간 ₩${Math.round(yearSaving).toLocaleString()} 절약</div>
-      ${cancelSubs.map(x => `<div class="cancel-callout-item">✕ ${x.sub.emoji} ${x.sub.name} (${x.freq ? x.freq.label : ''} · 회당 ₩${Math.round(x.cpu || 0).toLocaleString()})</div>`).join('')}
+      ${cancelSubs.map(x => `<div class="cancel-callout-item">✕ ${x.sub.emoji} ${x.sub.name} (${x.freq ? x.freq.label : ''} · 한 번에 ₩${Math.round(x.cpu || 0).toLocaleString()} 꼴)</div>`).join('')}
     </div>`;
   }
 
@@ -1414,7 +1414,7 @@ function renderCpuBreakdown() {
       <div class="cpu-row-emoji">${sub.emoji}</div>
       <div class="cpu-row-info">
         <div class="cpu-row-name">${sub.name}</div>
-        <div class="cpu-row-freq">${freq ? freq.label : ''} · <span class="cpu-row-cost ${costClass}">회당 ₩${Math.round(cpu || 0).toLocaleString()}</span>
+        <div class="cpu-row-freq">${freq ? freq.label : ''} · <span class="cpu-row-cost ${costClass}">한 번에 ₩${Math.round(cpu || 0).toLocaleString()} 꼴</span>
           <span class="rec-badge ${rec}" style="margin-left:4px;">${recLabel}</span>
         </div>
         <div class="cpu-bar-wrap" style="margin-top:6px;">

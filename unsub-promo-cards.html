@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNSUB 홍보 카드</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0f0f0;
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* ── Card base ────────────────────────────────── */
+  .card {
+    width: 540px;
+    height: 540px;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 44px 48px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    flex-shrink: 0;
+  }
+
+  /* ── Card 1 — 로그인 없이 시작 ── */
+  .card-1 {
+    background: linear-gradient(145deg, #e8f4ff 0%, #f5f0ff 60%, #ffe8f7 100%);
+  }
+  .card-1 .mockup {
+    position: absolute;
+    top: -20px;
+    right: -30px;
+    width: 260px;
+    height: 420px;
+    background: linear-gradient(160deg, #ffffff 0%, #f0e8ff 100%);
+    border-radius: 36px;
+    box-shadow: 0 16px 48px rgba(100,60,200,0.18);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 16px;
+    gap: 10px;
+    transform: rotate(6deg);
+  }
+  .card-1 .mockup-row {
+    height: 12px;
+    border-radius: 8px;
+    background: #e2d8f5;
+  }
+  .card-1 .mockup-row.accent { background: #b39ddb; width: 60%; }
+  .card-1 .mockup-item {
+    height: 52px;
+    border-radius: 14px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .card-1 .mockup-icon {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #c5a3ff, #9b6dff);
+    flex-shrink: 0;
+  }
+  .card-1 .mockup-text { flex: 1; }
+  .card-1 .mockup-line { height: 8px; border-radius: 4px; background: #e8e0f5; }
+  .card-1 .mockup-line.short { width: 55%; margin-top: 4px; }
+
+  /* ── Card 2 — 진짜 비용 ── */
+  .card-2 {
+    background: linear-gradient(145deg, #fff7e6 0%, #fff0d6 50%, #ffecd0 100%);
+  }
+  .card-2 .mockup {
+    position: absolute;
+    top: 30px;
+    right: -20px;
+    width: 240px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(200,100,0,0.14);
+    padding: 20px;
+    transform: rotate(4deg);
+  }
+  .card-2 .cost-label {
+    font-size: 11px;
+    color: #aaa;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .card-2 .cost-big {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ff6b00;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .card-2 .cost-sub {
+    font-size: 12px;
+    color: #999;
+  }
+  .card-2 .divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 14px 0;
+  }
+  .card-2 .bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .card-2 .bar-item { display: flex; flex-direction: column; gap: 3px; }
+  .card-2 .bar-name { font-size: 10px; color: #bbb; font-weight: 600; }
+  .card-2 .bar-track { height: 8px; border-radius: 4px; background: #f0f0f0; }
+  .card-2 .bar-fill { height: 8px; border-radius: 4px; }
+  .card-2 .bar-fill.red { background: linear-gradient(90deg, #ff6b00, #ff9940); width: 85%; }
+  .card-2 .bar-fill.orange { background: linear-gradient(90deg, #ffb347, #ffd080); width: 55%; }
+  .card-2 .bar-fill.yellow { background: linear-gradient(90deg, #ffd000, #ffe066); width: 30%; }
+
+  /* ── Card 3 — 백그라운드 알림 ── */
+  .card-3 {
+    background: linear-gradient(145deg, #e6fff5 0%, #d6f5ff 60%, #e0eeff 100%);
+  }
+  .card-3 .notif-stack {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 240px;
+  }
+  .card-3 .notif {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 24px rgba(0,150,100,0.12);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transform: translateX(20px);
+    transition: transform 0.3s;
+  }
+  .card-3 .notif:first-child { transform: translateX(0); }
+  .card-3 .notif-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .card-3 .notif-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  .card-3 .notif-body {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.4;
+  }
+  .card-3 .notif-time {
+    font-size: 10px;
+    color: #bbb;
+    margin-top: 3px;
+  }
+
+  /* ── Card 4 — 해지 가이드 ── */
+  .card-4 {
+    background: linear-gradient(145deg, #fff0f5 0%, #ffe8f0 50%, #ffdde8 100%);
+  }
+  .card-4 .guide-card {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    width: 230px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(200,0,80,0.12);
+    overflow: hidden;
+    transform: rotate(3deg);
+  }
+  .card-4 .guide-header {
+    background: linear-gradient(135deg, #ff4d80, #ff8fab);
+    padding: 16px 18px;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .card-4 .guide-steps {
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .card-4 .guide-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-4 .step-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff4d80, #ff8fab);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-4 .step-text {
+    font-size: 12px;
+    color: #444;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .card-4 .service-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 18px 14px;
+  }
+  .card-4 .chip {
+    font-size: 10px;
+    font-weight: 600;
+    color: #ff4d80;
+    background: #fff0f5;
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+
+  /* ── Card 5 — Summary / CTA ── */
+  .card-5 {
+    background: linear-gradient(160deg, #2a1a4a 0%, #1a1a3a 50%, #0d1a2e 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 48px;
+  }
+  .card-5 .logo-wrap {
+    width: 72px; height: 72px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #9b6dff, #ff6b9d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+  }
+  .card-5 .app-name {
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .card-5 .app-tagline {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .card-5 .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    width: 100%;
+    margin-bottom: 36px;
+  }
+  .card-5 .feat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .card-5 .feat-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .card-5 .feat-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    line-height: 1.35;
+  }
+  .card-5 .feat-text em {
+    font-style: normal;
+    color: white;
+    font-weight: 700;
+  }
+  .card-5 .cta-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #9b6dff, #ff6b9d);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* ── Text overlays shared ────────────────────── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    width: fit-content;
+  }
+  .badge-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+  .badge-dot.purple { background: #9b6dff; }
+  .badge-dot.orange { background: #ff6b00; }
+  .badge-dot.teal   { background: #00c896; }
+  .badge-dot.pink   { background: #ff4d80; }
+
+  .headline {
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1.25;
+    color: #111;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+  }
+  .headline em {
+    font-style: normal;
+  }
+  .hl-purple { color: #7c3aff; }
+  .hl-orange { color: #ff6b00; }
+  .hl-teal   { color: #00a87a; }
+  .hl-pink   { color: #ff1a6e; }
+
+  .subtitle {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.55;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Print / download helper ─────────────────── */
+  .card-label {
+    font-size: 13px;
+    color: #999;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     CARD 1  로그인 없이, 지금 바로
+═══════════════════════════════════════════════ -->
+<div class="wrapper">
+  <span class="card-label">Card 1 of 5</span>
+  <div class="card card-1">
+
+    <!-- phone mockup -->
+    <div class="mockup">
+      <div class="mockup-row accent"></div>
+      <div class="mockup-row" style="width:40%"></div>
+      <div style="height:8px"></div>
+      <div class="mockup-item">
+        <div class="mockup-icon"></div>
+        <div class="mockup-text">
+          <div class="mockup-line"></div>
+          <div class="mockup-line short"></div>
+        </div>
+      </div>
+      <div class="mockup-item">
+        <div class="mockup-icon" style="background:linear-gradient(135deg,#a5d8ff,#6ab0ff)"></div>
+        <div class="mockup-text">
+          <div class="mockup-line"></div>
+          <div class="mockup-line short"></div>
+        </div>
+      </div>
+      <div class="mockup-item">
+        <div class="mockup-icon" style="background:linear-gradient(135deg,#ffd3a5,#ffb060)"></div>
+        <div class="mockup-text">
+          <div class="mockup-line"></div>
+          <div class="mockup-line short"></div>
+        </div>
+      </div>
+      <div style="height:12px"></div>
+      <div style="height:44px;border-radius:14px;background:linear-gradient(90deg,#c5a3ff,#9b6dff);display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:700;">월 ₩47,500</div>
+    </div>
+
+    <div class="badge"><span class="badge-dot purple"></span> 회원가입 불필요</div>
+    <div class="headline">앱 열면<br><em class="hl-purple">바로 시작</em>해요</div>
+    <div class="subtitle">로그인 없이, 내 구독만 입력하면<br>월 지출이 바로 보여요</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CARD 2  진짜 비용 계산
+═══════════════════════════════════════════════ -->
+<div class="wrapper">
+  <span class="card-label">Card 2 of 5</span>
+  <div class="card card-2">
+
+    <div class="mockup">
+      <div class="cost-label">📊 사용 빈도 분석</div>
+      <div class="cost-big">₩833</div>
+      <div class="cost-sub">한 번 볼 때마다 내는 셈</div>
+      <div class="divider"></div>
+      <div class="bar-row">
+        <div class="bar-item">
+          <div class="bar-name">넷플릭스</div>
+          <div class="bar-track"><div class="bar-fill red"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-name">유튜브 프리미엄</div>
+          <div class="bar-track"><div class="bar-fill orange"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-name">밀리의서재</div>
+          <div class="bar-track"><div class="bar-fill yellow"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="badge"><span class="badge-dot orange"></span> 진짜 비용 계산</div>
+    <div class="headline">"얼마나 쓰는지"<br><em class="hl-orange">계산해드려요</em></div>
+    <div class="subtitle">월 요금을 사용 횟수로 나눠<br>한 번에 실제로 얼마 내는지 보여줘요</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CARD 3  앱 꺼도 알림 와요
+═══════════════════════════════════════════════ -->
+<div class="wrapper">
+  <span class="card-label">Card 3 of 5</span>
+  <div class="card card-3">
+
+    <div class="notif-stack">
+      <div class="notif">
+        <div class="notif-icon">⏰</div>
+        <div>
+          <div class="notif-title">내일 결제 예정</div>
+          <div class="notif-body">🎵 Spotify Premium — ₩10,900<br>📺 왓챠 — ₩7,900</div>
+          <div class="notif-time">방금 전</div>
+        </div>
+      </div>
+      <div class="notif" style="transform:translateX(16px)">
+        <div class="notif-icon">💳</div>
+        <div>
+          <div class="notif-title">오늘 결제일이에요!</div>
+          <div class="notif-body">📺 넷플릭스 — ₩17,000</div>
+          <div class="notif-time">1분 전</div>
+        </div>
+      </div>
+      <div class="notif" style="transform:translateX(32px);opacity:0.6">
+        <div class="notif-icon">💸</div>
+        <div>
+          <div class="notif-title">이번 달 구독료</div>
+          <div class="notif-body">총 ₩47,500 나가요</div>
+          <div class="notif-time">3분 전</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="badge"><span class="badge-dot teal"></span> 백그라운드 알림</div>
+    <div class="headline">앱 꺼도<br><em class="hl-teal">알림 와요</em></div>
+    <div class="subtitle">결제 전날, 당일 — 놓치지 않게<br>백그라운드에서 미리 알려드려요</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CARD 4  해지 방법도 알려줘요
+═══════════════════════════════════════════════ -->
+<div class="wrapper">
+  <span class="card-label">Card 4 of 5</span>
+  <div class="card card-4">
+
+    <div class="guide-card">
+      <div class="guide-header">📋 넷플릭스 해지 방법</div>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="step-num">1</div>
+          <div class="step-text">넷플릭스 앱 → 프로필 탭</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">2</div>
+          <div class="step-text">계정 → 멤버십 취소</div>
+        </div>
+        <div class="guide-step">
+          <div class="step-num">3</div>
+          <div class="step-text">취소 완료! 월말까지 이용 가능</div>
+        </div>
+      </div>
+      <div class="service-chips">
+        <div class="chip">넷플릭스</div>
+        <div class="chip">유튜브</div>
+        <div class="chip">왓챠</div>
+        <div class="chip">밀리</div>
+        <div class="chip">웨이브</div>
+        <div class="chip">+7개</div>
+      </div>
+    </div>
+
+    <div class="badge"><span class="badge-dot pink"></span> 해지 가이드</div>
+    <div class="headline">해지 방법,<br><em class="hl-pink">앱이 알려줘요</em></div>
+    <div class="subtitle">12개 서비스 해지 절차를 단계별로<br>직접 안내해드려요</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     CARD 5  Summary CTA
+═══════════════════════════════════════════════ -->
+<div class="wrapper">
+  <span class="card-label">Card 5 of 5</span>
+  <div class="card card-5">
+    <div class="logo-wrap">✂️</div>
+    <div class="app-name">UNSUB</div>
+    <div class="app-tagline">구독 정리, 이제 한 곳에서</div>
+
+    <div class="feature-list">
+      <div class="feat">
+        <div class="feat-icon">🚀</div>
+        <div class="feat-text"><em>로그인 없이</em> 바로 시작 — 가입 불필요</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📊</div>
+        <div class="feat-text">한 번 쓸 때마다 <em>얼마인지 계산</em>해드려요</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔔</div>
+        <div class="feat-text">앱 꺼도 <em>결제일 전날 미리 알림</em></div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📋</div>
+        <div class="feat-text">12개 서비스 <em>단계별 해지 가이드</em></div>
+      </div>
+    </div>
+
+    <div class="cta-btn">지금 바로 써보기 — 무료</div>
+  </div>
+</div>
+
+</body>
+</html>

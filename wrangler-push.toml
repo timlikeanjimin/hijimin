@@ -6,8 +6,7 @@ compatibility_date = "2024-01-01"
 [triggers]
 crons = ["0 0 * * *"]
 
-# KV namespace for storing push subscriptions
-# 👇 Cloudflare 대시보드에서 KV 네임스페이스 만든 후 ID를 여기에 넣으세요
+# KV namespace for storing push subscriptions (auto-created by deploy workflow)
 [[kv_namespaces]]
 binding = "PUSH_KV"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "3deb12588a364ec9833d9fe4467b6aae"

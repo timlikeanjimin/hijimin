@@ -6,17 +6,53 @@ on:
     paths:
       - 'unsub-push-worker.js'
       - 'wrangler-push.toml'
+      - '.github/workflows/deploy-push-worker.yml'
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          configPath: wrangler-push.toml
+          node-version: '20'
+
+      - name: Install Wrangler
+        run: npm install -g wrangler@3.90.0
+
+      - name: Ensure KV namespace exists and patch config
+        run: |
+          set -e
+          LIST=$(wrangler kv namespace list 2>/dev/null || echo '[]')
+          ID=$(echo "$LIST" | node -e "
+            let d='';
+            process.stdin.on('data', c => d += c).on('end', () => {
+              try {
+                const arr = JSON.parse(d);
+                const ns = arr.find(x => x.title && x.title.includes('PUSH_KV'));
+                console.log(ns ? ns.id : '');
+              } catch (e) { console.log(''); }
+            });
+          ")
+          if [ -z "$ID" ]; then
+            echo "Creating KV namespace PUSH_KV..."
+            OUT=$(wrangler kv namespace create PUSH_KV --config wrangler-push.toml 2>&1) || true
+            echo "$OUT"
+            ID=$(echo "$OUT" | grep -oE '[0-9a-f]{32}' | head -1)
+          fi
+          if [ -z "$ID" ]; then
+            echo "::error::Failed to find or create KV namespace"
+            exit 1
+          fi
+          echo "Using KV namespace ID: $ID"
+          sed -i "s/REPLACE_WITH_YOUR_KV_NAMESPACE_ID/$ID/" wrangler-push.toml
+          cat wrangler-push.toml
+
+      - name: Deploy to Cloudflare Workers
+        run: wrangler deploy --config wrangler-push.toml

@@ -911,18 +911,24 @@ const SERVICE_ICONS = {
   'adobe-cc':     `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#FF0000"/><text x="24" y="33" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" text-anchor="middle" fill="white">Cc</text></svg>`,
 };
 
+function resolveIcon(s) {
+  if (SERVICE_ICONS[s.id]) return SERVICE_ICONS[s.id];
+  const match = SERVICES.find(x => x.name === s.name);
+  if (match && SERVICE_ICONS[match.id]) return SERVICE_ICONS[match.id];
+  return null;
+}
 function getServiceIcon(s, extraClass = '') {
-  const svg = SERVICE_ICONS[s.id];
+  const svg = resolveIcon(s);
   if (svg) return `<div class="sub-emoji has-svg${extraClass ? ' ' + extraClass : ''}">${svg}</div>`;
   return `<div class="sub-emoji${extraClass ? ' ' + extraClass : ''}">${s.emoji}</div>`;
 }
 function getGuideIcon(s) {
-  const svg = SERVICE_ICONS[s.id];
+  const svg = resolveIcon(s);
   if (svg) return `<div class="guide-emoji has-svg">${svg}</div>`;
   return `<div class="guide-emoji">${s.emoji}</div>`;
 }
 function getCpuIcon(s) {
-  const svg = SERVICE_ICONS[s.id];
+  const svg = resolveIcon(s);
   if (svg) return `<div class="cpu-row-emoji has-svg">${svg}</div>`;
   return `<div class="cpu-row-emoji">${s.emoji}</div>`;
 }

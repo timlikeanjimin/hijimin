@@ -223,6 +223,9 @@
       display: flex; align-items: center; gap: 14px;
     }
     .sub-emoji { font-size: 32px; flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: var(--gray-100); border-radius: 12px; }
+    .sub-emoji.has-svg, .guide-emoji.has-svg, .cpu-row-emoji.has-svg { background: none; padding: 0; }
+    .sub-emoji.has-svg svg, .guide-emoji.has-svg svg { width: 48px; height: 48px; display: block; }
+    .cpu-row-emoji.has-svg svg { width: 32px; height: 32px; display: block; }
     .sub-info { flex: 1; min-width: 0; }
     .sub-name { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
     .sub-meta { font-size: 12px; color: var(--gray-500); }
@@ -888,6 +891,42 @@
 </div>
 
 <script>
+// ═══ SERVICE ICONS ═══
+const SERVICE_ICONS = {
+  'netflix-kr':   `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#141414"/><text x="24" y="36" font-family="Arial Black,sans-serif" font-size="30" font-weight="900" text-anchor="middle" fill="#E50914">N</text></svg>`,
+  'netflix-en':   `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#141414"/><text x="24" y="36" font-family="Arial Black,sans-serif" font-size="30" font-weight="900" text-anchor="middle" fill="#E50914">N</text></svg>`,
+  'youtube-kr':   `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#FF0000"/><polygon points="18,14 36,24 18,34" fill="white"/></svg>`,
+  'coupangplay':  `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#01BFA5"/><text x="23" y="35" font-family="Arial Black,sans-serif" font-size="27" font-weight="900" text-anchor="middle" fill="white">C</text><polygon points="30,18 38,24 30,30" fill="white"/></svg>`,
+  'watcha':       `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#FF3131"/><text x="24" y="35" font-family="Arial Black,sans-serif" font-size="24" font-weight="900" text-anchor="middle" fill="white">W</text></svg>`,
+  'wavve':        `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1769FF"/><path d="M8 22 Q14 15 20 22 Q26 29 32 22 Q38 15 44 22" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M8 30 Q14 23 20 30 Q26 37 32 30 Q38 23 44 30" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  'tving':        `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#F50000"/><text x="24" y="36" font-family="Arial Black,sans-serif" font-size="28" font-weight="900" text-anchor="middle" fill="white">T</text></svg>`,
+  'melon':        `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#00C457"/><text x="24" y="35" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" text-anchor="middle" fill="white">M</text></svg>`,
+  'spotify-kr':   `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1DB954"/><path d="M12 19 Q24 13 36 19" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M12 25 Q24 19 36 25" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M12 31 Q24 25 36 31" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  'spotify-en':   `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1DB954"/><path d="M12 19 Q24 13 36 19" stroke="white" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M12 25 Q24 19 36 25" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M12 31 Q24 25 36 31" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  'millie':       `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#FF6B00"/><rect x="14" y="13" width="9" height="23" rx="3" fill="white"/><rect x="25" y="13" width="9" height="23" rx="3" fill="rgba(255,255,255,0.65)"/></svg>`,
+  'ridi':         `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#1A56DB"/><text x="24" y="35" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" text-anchor="middle" fill="white">R</text></svg>`,
+  'amazon-prime': `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#232F3E"/><text x="24" y="31" font-family="Georgia,serif" font-size="22" font-weight="700" text-anchor="middle" fill="#FF9900">a</text><path d="M14 37 Q24 42 34 37" stroke="#FF9900" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  'disney-plus':  `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#113CCF"/><text x="19" y="34" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" text-anchor="middle" fill="white">D</text><text x="37" y="34" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" text-anchor="middle" fill="#1EC8EE">+</text></svg>`,
+  'chatgpt-plus': `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#10A37F"/><text x="24" y="30" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" text-anchor="middle" fill="white">GPT</text><text x="24" y="42" font-family="Arial Black,sans-serif" font-size="10" font-weight="700" text-anchor="middle" fill="rgba(255,255,255,0.7)">PLUS</text></svg>`,
+  'adobe-cc':     `<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="12" fill="#FF0000"/><text x="24" y="33" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" text-anchor="middle" fill="white">Cc</text></svg>`,
+};
+
+function getServiceIcon(s, extraClass = '') {
+  const svg = SERVICE_ICONS[s.id];
+  if (svg) return `<div class="sub-emoji has-svg${extraClass ? ' ' + extraClass : ''}">${svg}</div>`;
+  return `<div class="sub-emoji${extraClass ? ' ' + extraClass : ''}">${s.emoji}</div>`;
+}
+function getGuideIcon(s) {
+  const svg = SERVICE_ICONS[s.id];
+  if (svg) return `<div class="guide-emoji has-svg">${svg}</div>`;
+  return `<div class="guide-emoji">${s.emoji}</div>`;
+}
+function getCpuIcon(s) {
+  const svg = SERVICE_ICONS[s.id];
+  if (svg) return `<div class="cpu-row-emoji has-svg">${svg}</div>`;
+  return `<div class="cpu-row-emoji">${s.emoji}</div>`;
+}
+
 // ═══ DATA ═══
 const SERVICES = [
   // 한국
@@ -1320,7 +1359,7 @@ function renderMyList() {
     const freq = FREQUENCY_OPTIONS.find(f => f.value === s.frequency);
     return `
     <div class="sub-card">
-      <div class="sub-emoji">${s.emoji}</div>
+      ${getServiceIcon(s)}
       <div class="sub-info">
         <div class="sub-name">${s.name}</div>
         <div class="sub-meta">${s.cycle === 'monthly' ? '월간' : s.cycle === 'yearly' ? '연간' : '주간'} 결제</div>
@@ -1411,7 +1450,7 @@ function renderCpuBreakdown() {
     const recLabel = rec === 'cancel' ? '취소 추천' : rec === 'review' ? '검토 필요' : '유지 추천';
     return `
     <div class="cpu-row">
-      <div class="cpu-row-emoji">${sub.emoji}</div>
+      ${getCpuIcon(sub)}
       <div class="cpu-row-info">
         <div class="cpu-row-name">${sub.name}</div>
         <div class="cpu-row-freq">${freq ? freq.label : ''} · <span class="cpu-row-cost ${costClass}">한 번에 ₩${Math.round(cpu || 0).toLocaleString()} 꼴</span>
@@ -1468,7 +1507,7 @@ function renderGuides(filter) {
 function guideCard(s) {
   return `
     <div class="guide-card">
-      <div class="guide-emoji">${s.emoji}</div>
+      ${getGuideIcon(s)}
       <div class="guide-info">
         <div class="guide-name">${s.name}</div>
         <div class="guide-price">${formatPrice(s.price, s.currency)}/${s.cycle === 'monthly' ? '월' : s.cycle === 'yearly' ? '년' : '주'}</div>

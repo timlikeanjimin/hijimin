@@ -1,0 +1,19 @@
+{
+  "name": "사령관의 타워디펜스",
+  "short_name": "타워디펜스",
+  "description": "혼자 즐기는 오프라인 타워디펜스. 5개 스테이지를 사수하라!",
+  "start_url": "./game.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "icons": [
+    {
+      "src": "game-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

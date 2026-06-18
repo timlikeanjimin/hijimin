@@ -28,7 +28,7 @@ let html = src.slice(first + 1, last);
 const shim = [
   '<script>',
   '(function(){',
-  '  var KEY="commander_td_save_v1";',
+  '  var KEY="spark_survivor_save_v1";',
   '  try{ window.__SAVE__=JSON.parse(localStorage.getItem(KEY))||{}; }catch(e){ window.__SAVE__={}; }',
   '  window.ReactNativeWebView={ postMessage:function(s){ try{ var m=JSON.parse(s); if(m&&m.type==="save"&&m.save) localStorage.setItem(KEY,JSON.stringify(m.save)); }catch(e){} } };',
   '})();',
@@ -39,10 +39,10 @@ const shim = [
 const head = [
   '<meta name="apple-mobile-web-app-capable" content="yes" />',
   '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />',
-  '<meta name="apple-mobile-web-app-title" content="사령관의 타워디펜스" />',
+  '<meta name="apple-mobile-web-app-title" content="스파크 서바이버" />',
   '<meta name="mobile-web-app-capable" content="yes" />',
-  '<meta name="theme-color" content="#0b1020" />',
-  '<meta name="description" content="사령관의 타워디펜스 — 혼자 즐기는 오프라인 타워디펜스. iPhone/안드로이드 브라우저에서 바로 플레이." />',
+  '<meta name="theme-color" content="#16161F" />',
+  '<meta name="description" content="스파크 서바이버 — 한 손으로 즐기는 생존 로그라이크. 몰려오는 적을 버티고 무기를 진화시켜라. iPhone/안드로이드 브라우저에서 바로 플레이." />',
   '<link rel="manifest" href="game-manifest.json" />',
   '<link rel="apple-touch-icon" href="game-icon.svg" />',
   '<link rel="icon" href="game-icon.svg" type="image/svg+xml" />',

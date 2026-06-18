@@ -1,13 +1,13 @@
 {
-  "name": "사령관의 타워디펜스",
-  "short_name": "타워디펜스",
-  "description": "혼자 즐기는 오프라인 타워디펜스. 5개 스테이지를 사수하라!",
+  "name": "스파크 서바이버",
+  "short_name": "스파크",
+  "description": "한 손으로 즐기는 생존 로그라이크. 몰려오는 적을 버티고 무기를 진화시켜라.",
   "start_url": "./game.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0b1020",
-  "theme_color": "#0b1020",
+  "background_color": "#16161F",
+  "theme_color": "#16161F",
   "icons": [
     {
       "src": "game-icon.svg",

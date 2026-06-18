@@ -50,7 +50,17 @@ jobs:
 
       - name: Build debug APK
         working-directory: game-app/android
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        run: |
+          n=0
+          until ./gradlew assembleDebug --no-daemon --stacktrace; do
+            n=$((n+1))
+            if [ "$n" -ge 3 ]; then
+              echo "Gradle build failed after $n attempts"
+              exit 1
+            fi
+            echo "Gradle attempt $n failed (likely transient download). Retrying in 15s..."
+            sleep 15
+          done
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4

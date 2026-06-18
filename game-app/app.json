@@ -16,6 +16,16 @@
     "ios": {
       "bundleIdentifier": "com.hijimin.td",
       "supportsTablet": false
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "kotlinVersion": "1.9.25"
+          }
+        }
+      ]
+    ]
   }
 }

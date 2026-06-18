@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "사령관의 타워디펜스",
+    "slug": "commander-td",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0b1020",
+    "android": {
+      "package": "com.hijimin.td",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#0b1020"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.hijimin.td",
+      "supportsTablet": false
+    }
+  }
+}

@@ -448,7 +448,7 @@
   function damageEnemy(e,dmg,melee){
     if(e.type==="shielder" && !melee) dmg*=0.2;
     var crit=Math.random()<G.p.critC; if(crit) dmg*=G.p.critD;
-    dmg=Math.round(dmg); e.hp-=dmg; e.flash=0.12; e.fx=1.22; e.fy=0.82; addPart(e.x,e.y,"#FFFFFF",crit?3:1,crit?90:40);
+    dmg=Math.round(dmg); e.hp-=dmg; e.flash=0.14; e.fx=1.24; e.fy=0.8; addPart(e.x,e.y,"#FFFFFF",crit?6:2,crit?130:75); addPart(e.x,e.y,e.col,crit?4:1,90); muzzleFlash(e.x,e.y,crit?C.gold:"#cfe6ff",crit?8:4);
     if(crit){ G.hitStop=Math.max(G.hitStop,0.045); muzzleFlash(e.x,e.y,C.warning,7); }
     if(crit||e.type==="boss"||e.type==="elite") floatText(e.x,e.y-e.r,(""+dmg),crit?C.gold:C.tp,crit||e.type==="boss");
     if(e.hp<=0) killEnemy(e);
@@ -683,7 +683,7 @@
     function blob(x,y,r,col,a){ if(x<-30||x>W+30||y<-30||y>H+30) return; bctx.globalAlpha=a; bctx.fillStyle=col; bctx.beginPath(); bctx.arc(x*BS,y*BS,Math.max(1,r*BS),0,6.2832); bctx.fill(); }
     blob(W/2,H/2,p.r*1.6,"#bfe0ff",0.42);
     for(var i=0;i<G.enemies.length;i++){ var e=G.enemies[i]; var big=(e.type==="boss"||e.type==="elite"); blob(W2Sx(e.x),W2Sy(e.y),e.r*(big?1.8:1.6),e.col,big?0.5:0.42); }
-    for(var i=0;i<G.shots.length;i++){ var s=G.shots[i]; blob(W2Sx(s.x),W2Sy(s.y),10,s.col,0.7); }
+    for(var i=0;i<G.shots.length;i++){ var s=G.shots[i]; blob(W2Sx(s.x),W2Sy(s.y),s.kind==="seeker"?13:11,s.col,0.85); }
     for(var i=0;i<G.gems.length;i++){ var gm=G.gems[i]; blob(W2Sx(gm.x),W2Sy(gm.y),11,gm.tier>=3?C.gold:(gm.tier>=2?"#6FE39A":C.xp),0.6); }
     for(var i=0;i<G.drops.length;i++){ var d=G.drops[i]; blob(W2Sx(d.x),W2Sy(d.y),13,d.kind==="gold"?C.gold:(d.kind==="heal"?C.success:C.warning),0.6); }
     for(var i=0;i<G.parts.length;i++){ var pa=G.parts[i],al=Math.max(0,pa.life/pa.max); if(pa.ring) blob(W2Sx(pa.x),W2Sy(pa.y),pa.r0+(pa.r1-pa.r0)*(1-al),pa.col,al*0.45); else blob(W2Sx(pa.x),W2Sy(pa.y),pa.sz*3.5,pa.col,al*0.55); }
@@ -812,11 +812,23 @@
     if(e.type!=="boss" && e.hp<e.maxHp){ var w=r*2, hpf=Math.max(0,e.hp/e.maxHp); ctx.fillStyle="rgba(0,0,0,0.55)"; rrect(x-w/2,y-r-8,w,3.5,2); ctx.fill(); ctx.fillStyle=hpf>0.5?C.success:(hpf>0.25?C.warning:C.danger); rrect(x-w/2,y-r-8,w*hpf,3.5,2); ctx.fill(); } }
   function hexPath(x,y,r){ ctx.beginPath(); for(var i=0;i<6;i++){ var a=1.0472*i; var px=x+Math.cos(a)*r,py=y+Math.sin(a)*r; if(i===0)ctx.moveTo(px,py); else ctx.lineTo(px,py); } ctx.closePath(); }
   function drawShots(){ ctx.lineCap="round"; for(var i=0;i<G.shots.length;i++){ var s=G.shots[i], x=W2Sx(s.x), y=W2Sy(s.y);
-    if(s.kind==="boomer"){ ctx.save(); ctx.translate(x,y); ctx.rotate(now*12); ctx.fillStyle=s.col; rrect(-8,-3,16,6,3); ctx.fill(); rrect(-3,-8,6,16,3); ctx.fill(); ctx.fillStyle="#fff"; circle(0,0,2.5); ctx.restore(); }
-    else if(s.kind==="seeker"){ var a=Math.atan2(s.vy,s.vx); ctx.strokeStyle=hexA(s.col,0.5); ctx.lineWidth=4; ctx.beginPath(); ctx.moveTo(x-Math.cos(a)*10,y-Math.sin(a)*10); ctx.lineTo(x,y); ctx.stroke(); ctx.fillStyle="#fff"; circle(x,y,3.5); ctx.fillStyle=s.col; circle(x,y,2.2); }
-    else { var a=Math.atan2(s.vy,s.vx); ctx.save(); ctx.translate(x,y); ctx.rotate(a); ctx.strokeStyle=hexA(s.col,0.45); ctx.lineWidth=5; ctx.beginPath(); ctx.moveTo(-14,0); ctx.lineTo(2,0); ctx.stroke(); ctx.fillStyle=s.col; rrect(-3,-2.5,14,5,2.5); ctx.fill(); ctx.fillStyle="#ffffff"; rrect(2,-1.5,7,3,1.5); ctx.fill(); ctx.restore(); } } }
-  function drawBolts(){ for(var i=0;i<G.bolts.length;i++){ var b=G.bolts[i]; ctx.globalAlpha=clamp(b.life/0.16,0,1); ctx.strokeStyle=b.col; ctx.lineWidth=2.5; ctx.lineJoin="round";
-    var x0=W2Sx(b.x0),y0=W2Sy(b.y0),x1=W2Sx(b.x1),y1=W2Sy(b.y1); var mx=(x0+x1)/2+rnd(-8,8),my=(y0+y1)/2+rnd(-8,8); ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(mx,my); ctx.lineTo(x1,y1); ctx.stroke(); ctx.globalAlpha=1; } }
+    if(s.kind==="boomer"){ ctx.save(); ctx.translate(x,y);
+      ctx.globalCompositeOperation="lighter"; var bg=ctx.createRadialGradient(0,0,0,0,0,16); bg.addColorStop(0,hexA(s.col,0.85)); bg.addColorStop(1,hexA(s.col,0)); ctx.fillStyle=bg; circle(0,0,16);
+      ctx.globalCompositeOperation="source-over"; ctx.rotate(now*12); ctx.fillStyle=s.col; rrect(-9,-3,18,6,3); ctx.fill(); rrect(-3,-9,6,18,3); ctx.fill(); ctx.fillStyle="#fff"; circle(0,0,3); ctx.restore(); }
+    else if(s.kind==="seeker"){ var a=Math.atan2(s.vy,s.vx); ctx.save(); ctx.translate(x,y); ctx.rotate(a); ctx.globalCompositeOperation="lighter";
+      var tg=ctx.createLinearGradient(-26,0,4,0); tg.addColorStop(0,hexA(s.col,0)); tg.addColorStop(1,hexA(s.col,0.85)); ctx.fillStyle=tg; ctx.beginPath(); ctx.moveTo(-26,0); ctx.lineTo(2,-4); ctx.lineTo(2,4); ctx.closePath(); ctx.fill();
+      var gg=ctx.createRadialGradient(0,0,0,0,0,11); gg.addColorStop(0,hexA(s.col,1)); gg.addColorStop(0.5,hexA(s.col,0.45)); gg.addColorStop(1,hexA(s.col,0)); ctx.fillStyle=gg; circle(0,0,11);
+      ctx.globalCompositeOperation="source-over"; ctx.fillStyle="#fff"; circle(0,0,3); ctx.fillStyle=s.col; circle(0,0,1.6); ctx.restore(); }
+    else { var a=Math.atan2(s.vy,s.vx); ctx.save(); ctx.translate(x,y); ctx.rotate(a); ctx.globalCompositeOperation="lighter";
+      var t2=ctx.createLinearGradient(-28,0,9,0); t2.addColorStop(0,hexA(s.col,0)); t2.addColorStop(1,hexA(s.col,0.75)); ctx.fillStyle=t2; ctx.beginPath(); ctx.moveTo(-28,0); ctx.lineTo(4,-4.5); ctx.lineTo(10,0); ctx.lineTo(4,4.5); ctx.closePath(); ctx.fill();
+      var g2=ctx.createRadialGradient(3,0,0,3,0,13); g2.addColorStop(0,hexA(s.col,0.9)); g2.addColorStop(1,hexA(s.col,0)); ctx.fillStyle=g2; circle(3,0,13);
+      ctx.globalCompositeOperation="source-over"; ctx.fillStyle=s.col; rrect(-4,-2.6,13,5.2,2.6); ctx.fill(); ctx.fillStyle="#ffffff"; rrect(1,-1.4,8,2.8,1.4); ctx.fill(); circle(7,0,2); ctx.restore(); } } }
+  function drawBolts(){ ctx.lineCap="round"; ctx.lineJoin="round"; for(var i=0;i<G.bolts.length;i++){ var b=G.bolts[i]; var a=clamp(b.life/0.16,0,1);
+    var x0=W2Sx(b.x0),y0=W2Sy(b.y0),x1=W2Sx(b.x1),y1=W2Sy(b.y1); var nx=-(y1-y0),ny=(x1-x0),nl=Math.hypot(nx,ny)||1; nx/=nl; ny/=nl;
+    var segs=6, pts=[[x0,y0]]; for(var k=1;k<segs;k++){ var t=k/segs, off=rnd(-12,12); pts.push([x0+(x1-x0)*t+nx*off, y0+(y1-y0)*t+ny*off]); } pts.push([x1,y1]);
+    ctx.save(); ctx.globalCompositeOperation="lighter"; var lws=[8,4,1.8], als=[0.4,0.7,1], cols=[b.col,b.col,"#eaf6ff"];
+    for(var pass=0;pass<3;pass++){ ctx.globalAlpha=a*als[pass]; ctx.strokeStyle=cols[pass]; ctx.lineWidth=lws[pass]; ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]); for(var k2=1;k2<pts.length;k2++) ctx.lineTo(pts[k2][0],pts[k2][1]); ctx.stroke(); }
+    ctx.globalAlpha=1; ctx.restore(); } }
   function drawGems(){ for(var i=0;i<G.gems.length;i++){ var g=G.gems[i], x=W2Sx(g.x), y=W2Sy(g.y); if(x<-20||x>W+20||y<-20||y>H+20) continue;
     var col=g.tier>=3?C.gold:(g.tier>=2?"#6FE39A":C.xp), s=g.tier>=3?7:4.5; ctx.save(); ctx.translate(x,y); ctx.rotate(now*1.4);
     ctx.fillStyle=col; ctx.beginPath(); ctx.moveTo(0,-s); ctx.lineTo(s*0.8,0); ctx.lineTo(0,s); ctx.lineTo(-s*0.8,0); ctx.closePath(); ctx.fill();

@@ -195,6 +195,21 @@ export const GAME_HTML = `<!DOCTYPE html>
     bcv.width=Math.max(1,Math.floor(W*BS)); bcv.height=Math.max(1,Math.floor(H*BS));
     buildStars(); if(nebula.length===0) buildNebula(); buildAmbient(); }
   window.addEventListener("resize",resize);
+  // ====== 스프라이트(SVG 데이터URI를 구워서 사용) ======
+  var sprites={};
+  var SPR={
+    player:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='42%' cy='36%' r='68%'><stop offset='0%' stop-color='#ffffff'/><stop offset='38%' stop-color='#bcdcff'/><stop offset='72%' stop-color='#7EA8FF'/><stop offset='100%' stop-color='#33518f'/></radialGradient></defs><circle cx='50' cy='50' r='46' fill='#7EA8FF' opacity='0.14'/><path d='M88 50 L66 62 L66 38 Z' fill='#74E0C0'/><circle cx='48' cy='50' r='32' fill='url(#g)' stroke='#dbe8ff' stroke-width='2.5'/><circle cx='42' cy='42' r='8' fill='#ffffff' opacity='0.65'/><circle cx='48' cy='50' r='8' fill='#eafff8'/></svg>",
+    walker:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='40%' cy='34%' r='70%'><stop offset='0%' stop-color='#ffd5d5'/><stop offset='45%' stop-color='#E07A7A'/><stop offset='100%' stop-color='#6e2a2a'/></radialGradient></defs><circle cx='50' cy='50' r='46' fill='#E07A7A' opacity='0.12'/><circle cx='50' cy='52' r='33' fill='url(#g)' stroke='#5a2222' stroke-width='2.5'/><ellipse cx='40' cy='38' rx='12' ry='8' fill='#ffffff' opacity='0.26'/><circle cx='41' cy='50' r='7' fill='#2a1018'/><circle cx='59' cy='50' r='7' fill='#2a1018'/><circle cx='43' cy='48' r='2.3' fill='#fff'/><circle cx='61' cy='48' r='2.3' fill='#fff'/><path d='M40 66 Q50 72 60 66' stroke='#2a1018' stroke-width='3' fill='none' stroke-linecap='round'/></svg>",
+    runner:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='35%' cy='35%' r='85%'><stop offset='0%' stop-color='#ffe0c0'/><stop offset='50%' stop-color='#FF9E64'/><stop offset='100%' stop-color='#8a4a20'/></radialGradient></defs><path d='M90 50 L28 22 L44 50 L28 78 Z' fill='url(#g)' stroke='#7a3f1a' stroke-width='2.5' stroke-linejoin='round'/><path d='M70 50 L40 36 L48 50 Z' fill='#ffffff' opacity='0.28'/></svg>",
+    brute:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#c8b9e6'/><stop offset='45%' stop-color='#8C7BB0'/><stop offset='100%' stop-color='#3a2f5a'/></linearGradient></defs><rect x='17' y='17' width='66' height='66' rx='11' fill='url(#g)' stroke='#2f2547' stroke-width='3'/><rect x='24' y='24' width='52' height='17' rx='6' fill='#ffffff' opacity='0.18'/><circle cx='28' cy='28' r='3.5' fill='#2f2547'/><circle cx='72' cy='28' r='3.5' fill='#2f2547'/><circle cx='28' cy='72' r='3.5' fill='#2f2547'/><circle cx='72' cy='72' r='3.5' fill='#2f2547'/></svg>",
+    spitter:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='40%' cy='35%' r='70%'><stop offset='0%' stop-color='#ffefc0'/><stop offset='50%' stop-color='#E6C36B'/><stop offset='100%' stop-color='#7a5a20'/></radialGradient></defs><polygon points='50,15 85,32 85,68 50,85 15,68 15,32' fill='url(#g)' stroke='#5a4416' stroke-width='3'/><circle cx='50' cy='50' r='13' fill='#3a2a10'/><circle cx='50' cy='50' r='6' fill='#ffe9a8'/></svg>",
+    splitter:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='40%' cy='34%' r='72%'><stop offset='0%' stop-color='#f0c8ff'/><stop offset='50%' stop-color='#C58BD8'/><stop offset='100%' stop-color='#5a2f6e'/></radialGradient></defs><circle cx='50' cy='50' r='34' fill='url(#g)' stroke='#46255a' stroke-width='2.5'/><line x1='50' y1='17' x2='50' y2='83' stroke='#46255a' stroke-width='2.5'/><circle cx='37' cy='50' r='7' fill='#3a1f48'/><circle cx='63' cy='50' r='7' fill='#3a1f48'/><ellipse cx='42' cy='38' rx='9' ry='6' fill='#ffffff' opacity='0.24'/></svg>",
+    shielder:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='40%' cy='35%' r='72%'><stop offset='0%' stop-color='#e6f0ff'/><stop offset='50%' stop-color='#9FB6E6'/><stop offset='100%' stop-color='#3a4a7a'/></radialGradient></defs><circle cx='46' cy='50' r='30' fill='url(#g)' stroke='#33406a' stroke-width='2.5'/><path d='M70 24 A34 34 0 0 1 70 76' fill='none' stroke='#dcebff' stroke-width='7' stroke-linecap='round'/><ellipse cx='40' cy='40' rx='9' ry='6' fill='#ffffff' opacity='0.3'/></svg>",
+    elite:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='42%' cy='36%' r='70%'><stop offset='0%' stop-color='#ffffff'/><stop offset='30%' stop-color='#d8c4ff'/><stop offset='70%' stop-color='#A98BFF'/><stop offset='100%' stop-color='#4a2f8a'/></radialGradient></defs><polygon points='50,8 61,32 88,33 67,52 74,80 50,66 26,80 33,52 12,33 39,32' fill='url(#g)' stroke='#6a4fb0' stroke-width='3' stroke-linejoin='round'/><circle cx='50' cy='50' r='12' fill='#ffffff' opacity='0.85'/></svg>",
+    boss:"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='42%' cy='36%' r='72%'><stop offset='0%' stop-color='#ffffff'/><stop offset='28%' stop-color='#ffb0c0'/><stop offset='66%' stop-color='#D94E63'/><stop offset='100%' stop-color='#5a1626'/></radialGradient></defs><circle cx='50' cy='50' r='48' fill='#D94E63' opacity='0.16'/><polygon points='50,6 60,26 82,20 74,42 94,50 74,58 82,80 60,74 50,94 40,74 18,80 26,58 6,50 26,42 18,20 40,26' fill='url(#g)' stroke='#A98BFF' stroke-width='3' stroke-linejoin='round'/><circle cx='50' cy='50' r='16' fill='#ffffff' opacity='0.9'/><circle cx='50' cy='50' r='8' fill='#D94E63'/></svg>"
+  };
+  function loadSprites(){ if(typeof Image==="undefined") return; for(var k in SPR){ (function(key){ try{ var img=new Image(); img.onload=function(){ img._ok=true; }; img.src="data:image/svg+xml,"+encodeURIComponent(SPR[key]); sprites[key]=img; }catch(e){} })(k); } }
+  function spr(key){ var s=sprites[key]; return (s&&s._ok)?s:null; }
 
   // ====== 유틸 ======
   function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
@@ -561,8 +576,11 @@ export const GAME_HTML = `<!DOCTYPE html>
     if(G.luFlash>0){ ctx.globalCompositeOperation="lighter"; ctx.globalAlpha=G.luFlash*1.6; ctx.strokeStyle=C.xp; ctx.lineWidth=4; ctx.beginPath(); ctx.arc(W/2,H/2,(0.3-G.luFlash)*520,0,6.2832); ctx.stroke(); ctx.globalAlpha=1; ctx.globalCompositeOperation="source-over"; }
     // 보스 HP바
     for(var i=0;i<G.enemies.length;i++){ if(G.enemies[i].type==="boss"){ var e=G.enemies[i];
-      ctx.fillStyle="rgba(0,0,0,0.5)"; rrect(W*0.12,52,W*0.76,10,5); ctx.fill(); ctx.fillStyle=C.danger; rrect(W*0.12,52,W*0.76*Math.max(0,e.hp/e.maxHp),10,5); ctx.fill();
-      ctx.fillStyle=C.tp; ctx.font="700 11px sans-serif"; ctx.textAlign="center"; ctx.fillText("최종 보스",W/2,49); break; } }
+      var bx=W*0.12,bw=W*0.76,bh=11,by=54,hpf=Math.max(0,e.hp/e.maxHp);
+      ctx.fillStyle="rgba(0,0,0,0.55)"; rrect(bx-2,by-2,bw+4,bh+4,7); ctx.fill();
+      var bgr=ctx.createLinearGradient(bx,0,bx+bw,0); bgr.addColorStop(0,"#ff8a9a"); bgr.addColorStop(1,"#D94E63"); ctx.fillStyle=bgr; rrect(bx,by,bw*hpf,bh,5); ctx.fill();
+      ctx.strokeStyle="rgba(255,150,170,0.55)"; ctx.lineWidth=1; rrect(bx,by,bw,bh,5); ctx.stroke();
+      ctx.fillStyle=C.tp; ctx.font="800 11px sans-serif"; ctx.textAlign="center"; ctx.fillText("◆ 최종 보스 ◆",W/2,by-5); break; } }
     drawJoystick();
   }
   function drawBackground(){ var p=G.p;
@@ -610,18 +628,25 @@ export const GAME_HTML = `<!DOCTYPE html>
     for(var i=0;i<G.trail.length;i++){ var tr=G.trail[i], al=(i+1)/(G.trail.length+1)*0.4; ctx.globalAlpha=al; ctx.fillStyle=C.primary; circle(W2Sx(tr.x),W2Sy(tr.y),p.r*(0.4+0.5*al)); } ctx.globalAlpha=1;
     // 에너지 링(회전 대시)
     ctx.strokeStyle=hexA(C.mint,0.55); ctx.lineWidth=2; ctx.setLineDash([4,7]); ctx.lineDashOffset=-now*34; ctx.beginPath(); ctx.arc(x,y,p.r+6+Math.sin(now*4)*1.2,0,6.2832); ctx.stroke(); ctx.setLineDash([]);
-    // 본체(라디얼 음영)
-    var g=ctx.createRadialGradient(x-p.r*0.35,y-p.r*0.35,1,x,y,p.r); g.addColorStop(0,"#f2f8ff"); g.addColorStop(0.45,C.primary); g.addColorStop(1,shade("#7EA8FF",0.45));
-    ctx.fillStyle=g; circle(x,y,p.r);
-    ctx.strokeStyle="#dbe8ff"; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x,y,p.r,0,6.2832); ctx.stroke();
-    // 방향 코어
-    ctx.fillStyle=C.mint; ctx.beginPath(); ctx.moveTo(x+Math.cos(a)*p.r*0.85,y+Math.sin(a)*p.r*0.85); ctx.lineTo(x+Math.cos(a+2.5)*p.r*0.5,y+Math.sin(a+2.5)*p.r*0.5); ctx.lineTo(x+Math.cos(a-2.5)*p.r*0.5,y+Math.sin(a-2.5)*p.r*0.5); ctx.closePath(); ctx.fill();
-    ctx.fillStyle="#eafff8"; circle(x,y,3.5);
+    // 본체(스프라이트 우선, 없으면 라디얼 음영)
+    var pim=spr("player");
+    if(pim){ ctx.save(); ctx.translate(x,y); ctx.rotate(a); var d=p.r*2.7; ctx.drawImage(pim,-d/2,-d/2,d,d); ctx.restore(); }
+    else { var g=ctx.createRadialGradient(x-p.r*0.35,y-p.r*0.35,1,x,y,p.r); g.addColorStop(0,"#f2f8ff"); g.addColorStop(0.45,C.primary); g.addColorStop(1,shade("#7EA8FF",0.45));
+      ctx.fillStyle=g; circle(x,y,p.r); ctx.strokeStyle="#dbe8ff"; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x,y,p.r,0,6.2832); ctx.stroke();
+      ctx.fillStyle=C.mint; ctx.beginPath(); ctx.moveTo(x+Math.cos(a)*p.r*0.85,y+Math.sin(a)*p.r*0.85); ctx.lineTo(x+Math.cos(a+2.5)*p.r*0.5,y+Math.sin(a+2.5)*p.r*0.5); ctx.lineTo(x+Math.cos(a-2.5)*p.r*0.5,y+Math.sin(a-2.5)*p.r*0.5); ctx.closePath(); ctx.fill();
+      ctx.fillStyle="#eafff8"; circle(x,y,3.5); }
     // 오빗 무기 오브
     for(var i=0;i<p.weapons.length;i++){ var w=p.weapons[i]; if(w.key==="orbit"){ var S=W_S(w); for(var o=0;o<S.cnt;o++){ var aa=w.ang+o/S.cnt*6.2832; var ox=x+Math.cos(aa)*S.r, oy=y+Math.sin(aa)*S.r; var og=ctx.createRadialGradient(ox,oy,0,ox,oy,7); og.addColorStop(0,"#ffffff"); og.addColorStop(0.5,C.secondary); og.addColorStop(1,hexA(C.secondary,0)); ctx.fillStyle=og; circle(ox,oy,7); } } }
     if(p.invuln>0){ ctx.strokeStyle="rgba(234,255,248,0.8)"; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(x,y,p.r+10,0,6.2832); ctx.stroke(); } }
   function drawEnemy(e){ var x=W2Sx(e.x), y=W2Sy(e.y); if(x<-40||x>W+40||y<-40||y>H+40) return;
-    var base=e.flash>0?"#FFFFFF":e.col, r=e.r, hi=shade(e.col,1.55), rim=shade(e.col,0.5), bob=Math.sin(now*5+e.ph)*r*0.06;
+    var r=e.r, bob=Math.sin(now*5+e.ph)*r*0.06;
+    var img=spr(e.type);
+    if(img){ ctx.save(); ctx.translate(x,y+bob); var ang=0;
+      if(e.type==="runner"||e.type==="shielder") ang=Math.atan2(G.p.y-e.y,G.p.x-e.x); else if(e.type==="spitter"||e.type==="elite"||e.type==="boss") ang=now*0.5;
+      if(ang) ctx.rotate(ang); var pu=(e.type==="elite"||e.type==="boss")?(1+Math.sin(now*3)*0.05):1; var d=r*2.5*pu; ctx.drawImage(img,-d/2,-d/2,d,d); ctx.restore();
+      if(e.flash>0){ ctx.globalAlpha=Math.min(1,e.flash*9); ctx.fillStyle="#ffffff"; circle(x,y+bob,r); ctx.globalAlpha=1; }
+      if(e.type!=="boss"&&e.hp<e.maxHp){ var w=r*2,hpf=Math.max(0,e.hp/e.maxHp); ctx.fillStyle="rgba(0,0,0,0.55)"; rrect(x-w/2,y-r-8,w,3.5,2); ctx.fill(); ctx.fillStyle=hpf>0.5?C.success:(hpf>0.25?C.warning:C.danger); rrect(x-w/2,y-r-8,w*hpf,3.5,2); ctx.fill(); } return; }
+    var base=e.flash>0?"#FFFFFF":e.col, hi=shade(e.col,1.55), rim=shade(e.col,0.5);
     ctx.save(); ctx.translate(x,y+bob);
     if(e.type==="runner"){ var an=Math.atan2(G.p.y-e.y,G.p.x-e.x); ctx.rotate(an); ctx.fillStyle=base; ctx.beginPath(); ctx.moveTo(r,0); ctx.lineTo(-r*0.7,-r*0.7); ctx.lineTo(-r*0.4,0); ctx.lineTo(-r*0.7,r*0.7); ctx.closePath(); ctx.fill(); ctx.strokeStyle=rim; ctx.lineWidth=2; ctx.stroke(); ctx.globalAlpha=0.4; ctx.fillStyle=hi; ctx.beginPath(); ctx.moveTo(r*0.4,0); ctx.lineTo(-r*0.15,-r*0.22); ctx.lineTo(-r*0.15,r*0.22); ctx.closePath(); ctx.fill(); ctx.globalAlpha=1; }
     else if(e.type==="brute"){ ctx.fillStyle=base; rrect(-r,-r,r*2,r*2,5); ctx.fill(); ctx.strokeStyle=rim; ctx.lineWidth=2.5; rrect(-r,-r,r*2,r*2,5); ctx.stroke(); ctx.globalAlpha=0.5; ctx.fillStyle=hi; rrect(-r*0.7,-r*0.7,r*1.4,r*0.5,3); ctx.fill(); ctx.globalAlpha=1; ctx.fillStyle="rgba(0,0,0,0.18)"; circle(0,r*0.25,r*0.3); }
@@ -755,7 +780,7 @@ export const GAME_HTML = `<!DOCTYPE html>
   document.addEventListener("message",onNativeMsg); window.addEventListener("message",onNativeMsg);
 
   // 초기화
-  resize(); refreshSettings(); showMenuRec(); requestAnimationFrame(tick);
+  loadSprites(); resize(); refreshSettings(); showMenuRec(); requestAnimationFrame(tick);
 })();
 </script>
 </body>

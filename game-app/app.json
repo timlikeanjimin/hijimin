@@ -1,21 +1,32 @@
 {
   "expo": {
-    "name": "사령관의 타워디펜스",
-    "slug": "commander-td",
+    "name": "스파크 서바이버",
+    "slug": "spark-survivor",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "backgroundColor": "#0b1020",
-    "android": {
-      "package": "com.hijimin.td",
-      "versionCode": 1,
-      "adaptiveIcon": {
-        "backgroundColor": "#0b1020"
-      }
+    "backgroundColor": "#16161F",
+    "primaryColor": "#7EA8FF",
+    "splash": {
+      "backgroundColor": "#16161F",
+      "resizeMode": "contain"
     },
     "ios": {
-      "bundleIdentifier": "com.hijimin.td",
-      "supportsTablet": false
+      "bundleIdentifier": "com.hijimin.sparksurvivor",
+      "buildNumber": "1",
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "infoPlist": {
+        "UIRequiresFullScreen": true,
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.hijimin.sparksurvivor",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#16161F"
+      }
     },
     "plugins": [
       [

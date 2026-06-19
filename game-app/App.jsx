@@ -5,8 +5,8 @@ import { WebView } from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GAME_HTML } from './game/gameHtml';
 
-const STORE_KEY = 'commander_td_save_v1';
-const DEFAULT_SAVE = { unlocked: 0, stages: {}, bestScore: 0 };
+const STORE_KEY = 'spark_survivor_save_v1';
+const DEFAULT_SAVE = { gold: 0, meta: {}, bestTime: 0, sound: true, music: false };
 
 export default function App() {
   const webRef = useRef(null);
